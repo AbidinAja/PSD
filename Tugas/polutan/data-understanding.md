@@ -352,16 +352,45 @@ Pada tahap _data understanding_ ini, kita mengeksplorasi _outliers_ menggunakan 
 ```{code-cell}
 import pandas as pd
 from sklearn.ensemble import IsolationForest
+import matplotlib.pyplot as plt
 
+# 1. Load & Clean Data
 df = pd.read_csv("../../data/polutan/CO_Timeseries.csv")
+ 
 df_clean = df.dropna(subset=['CO']).copy()
 
-model = IsolationForest(contamination=0.05, random_state=42) # contamination 0.05 = 5%
+# 2. Deteksi Outlier
+model = IsolationForest(contamination=0.05, random_state=42)
 pred = model.fit_predict(df_clean[['CO']])
 
-# Nilai -1 merepresentasikan outlier
-jumlah_outlier = (pred == -1).sum()
-print("Jumlah outlier:", jumlah_outlier)
+# Simpan hasil ke dalam dataframe
+df_clean['Outlier'] = pred
+jumlah_outlier = (df_clean['Outlier'] == -1).sum()
+print("Jumlah outlier CO:", jumlah_outlier)
+
+# 3. Visualisasi Grafik Time Series
+plt.figure(figsize=(15, 6))
+
+# Ambil titik-titik data yang terdeteksi sebagai outlier
+data_outlier = df_clean[df_clean['Outlier'] == -1]
+
+# Plot garis utama untuk data CO 
+# (Ganti df_clean.index dengan df_clean['Tanggal'] jika Anda menggunakan kolom datetime)
+plt.plot(df_clean.index, df_clean['CO'], color='orange', label='Data CO (Normal)', alpha=0.7)
+
+# Plot titik merah untuk nilai outlier
+plt.scatter(data_outlier.index, data_outlier['CO'], color='red', label='Outlier', zorder=5)
+
+# Pengaturan visual grafik
+plt.title('Grafik Time Series CO dengan Deteksi Outlier (Isolation Forest)', fontsize=14)
+plt.xlabel('Indeks Waktu', fontsize=12)
+plt.ylabel('Konsentrasi CO', fontsize=12)
+plt.legend()
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.tight_layout()
+
+# Tampilkan grafik
+plt.show()
 ```
 
 Implementasi pada tools `Orange Data Mining`
@@ -384,16 +413,44 @@ Implementasi pada tools `Orange Data Mining`
 ```{code-cell}
 import pandas as pd
 from sklearn.ensemble import IsolationForest
+import matplotlib.pyplot as plt
 
+# 1. Load & Clean Data
 df = pd.read_csv("../../data/polutan/SO2_Timeseries.csv")
+
 df_clean = df.dropna(subset=['SO2']).copy()
 
-model = IsolationForest(contamination=0.05, random_state=42) # contamination 0.05 = 5%
+# 2. Deteksi Outlier
+model = IsolationForest(contamination=0.05, random_state=42)
 pred = model.fit_predict(df_clean[['SO2']])
 
-# Nilai -1 merepresentasikan outlier
-jumlah_outlier = (pred == -1).sum()
-print("Jumlah outlier:", jumlah_outlier)
+# Simpan hasil ke dalam dataframe
+df_clean['Outlier'] = pred
+jumlah_outlier = (df_clean['Outlier'] == -1).sum()
+print("Jumlah outlier SO2:", jumlah_outlier)
+
+# 3. Visualisasi Grafik Time Series
+plt.figure(figsize=(15, 6))
+
+# Ambil data outlier untuk di-plot secara terpisah
+data_outlier = df_clean[df_clean['Outlier'] == -1]
+
+# Plot garis utama untuk data SO2 (gunakan df_clean['Tanggal'] jika kolom waktu sudah diset)
+plt.plot(df_clean.index, df_clean['SO2'], color='green', label='Data SO2 (Normal)', alpha=0.5)
+
+# Plot titik merah untuk nilai outlier
+plt.scatter(data_outlier.index, data_outlier['SO2'], color='red', label='Outlier', zorder=5)
+
+# Pengaturan visual grafik
+plt.title('Grafik Time Series SO2 dengan Deteksi Outlier (Isolation Forest)', fontsize=14)
+plt.xlabel('Indeks Waktu', fontsize=12)
+plt.ylabel('Konsentrasi SO2', fontsize=12)
+plt.legend()
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.tight_layout()
+
+# Tampilkan grafik
+plt.show()
 ```
 
 Implementasi pada tools `Orange Data Mining`
@@ -413,19 +470,50 @@ Implementasi pada tools `Orange Data Mining`
 
 3. NO₂
 
+
 ```{code-cell}
 import pandas as pd
 from sklearn.ensemble import IsolationForest
+import matplotlib.pyplot as plt # Import matplotlib untuk visualisasi
 
+# 1. Load & Clean Data
 df = pd.read_csv("../../data/polutan/NO2_Timeseries.csv")
+ 
 df_clean = df.dropna(subset=['NO2']).copy()
 
-model = IsolationForest(contamination=0.05, random_state=42) # contamination 0.05 = 5%
+# 2. Deteksi Outlier
+model = IsolationForest(contamination=0.05, random_state=42)
 pred = model.fit_predict(df_clean[['NO2']])
 
-# Nilai -1 merepresentasikan outlier
-jumlah_outlier = (pred == -1).sum()
+# Simpan hasil prediksi ke dalam dataframe untuk mempermudah plotting
+df_clean['Outlier'] = pred
+jumlah_outlier = (df_clean['Outlier'] == -1).sum()
 print("Jumlah outlier:", jumlah_outlier)
+
+# 3. Visualisasi Grafik Time Series
+plt.figure(figsize=(15, 6))
+
+# Pisahkan data normal dan outlier
+data_normal = df_clean[df_clean['Outlier'] == 1]
+data_outlier = df_clean[df_clean['Outlier'] == -1]
+
+# Plot garis utama untuk seluruh data NO2
+# Catatan: Jika Anda menggunakan kolom waktu, ganti df_clean.index dengan df_clean['Tanggal']
+plt.plot(df_clean.index, df_clean['NO2'], color='blue', label='Data NO2 (Normal)', alpha=0.5)
+
+# Plot titik merah khusus untuk nilai outlier
+plt.scatter(data_outlier.index, data_outlier['NO2'], color='red', label='Outlier', zorder=5)
+
+# Pengaturan label dan judul
+plt.title('Grafik Time Series NO2 dengan Deteksi Outlier (Isolation Forest)', fontsize=14)
+plt.xlabel('Indeks Waktu', fontsize=12)
+plt.ylabel('Konsentrasi NO2', fontsize=12)
+plt.legend()
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.tight_layout()
+
+# Tampilkan grafik
+plt.show()
 ```
 
 Implementasi pada tools `Orange Data Mining`
