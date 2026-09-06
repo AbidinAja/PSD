@@ -15,23 +15,17 @@ Tabel ringkasan menyajikan metrik untuk variabel konsentrasi polutan udara, khus
 ### 2. Mean
 *   **Penjelasan:** Merupakan nilai pusat (rata-rata) dari sekumpulan data. Nilai ini diperoleh dengan menjumlahkan seluruh observasi, kemudian membaginya dengan total jumlah observasi yang valid.
 *   **Perhitungan Manual:**
-    $$ \bar{x} = \frac{\sum_{i=1}^{n} x_i}{n} 
-    
-    $$
+    $ \bar{x} = \frac{\sum_{i=1}^{n} x_i}{n} $
 
 ### 3. Std. Deviation (Standar Deviasi)
 *   **Penjelasan:** Mengukur sejauh mana rata-rata simpangan titik-titik data terhadap nilai Mean-nya. Standar deviasi yang rendah mengindikasikan bahwa data cenderung mengelompok di sekitar rata-rata (konsisten), sementara nilai yang tinggi menunjukkan adanya rentang fluktuasi yang lebar.
 *   **Perhitungan Manual (Sampel):**
-    $$ s = \sqrt{\frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}} 
-    
-    $$
+    $ s = \sqrt{\frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}} $
 
 ### 4. Variance (Varians)
 *   **Penjelasan:** Merupakan rata-rata dari kuadrat selisih antara setiap titik data dengan nilai Mean. Secara matematis, varians adalah nilai kuadrat dari Standar Deviasi.
 *   **Perhitungan Manual (Sampel):**
-    $$ s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1} 
-    
-    $$
+    $ s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1} $
 
 ### 5. Skewness 
 *   **Penjelasan:** Mengukur tingkat asimetri (ketidakseimbangan) distribusi data terhadap nilai rata-ratanya.
@@ -39,9 +33,7 @@ Tabel ringkasan menyajikan metrik untuk variabel konsentrasi polutan udara, khus
     *   *Skewness > 0 (Positif)*: Ekor distribusi memanjang ke arah kanan.
     *   *Skewness < 0 (Negatif)*: Ekor distribusi memanjang ke arah kiri.
 *   **Perhitungan Manual (Fisher-Pearson):**
-    $$ Skewness = \frac{n}{(n-1)(n-2)} \sum_{i=1}^{n} \left(\frac{x_i - \bar{x}}{s}\right)^3 
-    
-    $$
+    $ Skewness = \frac{n}{(n-1)(n-2)} \sum_{i=1}^{n} \left(\frac{x_i - \bar{x}}{s}\right)^3 $
 
 ### 6. Kurtosis
 *   **Penjelasan:** Mengukur tingkat keruncingan atau bobot ekor (*tailedness*) dari suatu distribusi data. Metrik ini menunjukkan seberapa ekstrem *outlier* (pencilan) yang ada di dalam data.
@@ -49,16 +41,12 @@ Tabel ringkasan menyajikan metrik untuk variabel konsentrasi polutan udara, khus
     *   *Kurtosis > 0*: Memiliki puncak yang tajam dengan ekor yang tebal (Leptokurtik).
     *   *Kurtosis < 0*: Puncaknya cenderung lebih datar dibandingkan distribusi normal (Platikurtik).
 *   **Perhitungan Manual (Excess Kurtosis Sampel):**
-    $$ Kurtosis = \left[ \frac{n(n+1)}{(n-1)(n-2)(n-3)} \sum \left(\frac{x_i - \bar{x}}{s}\right)^4 \right] - \frac{3(n-1)^2}{(n-2)(n-3)} 
-    
-    $$
+    $ Kurtosis = \left[ \frac{n(n+1)}{(n-1)(n-2)(n-3)} \sum \left(\frac{x_i - \bar{x}}{s}\right)^4 \right] - \frac{3(n-1)^2}{(n-2)(n-3)} $
 
 ### 7. Overall Sum
 *   **Penjelasan:** Merupakan jumlah total dari keseluruhan nilai pada variabel yang bersangkutan.
 *   **Perhitungan Manual:**
-    $$ Sum = \sum_{i=1}^{n} x_i 
-    
-    $$
+    $ Sum = \sum_{i=1}^{n} x_i $
 
 ### 8. Metrik Kualitas / Anomali Data
 *   **No. missings:** Menunjukkan jumlah sel yang kosong (NULL / NA) akibat data tidak berhasil terekam.
