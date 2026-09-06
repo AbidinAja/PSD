@@ -422,8 +422,11 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-1-penjelasan-metrik-statistika-deskriptif">Bagian 1: Penjelasan Metrik Statistika Deskriptif</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#min-max">1. Min &amp; Max</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mean">2. Mean</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#std-deviation-standar-deviasi">3. Std. Deviation (Standar Deviasi)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-varians">4. Variance (Varians)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skewness">5. Skewness</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kurtosis">6. Kurtosis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overall-sum">7. Overall Sum</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metrik-kualitas-anomali-data">8. Metrik Kualitas / Anomali Data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#median">9. Median</a></li>
 </ul>
@@ -468,59 +471,62 @@
 </section>
 <section id="mean">
 <h3>2. Mean<a class="headerlink" href="#mean" title="Link to this heading">#</a></h3>
-<ul>
+<ul class="simple">
 <li><p><strong>Penjelasan:</strong> Merupakan nilai pusat (rata-rata) dari sekumpulan data. Nilai ini diperoleh dengan menjumlahkan seluruh observasi, kemudian membaginya dengan total jumlah observasi yang valid.</p></li>
 <li><p><strong>Perhitungan Manual:</strong>
-$$ \bar{x} = \frac{\sum_{i=1}^{n} x_i}{n}</p>
-<div class="math notranslate nohighlight">
-\[### 3. Std. Deviation (Standar Deviasi)
-*   **Penjelasan:** Mengukur sejauh mana rata-rata simpangan titik-titik data terhadap nilai Mean-nya. Standar deviasi yang rendah mengindikasikan bahwa data cenderung mengelompok di sekitar rata-rata (konsisten), sementara nilai yang tinggi menunjukkan adanya rentang fluktuasi yang lebar.
-*   **Perhitungan Manual (Sampel):**
-    $$ s = \sqrt{\frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}} 
-    
-    \]</div>
-</li>
+<span class="math notranslate nohighlight">\( \bar{x} = \frac{\sum_{i=1}^{n} x_i}{n} \)</span></p></li>
+</ul>
+</section>
+<section id="std-deviation-standar-deviasi">
+<h3>3. Std. Deviation (Standar Deviasi)<a class="headerlink" href="#std-deviation-standar-deviasi" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Penjelasan:</strong> Mengukur sejauh mana rata-rata simpangan titik-titik data terhadap nilai Mean-nya. Standar deviasi yang rendah mengindikasikan bahwa data cenderung mengelompok di sekitar rata-rata (konsisten), sementara nilai yang tinggi menunjukkan adanya rentang fluktuasi yang lebar.</p></li>
+<li><p><strong>Perhitungan Manual (Sampel):</strong>
+<span class="math notranslate nohighlight">\( s = \sqrt{\frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}} \)</span></p></li>
 </ul>
 </section>
 <section id="variance-varians">
 <h3>4. Variance (Varians)<a class="headerlink" href="#variance-varians" title="Link to this heading">#</a></h3>
-<ul>
+<ul class="simple">
 <li><p><strong>Penjelasan:</strong> Merupakan rata-rata dari kuadrat selisih antara setiap titik data dengan nilai Mean. Secara matematis, varians adalah nilai kuadrat dari Standar Deviasi.</p></li>
 <li><p><strong>Perhitungan Manual (Sampel):</strong>
-$$ s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}</p>
-<div class="math notranslate nohighlight">
-\[### 5. Skewness 
-*   **Penjelasan:** Mengukur tingkat asimetri (ketidakseimbangan) distribusi data terhadap nilai rata-ratanya.
-    *   *Skewness = 0*: Data terdistribusi secara simetris (normal) dan berpusat di tengah.
-    *   *Skewness &gt; 0 (Positif)*: Ekor distribusi memanjang ke arah kanan.
-    *   *Skewness &lt; 0 (Negatif)*: Ekor distribusi memanjang ke arah kiri.
-*   **Perhitungan Manual (Fisher-Pearson):**
-    $$ Skewness = \frac{n}{(n-1)(n-2)} \sum_{i=1}^{n} \left(\frac{x_i - \bar{x}}{s}\right)^3 
-    
-    \]</div>
+<span class="math notranslate nohighlight">\( s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1} \)</span></p></li>
+</ul>
+</section>
+<section id="skewness">
+<h3>5. Skewness<a class="headerlink" href="#skewness" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Penjelasan:</strong> Mengukur tingkat asimetri (ketidakseimbangan) distribusi data terhadap nilai rata-ratanya.</p>
+<ul>
+<li><p><em>Skewness = 0</em>: Data terdistribusi secara simetris (normal) dan berpusat di tengah.</p></li>
+<li><p><em>Skewness &gt; 0 (Positif)</em>: Ekor distribusi memanjang ke arah kanan.</p></li>
+<li><p><em>Skewness &lt; 0 (Negatif)</em>: Ekor distribusi memanjang ke arah kiri.</p></li>
+</ul>
 </li>
+<li><p><strong>Perhitungan Manual (Fisher-Pearson):</strong>
+<span class="math notranslate nohighlight">\( Skewness = \frac{n}{(n-1)(n-2)} \sum_{i=1}^{n} \left(\frac{x_i - \bar{x}}{s}\right)^3 \)</span></p></li>
 </ul>
 </section>
 <section id="kurtosis">
 <h3>6. Kurtosis<a class="headerlink" href="#kurtosis" title="Link to this heading">#</a></h3>
-<ul>
-<li><p><strong>Penjelasan:</strong> Mengukur tingkat keruncingan atau bobot ekor (<em>tailedness</em>) dari suatu distribusi data. Metrik ini menunjukkan seberapa ekstrem <em>outlier</em> (pencilan) yang ada di dalam data.</p>
 <ul class="simple">
+<li><p><strong>Penjelasan:</strong> Mengukur tingkat keruncingan atau bobot ekor (<em>tailedness</em>) dari suatu distribusi data. Metrik ini menunjukkan seberapa ekstrem <em>outlier</em> (pencilan) yang ada di dalam data.</p>
+<ul>
 <li><p><em>Kurtosis \approx 0</em>: Distribusi normal (Mesokurtik).</p></li>
 <li><p><em>Kurtosis &gt; 0</em>: Memiliki puncak yang tajam dengan ekor yang tebal (Leptokurtik).</p></li>
 <li><p><em>Kurtosis &lt; 0</em>: Puncaknya cenderung lebih datar dibandingkan distribusi normal (Platikurtik).</p></li>
 </ul>
 </li>
 <li><p><strong>Perhitungan Manual (Excess Kurtosis Sampel):</strong>
-$$ Kurtosis = \left[ \frac{n(n+1)}{(n-1)(n-2)(n-3)} \sum \left(\frac{x_i - \bar{x}}{s}\right)^4 \right] - \frac{3(n-1)^2}{(n-2)(n-3)}</p>
-<div class="math notranslate nohighlight">
-\[### 7. Overall Sum
-*   **Penjelasan:** Merupakan jumlah total dari keseluruhan nilai pada variabel yang bersangkutan.
-*   **Perhitungan Manual:**
-    $$ Sum = \sum_{i=1}^{n} x_i 
-    
-    \]</div>
-</li>
+<span class="math notranslate nohighlight">\( Kurtosis = \left[ \frac{n(n+1)}{(n-1)(n-2)(n-3)} \sum \left(\frac{x_i - \bar{x}}{s}\right)^4 \right] - \frac{3(n-1)^2}{(n-2)(n-3)} \)</span></p></li>
+</ul>
+</section>
+<section id="overall-sum">
+<h3>7. Overall Sum<a class="headerlink" href="#overall-sum" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Penjelasan:</strong> Merupakan jumlah total dari keseluruhan nilai pada variabel yang bersangkutan.</p></li>
+<li><p><strong>Perhitungan Manual:</strong>
+<span class="math notranslate nohighlight">\( Sum = \sum_{i=1}^{n} x_i \)</span></p></li>
 </ul>
 </section>
 <section id="metrik-kualitas-anomali-data">
@@ -705,8 +711,11 @@ OS = \sum_{i=1}^{n}x_i = 0.00003747 + 0.00004383 + \ldots + x_n = \mathbf{0.0101
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagian-1-penjelasan-metrik-statistika-deskriptif">Bagian 1: Penjelasan Metrik Statistika Deskriptif</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#min-max">1. Min &amp; Max</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mean">2. Mean</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#std-deviation-standar-deviasi">3. Std. Deviation (Standar Deviasi)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-varians">4. Variance (Varians)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skewness">5. Skewness</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kurtosis">6. Kurtosis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overall-sum">7. Overall Sum</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metrik-kualitas-anomali-data">8. Metrik Kualitas / Anomali Data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#median">9. Median</a></li>
 </ul>
