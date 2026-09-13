@@ -12,7 +12,7 @@ kernelspec:
   name: python3
 ---
 
-# Laporan Analisis Statistika Deskriptif Polutan Udara ($NO_2$)
+# Laporan Analisis Statistika Deskriptif Polutan Udara (NO2)
 
 ## Bagian 1: Penjelasan Metrik Statistika Deskriptif
 

@@ -62,32 +62,32 @@ aoi = {
    
     "coordinates": [
         [
-            [
-              111.66191298444176,
-              -6.737450756719085
+[
+              112.07070429065317,
+              -7.036265783748036
             ],
             [
-              112.16520539429672,
-              -6.737450756719085
+              112.19740799249746,
+              -7.036224356301773
             ],
             [
-              112.16520539429672,
-              -7.125663462269856
+              112.19740713316935,
+              -7.101920167256907
             ],
             [
-              111.66191298444176,
-              -7.125663462269856
+              112.07064606635191,
+              -7.101920088468077
             ],
             [
-              111.66191298444176,
-              -6.737450756719085
+              112.07070429065317,
+              -7.036265783748036
             ]
         ]
     ]
 }
 s5post = connection.load_collection(
     "SENTINEL_5P_L2",
-    temporal_extent=["2025-08-25", "2026-08-25"],
+    temporal_extent=["2025-08-31", "2026-08-31"],
     spatial_extent={
         "west": 111.66191298444176,
         "south": -7.125663462269856,
@@ -220,7 +220,7 @@ df.head(5)
 _Missing values_ (nilai yang hilang) adalah kondisi di mana terdapat informasi yang kosong atau tidak terekam dalam dataset. Pada kasus data deret waktu yang diambil menggunakan satelit, kekosongan data ini wajar terjadi, biasanya akibat faktor cuaca (area tertutup awan tebal sehingga sensor tidak dapat membaca permukaan bumi) atau karena orbit satelit yang tidak merekam area tersebut pada hari tertentu. Mengidentifikasi keberadaan _missing values_ sangat penting sebelum melakukan analisis lebih lanjut.
 
 Pada proyek ini, kita mengecek dua bentuk _missing values_:
-1. **Tanggal yang Hilang**: Memastikan apakah ada urutan hari yang terlewat (bolong) dari rentang waktu awal hingga akhir (25 Agustus 2025 - 25 Agustus 2026).
+1. **Tanggal yang Hilang**: Memastikan apakah ada urutan hari yang terlewat (bolong) dari rentang waktu awal hingga akhir (31 Agustus 2025 - 31 Agustus 2026).
 2. **Data yang Hilang**: Memeriksa jumlah nilai polutan yang kosong (`NaN`) pada record tanggal yang sudah terekam.
 
 ### Tanggal Yang Hilang
@@ -233,8 +233,8 @@ df = pd.read_csv("../../data/polutan/CO_Timeseries.csv")
 df['date'] = pd.to_datetime(df['date'])
 
 # Buat rentang tanggal lengkap
-start_date = "2025-08-25"
-end_date   = "2026-08-25"
+start_date = "2025-08-31"
+end_date   = "2026-08-31"
 full_range = pd.date_range(start=start_date, end=end_date, freq='D')
 
 # Cek tanggal yang hilang
@@ -254,8 +254,8 @@ df = pd.read_csv("../../data/polutan/SO2_Timeseries.csv")
 df['date'] = pd.to_datetime(df['date'])
 
 # Buat rentang tanggal lengkap
-start_date = "2025-08-25"
-end_date   = "2026-08-25"
+start_date = "2025-08-31"
+end_date   = "2026-08-31"
 full_range = pd.date_range(start=start_date, end=end_date, freq='D')
 
 # Cek tanggal yang hilang
@@ -275,8 +275,8 @@ df = pd.read_csv("../../data/polutan/NO2_Timeseries.csv")
 df['date'] = pd.to_datetime(df['date'])
 
 # Buat rentang tanggal lengkap
-start_date = "2025-08-25"
-end_date   = "2026-08-25"
+start_date = "2025-08-31"
+end_date   = "2026-08-31"
 full_range = pd.date_range(start=start_date, end=end_date, freq='D')
 
 # Cek tanggal yang hilang
@@ -477,36 +477,54 @@ from sklearn.ensemble import IsolationForest
 import matplotlib.pyplot as plt # Import matplotlib untuk visualisasi
 
 # 1. Load & Clean Data
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 1. Baca data
 df = pd.read_csv("../../data/polutan/NO2_Timeseries.csv")
- 
+
+# Pastikan kolom tanggal berformat datetime agar sumbu X rapi
+if 'date' in df.columns:
+    df['date'] = pd.to_datetime(df['date'])
+    
+    # Mengurutkan data berdasarkan tanggal dari yang paling lama ke terbaru
+    df = df.sort_values(by='date')
+    
+    # Jadikan tanggal sebagai indeks agar sumbu X pada grafik otomatis menyesuaikan
+    df = df.set_index('date')
+
 df_clean = df.dropna(subset=['NO2']).copy()
 
-# 2. Deteksi Outlier
-model = IsolationForest(contamination=0.05, random_state=42)
-pred = model.fit_predict(df_clean[['NO2']])
+# 2. Deteksi Outlier dengan Metode IQR
+Q1 = df_clean['NO2'].quantile(0.25)
+Q3 = df_clean['NO2'].quantile(0.75)
+IQR = Q3 - Q1
 
-# Simpan hasil prediksi ke dalam dataframe untuk mempermudah plotting
-df_clean['Outlier'] = pred
-jumlah_outlier = (df_clean['Outlier'] == -1).sum()
-print("Jumlah outlier:", jumlah_outlier)
+batas_bawah = Q1 - 1.5 * IQR
+batas_atas = Q3 + 1.5 * IQR
+
+# Buat kolom penanda (True jika nilainya di luar batas IQR)
+df_clean['Outlier'] = (df_clean['NO2'] < batas_bawah) | (df_clean['NO2'] > batas_atas)
+
+jumlah_outlier = df_clean['Outlier'].sum()
+print("Jumlah outlier (IQR):", jumlah_outlier)
+print(f"Batas Bawah: {batas_bawah:.2f} | Batas Atas: {batas_atas:.2f}")
 
 # 3. Visualisasi Grafik Time Series
 plt.figure(figsize=(15, 6))
 
-# Pisahkan data normal dan outlier
-data_normal = df_clean[df_clean['Outlier'] == 1]
-data_outlier = df_clean[df_clean['Outlier'] == -1]
+# Filter baris yang terdeteksi sebagai outlier
+data_outlier = df_clean[df_clean['Outlier']]
 
-# Plot garis utama untuk seluruh data NO2
-# Catatan: Jika Anda menggunakan kolom waktu, ganti df_clean.index dengan df_clean['Tanggal']
-plt.plot(df_clean.index, df_clean['NO2'], color='blue', label='Data NO2 (Normal)', alpha=0.5)
+# Plot garis tren utama untuk seluruh data NO2 (warna biru)
+plt.plot(df_clean.index, df_clean['NO2'], color='blue', label='Data NO2', alpha=0.5)
 
-# Plot titik merah khusus untuk nilai outlier
+# Plot titik khusus (scatter) untuk nilai outlier (warna merah)
 plt.scatter(data_outlier.index, data_outlier['NO2'], color='red', label='Outlier', zorder=5)
 
 # Pengaturan label dan judul
-plt.title('Grafik Time Series NO2 dengan Deteksi Outlier (Isolation Forest)', fontsize=14)
-plt.xlabel('Indeks Waktu', fontsize=12)
+plt.title('Grafik Time Series NO2 dengan Deteksi Outlier (Metode IQR)', fontsize=14)
+plt.xlabel('Waktu', fontsize=12)
 plt.ylabel('Konsentrasi NO2', fontsize=12)
 plt.legend()
 plt.grid(True, linestyle='--', alpha=0.7)
@@ -514,7 +532,7 @@ plt.tight_layout()
 
 # Tampilkan grafik
 plt.show()
-```
+````
 
 Implementasi pada tools `Orange Data Mining`
 
@@ -556,6 +574,6 @@ dataframe_merged.to_csv("Polutan_Tuban.csv", index=False)
 
 ```{code-cell}
 :tags: [hide-input]
-df = pd.read_csv("../../data/polutan/Polutan_Tuban.csv")
+df = pd.read_csv("../../data/polutan/Polutan_Widang.csv")
 df.head(5)
 ```
