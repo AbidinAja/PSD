@@ -51,6 +51,6 @@ Here is a preview of the cell contents:
 -------------------
 ['aoi = {', '    "type": "Polygon",', '   ', '    "coordinates": [', '        [']
 ...
-['job = result.create_job(title="s5p_co_timeseries")', 'job.start_and_wait()', '', '# Download', 'job.get_results().download_files("output_co")']
+['job = result.create_job(title="s5p_so2_timeseries")', 'job.start_and_wait()', '', '# Download', 'job.get_results().download_files("output_so2")']
 -------------------
 

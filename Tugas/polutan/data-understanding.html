@@ -64,7 +64,7 @@
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Penjelasan Metrik Statistika Deskriptif" href="statistik.html" />
+    <link rel="next" title="Laporan Analisis Statistika Deskriptif Polutan Udara (\(NO_2\))" href="statistik.html" />
     <link rel="prev" title="Business Understanding" href="bussiness-understanding.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -223,8 +223,8 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="polutan.html">Polutan di Kabupaten Tuban</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="bussiness-understanding.html">Business Understanding</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Data Understanding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="statistik.html">Penjelasan Metrik Statistika Deskriptif</a></li>
-
+<li class="toctree-l2"><a class="reference internal" href="statistik.html">Laporan Analisis Statistika Deskriptif Polutan Udara (<span class="math notranslate nohighlight">\(NO_2\)</span>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html">Preprocessing Data Polutan Kecamatan Widang</a></li>
 </ul>
 </details></li>
 </ul>
@@ -485,32 +485,32 @@ Authenticated using device code flow.
    
     <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span>
         <span class="p">[</span>
-            <span class="p">[</span>
-              <span class="mf">111.66191298444176</span><span class="p">,</span>
-              <span class="o">-</span><span class="mf">6.737450756719085</span>
+<span class="p">[</span>
+              <span class="mf">112.07070429065317</span><span class="p">,</span>
+              <span class="o">-</span><span class="mf">7.036265783748036</span>
             <span class="p">],</span>
             <span class="p">[</span>
-              <span class="mf">112.16520539429672</span><span class="p">,</span>
-              <span class="o">-</span><span class="mf">6.737450756719085</span>
+              <span class="mf">112.19740799249746</span><span class="p">,</span>
+              <span class="o">-</span><span class="mf">7.036224356301773</span>
             <span class="p">],</span>
             <span class="p">[</span>
-              <span class="mf">112.16520539429672</span><span class="p">,</span>
-              <span class="o">-</span><span class="mf">7.125663462269856</span>
+              <span class="mf">112.19740713316935</span><span class="p">,</span>
+              <span class="o">-</span><span class="mf">7.101920167256907</span>
             <span class="p">],</span>
             <span class="p">[</span>
-              <span class="mf">111.66191298444176</span><span class="p">,</span>
-              <span class="o">-</span><span class="mf">7.125663462269856</span>
+              <span class="mf">112.07064606635191</span><span class="p">,</span>
+              <span class="o">-</span><span class="mf">7.101920088468077</span>
             <span class="p">],</span>
             <span class="p">[</span>
-              <span class="mf">111.66191298444176</span><span class="p">,</span>
-              <span class="o">-</span><span class="mf">6.737450756719085</span>
+              <span class="mf">112.07070429065317</span><span class="p">,</span>
+              <span class="o">-</span><span class="mf">7.036265783748036</span>
             <span class="p">]</span>
         <span class="p">]</span>
     <span class="p">]</span>
 <span class="p">}</span>
 <span class="n">s5post</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">load_collection</span><span class="p">(</span>
     <span class="s2">&quot;SENTINEL_5P_L2&quot;</span><span class="p">,</span>
-    <span class="n">temporal_extent</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;2025-08-25&quot;</span><span class="p">,</span> <span class="s2">&quot;2026-08-25&quot;</span><span class="p">],</span>
+    <span class="n">temporal_extent</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;2025-08-31&quot;</span><span class="p">,</span> <span class="s2">&quot;2026-08-31&quot;</span><span class="p">],</span>
     <span class="n">spatial_extent</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">&quot;west&quot;</span><span class="p">:</span> <span class="mf">111.66191298444176</span><span class="p">,</span>
         <span class="s2">&quot;south&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">7.125663462269856</span><span class="p">,</span>
@@ -604,33 +604,33 @@ Authenticated using device code flow.
   <tbody>
     <tr>
       <th>0</th>
-      <td>2025-09-25T00:00:00.000Z</td>
+      <td>2025-09-03T00:00:00.000Z</td>
       <td>0</td>
-      <td>0.031352</td>
+      <td>0.026759</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2025-09-27T00:00:00.000Z</td>
+      <td>2025-09-04T00:00:00.000Z</td>
       <td>0</td>
-      <td>0.034081</td>
+      <td>0.032780</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2025-09-23T00:00:00.000Z</td>
+      <td>2025-09-02T00:00:00.000Z</td>
       <td>0</td>
-      <td>0.034661</td>
+      <td>0.023892</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2025-09-24T00:00:00.000Z</td>
+      <td>2025-08-30T00:00:00.000Z</td>
       <td>0</td>
-      <td>0.037663</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2025-09-21T00:00:00.000Z</td>
+      <td>2025-08-31T00:00:00.000Z</td>
       <td>0</td>
-      <td>0.031104</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
@@ -679,33 +679,33 @@ Authenticated using device code flow.
   <tbody>
     <tr>
       <th>0</th>
-      <td>2025-08-25T00:00:00.000Z</td>
+      <td>2025-09-08T00:00:00.000Z</td>
       <td>0</td>
-      <td>0.000253</td>
+      <td>-0.000004</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2025-08-26T00:00:00.000Z</td>
-      <td>0</td>
-      <td>0.000262</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2025-08-27T00:00:00.000Z</td>
-      <td>0</td>
-      <td>0.000100</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2025-08-24T00:00:00.000Z</td>
+      <td>2025-09-10T00:00:00.000Z</td>
       <td>0</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>2025-11-10T00:00:00.000Z</td>
+      <th>2</th>
+      <td>2025-09-12T00:00:00.000Z</td>
       <td>0</td>
-      <td>0.000105</td>
+      <td>0.000590</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-09-11T00:00:00.000Z</td>
+      <td>0</td>
+      <td>-0.000134</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2025-09-06T00:00:00.000Z</td>
+      <td>0</td>
+      <td>0.000022</td>
     </tr>
   </tbody>
 </table>
@@ -754,33 +754,33 @@ Authenticated using device code flow.
   <tbody>
     <tr>
       <th>0</th>
-      <td>2026-07-21T00:00:00.000Z</td>
+      <td>2025-11-10T00:00:00.000Z</td>
       <td>0</td>
-      <td>0.000037</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2026-07-15T00:00:00.000Z</td>
+      <td>2025-11-14T00:00:00.000Z</td>
       <td>0</td>
-      <td>0.000044</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2026-07-20T00:00:00.000Z</td>
+      <td>2025-11-12T00:00:00.000Z</td>
+      <td>0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-11-08T00:00:00.000Z</td>
       <td>0</td>
       <td>0.000047</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>2026-07-17T00:00:00.000Z</td>
-      <td>0</td>
-      <td>0.000040</td>
-    </tr>
-    <tr>
       <th>4</th>
-      <td>2026-07-16T00:00:00.000Z</td>
+      <td>2025-11-09T00:00:00.000Z</td>
       <td>0</td>
-      <td>0.000040</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
@@ -853,28 +853,28 @@ Authenticated using device code flow.
   <tbody>
     <tr>
       <th>0</th>
-      <td>2025-09-25</td>
-      <td>0.031352</td>
+      <td>2025-09-03</td>
+      <td>0.026759</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2025-09-27</td>
-      <td>0.034081</td>
+      <td>2025-09-04</td>
+      <td>0.032780</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2025-09-23</td>
-      <td>0.034661</td>
+      <td>2025-09-02</td>
+      <td>0.023892</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2025-09-24</td>
-      <td>0.037663</td>
+      <td>2025-08-30</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2025-09-21</td>
-      <td>0.031104</td>
+      <td>2025-08-31</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
@@ -922,28 +922,28 @@ Authenticated using device code flow.
   <tbody>
     <tr>
       <th>0</th>
-      <td>2025-08-25</td>
-      <td>0.000253</td>
+      <td>2025-09-08</td>
+      <td>-0.000004</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2025-08-26</td>
-      <td>0.000262</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2025-08-27</td>
-      <td>0.000100</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2025-08-24</td>
+      <td>2025-09-10</td>
       <td>NaN</td>
     </tr>
     <tr>
+      <th>2</th>
+      <td>2025-09-12</td>
+      <td>0.000590</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-09-11</td>
+      <td>-0.000134</td>
+    </tr>
+    <tr>
       <th>4</th>
-      <td>2025-11-10</td>
-      <td>0.000105</td>
+      <td>2025-09-06</td>
+      <td>0.000022</td>
     </tr>
   </tbody>
 </table>
@@ -991,28 +991,28 @@ Authenticated using device code flow.
   <tbody>
     <tr>
       <th>0</th>
-      <td>2026-07-21</td>
-      <td>0.000037</td>
+      <td>2025-11-10</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2026-07-15</td>
-      <td>0.000044</td>
+      <td>2025-11-14</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2026-07-20</td>
-      <td>0.000047</td>
+      <td>2025-11-12</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2026-07-17</td>
-      <td>0.000040</td>
+      <td>2025-11-08</td>
+      <td>0.000047</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2026-07-16</td>
-      <td>0.000040</td>
+      <td>2025-11-09</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
@@ -1025,7 +1025,7 @@ Authenticated using device code flow.
 <p><em>Missing values</em> (nilai yang hilang) adalah kondisi di mana terdapat informasi yang kosong atau tidak terekam dalam dataset. Pada kasus data deret waktu yang diambil menggunakan satelit, kekosongan data ini wajar terjadi, biasanya akibat faktor cuaca (area tertutup awan tebal sehingga sensor tidak dapat membaca permukaan bumi) atau karena orbit satelit yang tidak merekam area tersebut pada hari tertentu. Mengidentifikasi keberadaan <em>missing values</em> sangat penting sebelum melakukan analisis lebih lanjut.</p>
 <p>Pada proyek ini, kita mengecek dua bentuk <em>missing values</em>:</p>
 <ol class="arabic simple">
-<li><p><strong>Tanggal yang Hilang</strong>: Memastikan apakah ada urutan hari yang terlewat (bolong) dari rentang waktu awal hingga akhir (25 Agustus 2025 - 25 Agustus 2026).</p></li>
+<li><p><strong>Tanggal yang Hilang</strong>: Memastikan apakah ada urutan hari yang terlewat (bolong) dari rentang waktu awal hingga akhir (31 Agustus 2025 - 31 Agustus 2026).</p></li>
 <li><p><strong>Data yang Hilang</strong>: Memeriksa jumlah nilai polutan yang kosong (<code class="docutils literal notranslate"><span class="pre">NaN</span></code>) pada record tanggal yang sudah terekam.</p></li>
 </ol>
 <section id="tanggal-yang-hilang">
@@ -1041,8 +1041,8 @@ Authenticated using device code flow.
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
 
 <span class="c1"># Buat rentang tanggal lengkap</span>
-<span class="n">start_date</span> <span class="o">=</span> <span class="s2">&quot;2025-08-25&quot;</span>
-<span class="n">end_date</span>   <span class="o">=</span> <span class="s2">&quot;2026-08-25&quot;</span>
+<span class="n">start_date</span> <span class="o">=</span> <span class="s2">&quot;2025-08-31&quot;</span>
+<span class="n">end_date</span>   <span class="o">=</span> <span class="s2">&quot;2026-08-31&quot;</span>
 <span class="n">full_range</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">)</span>
 
 <span class="c1"># Cek tanggal yang hilang</span>
@@ -1057,7 +1057,7 @@ Authenticated using device code flow.
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah hari missing: 1
 Daftar tanggal missing:
-DatetimeIndex([&#39;2026-08-25&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;D&#39;)
+DatetimeIndex([&#39;2026-08-31&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;D&#39;)
 </pre></div>
 </div>
 </div>
@@ -1073,8 +1073,8 @@ DatetimeIndex([&#39;2026-08-25&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
 
 <span class="c1"># Buat rentang tanggal lengkap</span>
-<span class="n">start_date</span> <span class="o">=</span> <span class="s2">&quot;2025-08-25&quot;</span>
-<span class="n">end_date</span>   <span class="o">=</span> <span class="s2">&quot;2026-08-25&quot;</span>
+<span class="n">start_date</span> <span class="o">=</span> <span class="s2">&quot;2025-08-31&quot;</span>
+<span class="n">end_date</span>   <span class="o">=</span> <span class="s2">&quot;2026-08-31&quot;</span>
 <span class="n">full_range</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">)</span>
 
 <span class="c1"># Cek tanggal yang hilang</span>
@@ -1089,7 +1089,7 @@ DatetimeIndex([&#39;2026-08-25&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah hari missing: 1
 Daftar tanggal missing:
-DatetimeIndex([&#39;2026-08-25&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;D&#39;)
+DatetimeIndex([&#39;2026-08-31&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;D&#39;)
 </pre></div>
 </div>
 </div>
@@ -1105,8 +1105,8 @@ DatetimeIndex([&#39;2026-08-25&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
 
 <span class="c1"># Buat rentang tanggal lengkap</span>
-<span class="n">start_date</span> <span class="o">=</span> <span class="s2">&quot;2025-08-25&quot;</span>
-<span class="n">end_date</span>   <span class="o">=</span> <span class="s2">&quot;2026-08-25&quot;</span>
+<span class="n">start_date</span> <span class="o">=</span> <span class="s2">&quot;2025-08-31&quot;</span>
+<span class="n">end_date</span>   <span class="o">=</span> <span class="s2">&quot;2026-08-31&quot;</span>
 <span class="n">full_range</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">)</span>
 
 <span class="c1"># Cek tanggal yang hilang</span>
@@ -1121,7 +1121,7 @@ DatetimeIndex([&#39;2026-08-25&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah hari missing: 1
 Daftar tanggal missing:
-DatetimeIndex([&#39;2026-08-25&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;D&#39;)
+DatetimeIndex([&#39;2026-08-31&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;D&#39;)
 </pre></div>
 </div>
 </div>
@@ -1142,7 +1142,7 @@ DatetimeIndex([&#39;2026-08-25&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>81
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>147
 </pre></div>
 </div>
 </div>
@@ -1162,7 +1162,7 @@ DatetimeIndex([&#39;2026-08-25&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>40
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>129
 </pre></div>
 </div>
 </div>
@@ -1182,7 +1182,7 @@ DatetimeIndex([&#39;2026-08-25&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>66
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>154
 </pre></div>
 </div>
 </div>
@@ -1246,10 +1246,10 @@ DatetimeIndex([&#39;2026-08-25&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah outlier CO: 15
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah outlier CO: 11
 </pre></div>
 </div>
-<img alt="../../_images/a5b3dd94b2dd3cfde9e5454ceaadae3863feea8d9eca2d3c1d6087aba098d17a.png" src="../../_images/a5b3dd94b2dd3cfde9e5454ceaadae3863feea8d9eca2d3c1d6087aba098d17a.png" />
+<img alt="../../_images/3ad0f436df4d0f7f2ebabfb07e337181e4fb99424537b4f6918342b36bfd97cc.png" src="../../_images/3ad0f436df4d0f7f2ebabfb07e337181e4fb99424537b4f6918342b36bfd97cc.png" />
 </div>
 </div>
 <p>Implementasi pada tools <code class="docutils literal notranslate"><span class="pre">Orange</span> <span class="pre">Data</span> <span class="pre">Mining</span></code></p>
@@ -1306,10 +1306,10 @@ DatetimeIndex([&#39;2026-08-25&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah outlier SO2: 17
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah outlier SO2: 12
 </pre></div>
 </div>
-<img alt="../../_images/4aebf27acdf164f62296ac19edadcb635587ab34c8ed0e7f3b7ea117756b891b.png" src="../../_images/4aebf27acdf164f62296ac19edadcb635587ab34c8ed0e7f3b7ea117756b891b.png" />
+<img alt="../../_images/74cf7fcdd330f7c4f20e9f828ac34a872349863373e22052577b1c5da8d4633e.png" src="../../_images/74cf7fcdd330f7c4f20e9f828ac34a872349863373e22052577b1c5da8d4633e.png" />
 </div>
 </div>
 <p>Implementasi pada tools <code class="docutils literal notranslate"><span class="pre">Orange</span> <span class="pre">Data</span> <span class="pre">Mining</span></code></p>
@@ -1327,36 +1327,54 @@ DatetimeIndex([&#39;2026-08-25&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span> <span class="c1"># Import matplotlib untuk visualisasi</span>
 
 <span class="c1"># 1. Load &amp; Clean Data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># 1. Baca data</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../data/polutan/NO2_Timeseries.csv&quot;</span><span class="p">)</span>
- 
+
+<span class="c1"># Pastikan kolom tanggal berformat datetime agar sumbu X rapi</span>
+<span class="k">if</span> <span class="s1">&#39;date&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
+    
+    <span class="c1"># Mengurutkan data berdasarkan tanggal dari yang paling lama ke terbaru</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Jadikan tanggal sebagai indeks agar sumbu X pada grafik otomatis menyesuaikan</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span>
+
 <span class="n">df_clean</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-<span class="c1"># 2. Deteksi Outlier</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">IsolationForest</span><span class="p">(</span><span class="n">contamination</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">df_clean</span><span class="p">[[</span><span class="s1">&#39;NO2&#39;</span><span class="p">]])</span>
+<span class="c1"># 2. Deteksi Outlier dengan Metode IQR</span>
+<span class="n">Q1</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">Q3</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
 
-<span class="c1"># Simpan hasil prediksi ke dalam dataframe untuk mempermudah plotting</span>
-<span class="n">df_clean</span><span class="p">[</span><span class="s1">&#39;Outlier&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred</span>
-<span class="n">jumlah_outlier</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">&#39;Outlier&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah outlier:&quot;</span><span class="p">,</span> <span class="n">jumlah_outlier</span><span class="p">)</span>
+<span class="n">batas_bawah</span> <span class="o">=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+<span class="n">batas_atas</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+
+<span class="c1"># Buat kolom penanda (True jika nilainya di luar batas IQR)</span>
+<span class="n">df_clean</span><span class="p">[</span><span class="s1">&#39;Outlier&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">batas_bawah</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">batas_atas</span><span class="p">)</span>
+
+<span class="n">jumlah_outlier</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">&#39;Outlier&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah outlier (IQR):&quot;</span><span class="p">,</span> <span class="n">jumlah_outlier</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Batas Bawah: </span><span class="si">{</span><span class="n">batas_bawah</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> | Batas Atas: </span><span class="si">{</span><span class="n">batas_atas</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="c1"># 3. Visualisasi Grafik Time Series</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 
-<span class="c1"># Pisahkan data normal dan outlier</span>
-<span class="n">data_normal</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">&#39;Outlier&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
-<span class="n">data_outlier</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">&#39;Outlier&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="c1"># Filter baris yang terdeteksi sebagai outlier</span>
+<span class="n">data_outlier</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">&#39;Outlier&#39;</span><span class="p">]]</span>
 
-<span class="c1"># Plot garis utama untuk seluruh data NO2</span>
-<span class="c1"># Catatan: Jika Anda menggunakan kolom waktu, ganti df_clean.index dengan df_clean[&#39;Tanggal&#39;]</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_clean</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data NO2 (Normal)&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="c1"># Plot garis tren utama untuk seluruh data NO2 (warna biru)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_clean</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data NO2&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 
-<span class="c1"># Plot titik merah khusus untuk nilai outlier</span>
+<span class="c1"># Plot titik khusus (scatter) untuk nilai outlier (warna merah)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_outlier</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">data_outlier</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Outlier&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
 <span class="c1"># Pengaturan label dan judul</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Grafik Time Series NO2 dengan Deteksi Outlier (Isolation Forest)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Indeks Waktu&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Grafik Time Series NO2 dengan Deteksi Outlier (Metode IQR)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Waktu&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Konsentrasi NO2&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
@@ -1368,10 +1386,11 @@ DatetimeIndex([&#39;2026-08-25&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah outlier: 15
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah outlier (IQR): 4
+Batas Bawah: 0.00 | Batas Atas: 0.00
 </pre></div>
 </div>
-<img alt="../../_images/b21fc4b2ec195f94466d44fe143d13b85eb958417849fc9e7dd6eb338f133342.png" src="../../_images/b21fc4b2ec195f94466d44fe143d13b85eb958417849fc9e7dd6eb338f133342.png" />
+<img alt="../../_images/9bfb960f66583bae4fe9aba8a182050e26ec0f6a92a5f5a8bdaeab00c66f6f2b.png" src="../../_images/9bfb960f66583bae4fe9aba8a182050e26ec0f6a92a5f5a8bdaeab00c66f6f2b.png" />
 </div>
 </div>
 <p>Implementasi pada tools <code class="docutils literal notranslate"><span class="pre">Orange</span> <span class="pre">Data</span> <span class="pre">Mining</span></code></p>
@@ -1407,7 +1426,7 @@ DatetimeIndex([&#39;2026-08-25&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../data/polutan/Polutan_Tuban.csv&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../data/polutan/Polutan_Widang.csv&quot;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1441,38 +1460,38 @@ DatetimeIndex([&#39;2026-08-25&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;
   <tbody>
     <tr>
       <th>0</th>
-      <td>2025-09-25</td>
-      <td>0.031352</td>
-      <td>0.000037</td>
-      <td>0.000253</td>
+      <td>2025-09-03</td>
+      <td>0.026759</td>
+      <td>NaN</td>
+      <td>-0.000004</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2025-09-27</td>
-      <td>0.034081</td>
-      <td>0.000044</td>
-      <td>0.000262</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2025-09-23</td>
-      <td>0.034661</td>
-      <td>0.000047</td>
-      <td>0.000100</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2025-09-24</td>
-      <td>0.037663</td>
-      <td>0.000040</td>
+      <td>2025-09-04</td>
+      <td>0.032780</td>
+      <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
+      <th>2</th>
+      <td>2025-09-02</td>
+      <td>0.023892</td>
+      <td>NaN</td>
+      <td>0.000590</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-08-30</td>
+      <td>NaN</td>
+      <td>0.000047</td>
+      <td>-0.000134</td>
+    </tr>
+    <tr>
       <th>4</th>
-      <td>2025-09-21</td>
-      <td>0.031104</td>
-      <td>0.000040</td>
-      <td>0.000105</td>
+      <td>2025-08-31</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000022</td>
     </tr>
   </tbody>
 </table>
@@ -1525,7 +1544,7 @@ DatetimeIndex([&#39;2026-08-25&#39;], dtype=&#39;datetime64[ns]&#39;, freq=&#39;
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Penjelasan Metrik Statistika Deskriptif</p>
+        <p class="prev-next-title">Laporan Analisis Statistika Deskriptif Polutan Udara (<span class="math notranslate nohighlight">\(NO_2\)</span>)</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
