@@ -14,141 +14,29 @@ kernelspec:
 
 # Data Understanding
 ## Data Collection
-Langkah pertama dalam proyek ini adalah mengumpulkan data polutan udara (seperti NO₂, CO dan SO₂) yang bertipe deret waktu (_Time Series_). Dataset ini diambil dari platform satelit [Copernicus Data Space Ecosystem](https://dataspace.copernicus.eu/).
 
-Buat akun terlebih dahulu di website Copernicus agar bisa melakukan crawling data menggunakan library openEO.
+Pada proyek ini, data polutan udara dikumpulkan dalam bentuk deret waktu harian untuk tiga variabel utama, yaitu CO, SO₂, dan NO₂. Data tersebut disimpan dalam format CSV dan dapat dibuka menggunakan library Pandas untuk dianalisis lebih lanjut.
 
-### Install Library
+Dataset yang digunakan dalam proyek ini adalah file yang berada di folder:
 
-Untuk melakukan proses crawling data, kita membutuhkan pustaka Python pendukung yaitu `openeo` untuk berkomunikasi dengan API Copernicus.
-
-```bash
-pip install openeo
-```
-
-### Autentikasi dan Pengambilan Data
-
-Skrip di bawah ini melakukan proses autentikasi untuk menghubungkan sistem lokal kita dengan server Copernicus menggunakan _device code flow_.
-
-```python
-import openeo
-
-connection = openeo.connect("openeo.dataspace.copernicus.eu").authenticate_oidc()
-```
-
-Saat menjalankan baris di atas, akan muncul permintaan autentikasi:
-
-```
-Visit (link authentikasi) 📋 to authenticate.
-✅ Authorized successfully
-Authenticated using device code flow.
-```
-
-Klik link autentikasi lalu login menggunakan akun Copernicus.
-
-### Definisi Area dan Pengambilan Data NO₂, SO₂ dan CO dari geojson
-
-Setelah berhasil masuk, langkah selanjutnya adalah menentukan wilayah spesifik. Titik koordinat batas wilayah Tuban (Poligon) didapatkan menggunakan alat bantu pemetaan [geojson.io](https://geojson.io) dengan menggambar kotak di atas wilayah yang diinginkan kemudian menyalin koordinatnya.
-
-![Grafik Data](../../img/polutan/tuban.png)
-
-Koordinat yang didapatkan dimasukkan ke dalam variabel `aoi` (Area of Interest). Satelit Sentinel-5P kemudian diminta untuk mengambil data polutan berdasarkan _bounding box_ wilayah tersebut dengan menyesuaikan variabel `s5post` atribut `bands`. 
-
-Karena satelit mungkin merekam area yang sama beberapa kali, dilakukan **agregasi temporal harian** agar hanya terdapat rata-rata satu data per hari. Dilanjutkan dengan **agregasi spasial** agar seluruh _grid_ pada wilayah Tuban dirata-rata menjadi satu nilai tunggal.
-
-```python
-aoi = {
-    "type": "Polygon",
-   
-    "coordinates": [
-        [
-[
-              112.07070429065317,
-              -7.036265783748036
-            ],
-            [
-              112.19740799249746,
-              -7.036224356301773
-            ],
-            [
-              112.19740713316935,
-              -7.101920167256907
-            ],
-            [
-              112.07064606635191,
-              -7.101920088468077
-            ],
-            [
-              112.07070429065317,
-              -7.036265783748036
-            ]
-        ]
-    ]
-}
-s5post = connection.load_collection(
-    "SENTINEL_5P_L2",
-    temporal_extent=["2025-08-31", "2026-08-31"],
-    spatial_extent={
-        "west": 111.66191298444176,
-        "south": -7.125663462269856,
-        "east": 112.16520539429672,
-        "north": -6.737450756719085
-    },
-    # Disesuaikan dengan data yang dibutuhkan
-    bands=["NO2"],
-)
-
-# Agregasi harian agar tidak ada lebih dari satu data per hari
-s5p_no2_daily = s5post.aggregate_temporal_period(reducer="mean", period="day")
-
-# Agregasi spasial untuk menghasilkan rata-rata time series per AOI
-s5p_no2_aoi = s5p_no2_daily.aggregate_spatial(reducer="mean", geometries=aoi)
-
-# Simpan hasil sebagai CSV
-result = s5p_no2_aoi.save_result(format="CSV")
-
-# Jalankan job
-job = result.create_job(title="s5p_no2_timeseries")
-job.start_and_wait()
-
-# Download
-job.get_results().download_files("output_no2")
-```
-
-Tunggu proses selesai. Status dan progres eksekusi bisa dipantau di [openEO editor](https://editor.openeo.org/?server=https%3A%2F%2Fopeneo.dataspace.copernicus.eu%2Fopeneo%2F1.2). Setelah diproses oleh server, output akan otomatis diunduh dalam format **CSV**.
-
-![Grafik Data](../../img/polutan/editor.png)
-
-```
-0:00:00 Job 'j-2608250945264132925ebef4140e0037': send 'start'
-0:00:03 Job 'j-2608250945264132925ebef4140e0037': queued (progress 0%)
-0:00:08 Job 'j-2608250945264132925ebef4140e0037': queued (progress 0%)
-0:00:15 Job 'j-2608250945264132925ebef4140e0037': queued (progress 0%)
-0:00:23 Job 'j-2608250945264132925ebef4140e0037': queued (progress 0%)
-0:00:33 Job 'j-2608250945264132925ebef4140e0037': queued (progress 0%)
-0:00:46 Job 'j-2608250945264132925ebef4140e0037': running (progress N/A)
-0:01:02 Job 'j-2608250945264132925ebef4140e0037': running (progress N/A)
-0:01:21 Job 'j-2608250945264132925ebef4140e0037': running (progress N/A)
-0:01:45 Job 'j-2608250945264132925ebef4140e0037': running (progress N/A)
-0:02:16 Job 'j-2608250945264132925ebef4140e0037': running (progress N/A)
-0:02:53 Job 'j-2608250945264132925ebef4140e0037': running (progress N/A)
-0:03:40 Job 'j-2608250945264132925ebef4140e0037': finished (progress 100%)
-```
+- ../../data/polutan/CO.csv
+- ../../data/polutan/SO2.csv
+- ../../data/polutan/NO2.csv
 
 ### Hasil CSV
-Pada tahap terakhir, kita memuat file CSV (SO₂, CO dan NO₂) yang telah dirapikan menggunakan pustaka Pandas. Data ini sekarang sudah terstruktur sebagai dataset _Time Series_ dan siap digunakan untuk analisis lanjutan. Berikut adalah cuplikan data tersebut:
+Berikut adalah tampilan awal dari dataset tersebut.
 
 1. CO
 
 ```{code-cell}
 :tags: [hide-input]
 import pandas as pd
-import numpy as np
+
 df = pd.read_csv("../../data/polutan/CO.csv")
 df.head(5)
 ```
 
-2. SO2
+2. SO₂
 
 ```{code-cell}
 :tags: [hide-input]
@@ -156,7 +44,7 @@ df = pd.read_csv("../../data/polutan/SO2.csv")
 df.head(5)
 ```
 
-3. NO 2
+3. NO₂
 
 ```{code-cell}
 :tags: [hide-input]
@@ -164,416 +52,259 @@ df = pd.read_csv("../../data/polutan/NO2.csv")
 df.head(5)
 ```
 
-### Normalisasi Tanggal
+---
 
-Data waktu (tanggal) yang diperoleh dari Copernicus menyertakan zona waktu yang tidak diperlukan. Oleh karena itu, kita perlu menormalisasinya menjadi format standar yang seragam yaitu `YYYY-MM-DD` agar lebih mudah diolah. Berikut adalah kode yang digunakan untuk menyeragamkan format tanggal:
-```python
-import pandas as pd
+## Eksplorasi Data
+### Missing Values
 
-df = pd.read_csv("SO2.csv")
+_Missing values_ adalah nilai yang hilang atau tidak terisi pada dataset. Dalam data deret waktu polutan, kondisi ini bisa terjadi karena data tidak tercatat pada hari tertentu atau sensor tidak berhasil membaca konsentrasi pada waktu tertentu. Pada tahap ini, kita mengecek dua hal:
 
-# pastikan kolom tanggal valid
-df["date"] = pd.to_datetime(df["date"], errors="coerce")
+1. tanggal yang hilang dari rentang waktu
+2. jumlah nilai kosong pada kolom konsentrasi polutan
 
-# ambil hanya bulan dan tahun
-df["date"] = df["date"].dt.strftime("%Y-%m-%d")
-
-new_df = pd.DataFrame({
-    "date": df['date'],
-    "SO2": df['SO2']
-})
-
-new_df.to_csv("SO2_Timeseries.csv", index=False)
-```
-Setelah proses normalisasi dilakukan pada seluruh dataset polutan, format waktu pada dataset menjadi lebih rapi dan konsisten. Berikut adalah cuplikan dataset setelah tanggal dinormalisasi:
-
+#### 1. Tanggal yang Hilang
 
 1. CO
 
 ```{code-cell}
-:tags: [hide-input]
-import pandas as pd
-import numpy as np
-df = pd.read_csv("../../data/polutan/CO_Timeseries.csv")
-df.head(5)
-```
-
-2. SO2
-
-```{code-cell}
-:tags: [hide-input]
-df = pd.read_csv("../../data/polutan/SO2_Timeseries.csv")
-df.head(5)
-```
-
-3. NO2
-
-```{code-cell}
-:tags: [hide-input]
-df = pd.read_csv("../../data/polutan/NO2_Timeseries.csv")
-df.head(5)
-```
-
-
-## Missing Values
-
-_Missing values_ (nilai yang hilang) adalah kondisi di mana terdapat informasi yang kosong atau tidak terekam dalam dataset. Pada kasus data deret waktu yang diambil menggunakan satelit, kekosongan data ini wajar terjadi, biasanya akibat faktor cuaca (area tertutup awan tebal sehingga sensor tidak dapat membaca permukaan bumi) atau karena orbit satelit yang tidak merekam area tersebut pada hari tertentu. Mengidentifikasi keberadaan _missing values_ sangat penting sebelum melakukan analisis lebih lanjut.
-
-Pada proyek ini, kita mengecek dua bentuk _missing values_:
-1. **Tanggal yang Hilang**: Memastikan apakah ada urutan hari yang terlewat (bolong) dari rentang waktu awal hingga akhir (31 Agustus 2025 - 31 Agustus 2026).
-2. **Data yang Hilang**: Memeriksa jumlah nilai polutan yang kosong (`NaN`) pada record tanggal yang sudah terekam.
-
-### Tanggal Yang Hilang
-1. CO
-
-```{code-cell}
 import pandas as pd
 
-df = pd.read_csv("../../data/polutan/CO_Timeseries.csv")
+df = pd.read_csv("../../data/polutan/CO.csv")
 df['date'] = pd.to_datetime(df['date'])
 
-# Buat rentang tanggal lengkap
-start_date = "2025-08-31"
-end_date   = "2026-08-31"
+start_date = df['date'].min()
+end_date = df['date'].max()
 full_range = pd.date_range(start=start_date, end=end_date, freq='D')
 
-# Cek tanggal yang hilang
 missing_dates = full_range.difference(df['date'])
 
 print(f"Jumlah hari missing: {len(missing_dates)}")
-print("Daftar tanggal missing:")
 print(missing_dates)
-```
-
-2. SO2
-
-```{code-cell}
-import pandas as pd
-
-df = pd.read_csv("../../data/polutan/SO2_Timeseries.csv")
-df['date'] = pd.to_datetime(df['date'])
-
-# Buat rentang tanggal lengkap
-start_date = "2025-08-31"
-end_date   = "2026-08-31"
-full_range = pd.date_range(start=start_date, end=end_date, freq='D')
-
-# Cek tanggal yang hilang
-missing_dates = full_range.difference(df['date'])
-
-print(f"Jumlah hari missing: {len(missing_dates)}")
-print("Daftar tanggal missing:")
-print(missing_dates)
-```
-
-3. NO₂
-
-```{code-cell}
-import pandas as pd
-
-df = pd.read_csv("../../data/polutan/NO2_Timeseries.csv")
-df['date'] = pd.to_datetime(df['date'])
-
-# Buat rentang tanggal lengkap
-start_date = "2025-08-31"
-end_date   = "2026-08-31"
-full_range = pd.date_range(start=start_date, end=end_date, freq='D')
-
-# Cek tanggal yang hilang
-missing_dates = full_range.difference(df['date'])
-
-print(f"Jumlah hari missing: {len(missing_dates)}")
-print("Daftar tanggal missing:")
-print(missing_dates)
-```
-
-
-### Data Yang Hilang
-
-Selain urutan tanggal, kita juga mengecek jumlah baris data yang memiliki nilai konsentrasi polutan kosong (`NaN`).
-
-1. CO
-
-```{code-cell}
-df = pd.read_csv("../../data/polutan/CO_Timeseries.csv")
-missing_value = df['CO'].isna().sum()
-print(missing_value)
-```
-
-Implementasi pada tools `Orange Data Mining`
-```{image} ../../img/polutan/co_missing.png
-:alt: Grafik Data
-:width: 100%
-:align: center
-```
-
-2. SO₂
-
-```{code-cell}
-df = pd.read_csv("../../data/polutan/SO2_Timeseries.csv")
-missing_value = df['SO2'].isna().sum()
-print(missing_value)
-```
-
-Implementasi pada tools `Orange Data Mining`
-
-```{image} ../../img/polutan/so2_missing.png
-:alt: Grafik Data
-:width: 100%
-:align: center
-```
-
-3. NO₂
-
-```{code-cell}
-df = pd.read_csv("../../data/polutan/NO2_Timeseries.csv")
-missing_value = df['NO2'].isna().sum()
-print(missing_value)
-```
-
-Implementasi pada tools `Orange Data Mining`
-
-```{image} ../../img/polutan/no2_missing.png
-:alt: Grafik Data
-:width: 100%
-:align: center
-```
-
-
-
-## Outliers
-
-_Outliers_ (pencilan) adalah titik data yang nilainya menyimpang secara drastis atau ekstrem dari mayoritas distribusi data lainnya. Pada data deret waktu kualitas udara, _outlier_ bisa jadi merupakan lonjakan polusi nyata yang terjadi akibat peristiwa tertentu (misalnya kebakaran hutan atau peningkatan aktivitas industri mendadak), atau bisa juga sekadar _noise_ / _error_ pada pembacaan sensor satelit.
-
-Pada tahap _data understanding_ ini, kita mengeksplorasi _outliers_ menggunakan algoritma **Isolation Forest** dari pustaka `scikit-learn`. Algoritma deteksi anomali ini bekerja dengan cara "mengisolasi" observasi melalui pemisahan data secara acak, di mana anomali akan lebih cepat/mudah diisolasi. Kita mengatur parameter _contamination_ (estimasi persentase _outlier_ di dalam dataset) sebesar 5%. Hasil prediksi dari model yang bernilai `-1` menandakan bahwa baris tersebut terdeteksi sebagai _outlier_.
-
-1. CO
-
-```{code-cell}
-import pandas as pd
-from sklearn.ensemble import IsolationForest
-import matplotlib.pyplot as plt
-
-# 1. Load & Clean Data
-df = pd.read_csv("../../data/polutan/CO_Timeseries.csv")
- 
-df_clean = df.dropna(subset=['CO']).copy()
-
-# 2. Deteksi Outlier
-model = IsolationForest(contamination=0.05, random_state=42)
-pred = model.fit_predict(df_clean[['CO']])
-
-# Simpan hasil ke dalam dataframe
-df_clean['Outlier'] = pred
-jumlah_outlier = (df_clean['Outlier'] == -1).sum()
-print("Jumlah outlier CO:", jumlah_outlier)
-
-# 3. Visualisasi Grafik Time Series
-plt.figure(figsize=(15, 6))
-
-# Ambil titik-titik data yang terdeteksi sebagai outlier
-data_outlier = df_clean[df_clean['Outlier'] == -1]
-
-# Plot garis utama untuk data CO 
-# (Ganti df_clean.index dengan df_clean['Tanggal'] jika Anda menggunakan kolom datetime)
-plt.plot(df_clean.index, df_clean['CO'], color='orange', label='Data CO (Normal)', alpha=0.7)
-
-# Plot titik merah untuk nilai outlier
-plt.scatter(data_outlier.index, data_outlier['CO'], color='red', label='Outlier', zorder=5)
-
-# Pengaturan visual grafik
-plt.title('Grafik Time Series CO dengan Deteksi Outlier (Isolation Forest)', fontsize=14)
-plt.xlabel('Indeks Waktu', fontsize=12)
-plt.ylabel('Konsentrasi CO', fontsize=12)
-plt.legend()
-plt.grid(True, linestyle='--', alpha=0.7)
-plt.tight_layout()
-
-# Tampilkan grafik
-plt.show()
-```
-
-Implementasi pada tools `Orange Data Mining`
-
-```{image} ../../img/polutan/co_outliers.png
-:alt: Grafik Data
-:width: 100%
-:align: center
-:class: mabot-gambar
-```
-
-```{image} ../../img/polutan/sp_co.png
-:alt: Grafik Data
-:width: 100%
-:align: center
 ```
 
 2. SO₂
 
 ```{code-cell}
 import pandas as pd
-from sklearn.ensemble import IsolationForest
-import matplotlib.pyplot as plt
 
-# 1. Load & Clean Data
-df = pd.read_csv("../../data/polutan/SO2_Timeseries.csv")
+df = pd.read_csv("../../data/polutan/SO2.csv")
+df['date'] = pd.to_datetime(df['date'])
 
-df_clean = df.dropna(subset=['SO2']).copy()
+start_date = df['date'].min()
+end_date = df['date'].max()
+full_range = pd.date_range(start=start_date, end=end_date, freq='D')
 
-# 2. Deteksi Outlier
-model = IsolationForest(contamination=0.05, random_state=42)
-pred = model.fit_predict(df_clean[['SO2']])
+missing_dates = full_range.difference(df['date'])
 
-# Simpan hasil ke dalam dataframe
-df_clean['Outlier'] = pred
-jumlah_outlier = (df_clean['Outlier'] == -1).sum()
-print("Jumlah outlier SO2:", jumlah_outlier)
-
-# 3. Visualisasi Grafik Time Series
-plt.figure(figsize=(15, 6))
-
-# Ambil data outlier untuk di-plot secara terpisah
-data_outlier = df_clean[df_clean['Outlier'] == -1]
-
-# Plot garis utama untuk data SO2 (gunakan df_clean['Tanggal'] jika kolom waktu sudah diset)
-plt.plot(df_clean.index, df_clean['SO2'], color='green', label='Data SO2 (Normal)', alpha=0.5)
-
-# Plot titik merah untuk nilai outlier
-plt.scatter(data_outlier.index, data_outlier['SO2'], color='red', label='Outlier', zorder=5)
-
-# Pengaturan visual grafik
-plt.title('Grafik Time Series SO2 dengan Deteksi Outlier (Isolation Forest)', fontsize=14)
-plt.xlabel('Indeks Waktu', fontsize=12)
-plt.ylabel('Konsentrasi SO2', fontsize=12)
-plt.legend()
-plt.grid(True, linestyle='--', alpha=0.7)
-plt.tight_layout()
-
-# Tampilkan grafik
-plt.show()
-```
-
-Implementasi pada tools `Orange Data Mining`
-
-```{image} ../../img/polutan/so2_outliers.png
-:alt: Grafik Data
-:width: 100%
-:align: center
-:class: mabot-gambar
-```
-
-```{image} ../../img/polutan/sp_so2.png
-:alt: Grafik Data
-:width: 100%
-:align: center
+print(f"Jumlah hari missing: {len(missing_dates)}")
+print(missing_dates)
 ```
 
 3. NO₂
 
+```{code-cell}
+import pandas as pd
+
+df = pd.read_csv("../../data/polutan/NO2.csv")
+df['date'] = pd.to_datetime(df['date'])
+
+start_date = df['date'].min()
+end_date = df['date'].max()
+full_range = pd.date_range(start=start_date, end=end_date, freq='D')
+
+missing_dates = full_range.difference(df['date'])
+
+print(f"Jumlah hari missing: {len(missing_dates)}")
+print(missing_dates)
+```
+
+#### 2. Data yang Hilang
+
+Selain tanggal, kita juga mengecek jumlah nilai `NaN` pada kolom konsentrasi polutan.
+
+1. CO
+
+```{code-cell}
+df = pd.read_csv("../../data/polutan/CO.csv")
+print("Jumlah missing value CO:", df['CO'].isna().sum())
+```
+
+2. SO₂
+
+```{code-cell}
+df = pd.read_csv("../../data/polutan/SO2.csv")
+print("Jumlah missing value SO2:", df['SO2'].isna().sum())
+```
+
+3. NO₂
+
+```{code-cell}
+df = pd.read_csv("../../data/polutan/NO2.csv")
+print("Jumlah missing value NO2:", df['NO2'].isna().sum())
+```
+
+---
+
+### Outliers
+
+_Outliers_ adalah data yang sangat jauh dari pola umum dataset. Pada data kualitas udara, outlier bisa terjadi karena sensor membaca nilai ekstrem atau adanya kejadian khusus seperti peningkatan aktivitas industri atau kondisi cuaca tertentu. Untuk mengetahui keberadaan outlier, kita menggunakan metode **Isolation Forest** dari pustaka `scikit-learn`.
+
+Isolation Forest bekerja dengan membangun pohon keputusan acak untuk memisahkan data. Observasi yang lebih mudah dipisahkan dianggap lebih tidak biasa, sehingga dapat dideteksi sebagai outlier. Hasil prediksi `-1` menandakan data tersebut merupakan outlier.
+
+#### 1. CO
 
 ```{code-cell}
 import pandas as pd
-from sklearn.ensemble import IsolationForest
-import matplotlib.pyplot as plt # Import matplotlib untuk visualisasi
-
-# 1. Load & Clean Data
-import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn.ensemble import IsolationForest
 
-# 1. Baca data
-df = pd.read_csv("../../data/polutan/NO2_Timeseries.csv")
+df = pd.read_csv("../../data/polutan/CO.csv")
+df = df.dropna(subset=['CO']).copy()
+df['date'] = pd.to_datetime(df['date'])
+df = df.sort_values('date').reset_index(drop=True)
 
-# Pastikan kolom tanggal berformat datetime agar sumbu X rapi
-if 'date' in df.columns:
-    df['date'] = pd.to_datetime(df['date'])
-    
-    # Mengurutkan data berdasarkan tanggal dari yang paling lama ke terbaru
-    df = df.sort_values(by='date')
-    
-    # Jadikan tanggal sebagai indeks agar sumbu X pada grafik otomatis menyesuaikan
-    df = df.set_index('date')
+model = IsolationForest(contamination=0.05, random_state=42)
+pred = model.fit_predict(df[['CO']])
 
-df_clean = df.dropna(subset=['NO2']).copy()
+df['anomaly'] = pred
+outliers = df[df['anomaly'] == -1]
 
-# 2. Deteksi Outlier dengan Metode IQR
-Q1 = df_clean['NO2'].quantile(0.25)
-Q3 = df_clean['NO2'].quantile(0.75)
-IQR = Q3 - Q1
+print("Jumlah outlier CO:", len(outliers))
+print(outliers[['date', 'CO']].head())
 
-batas_bawah = Q1 - 1.5 * IQR
-batas_atas = Q3 + 1.5 * IQR
-
-# Buat kolom penanda (True jika nilainya di luar batas IQR)
-df_clean['Outlier'] = (df_clean['NO2'] < batas_bawah) | (df_clean['NO2'] > batas_atas)
-
-jumlah_outlier = df_clean['Outlier'].sum()
-print("Jumlah outlier (IQR):", jumlah_outlier)
-print(f"Batas Bawah: {batas_bawah:.2f} | Batas Atas: {batas_atas:.2f}")
-
-# 3. Visualisasi Grafik Time Series
-plt.figure(figsize=(15, 6))
-
-# Filter baris yang terdeteksi sebagai outlier
-data_outlier = df_clean[df_clean['Outlier']]
-
-# Plot garis tren utama untuk seluruh data NO2 (warna biru)
-plt.plot(df_clean.index, df_clean['NO2'], color='blue', label='Data NO2', alpha=0.5)
-
-# Plot titik khusus (scatter) untuk nilai outlier (warna merah)
-plt.scatter(data_outlier.index, data_outlier['NO2'], color='red', label='Outlier', zorder=5)
-
-# Pengaturan label dan judul
-plt.title('Grafik Time Series NO2 dengan Deteksi Outlier (Metode IQR)', fontsize=14)
-plt.xlabel('Waktu', fontsize=12)
-plt.ylabel('Konsentrasi NO2', fontsize=12)
+plt.figure(figsize=(15, 5))
+plt.plot(df['date'], df['CO'], label='CO', linewidth=1)
+plt.scatter(outliers['date'], outliers['CO'], color='red', label='Outlier')
+plt.title('Deteksi Outlier CO (Isolation Forest)')
+plt.xlabel('Tanggal')
+plt.ylabel('Kadar CO')
 plt.legend()
 plt.grid(True, linestyle='--', alpha=0.7)
 plt.tight_layout()
-
-# Tampilkan grafik
 plt.show()
-````
-
-Implementasi pada tools `Orange Data Mining`
-
-```{image} ../../img/polutan/no2_outliers.png
-:alt: Grafik Data
-:width: 100%
-:align: center
-:class: mabot-gambar
 ```
 
-```{image} ../../img/polutan/sp_no2.png
-:alt: Grafik Data
-:width: 100%
-:align: center
-```
+#### 2. SO₂
 
-
-## Menggabungkan File CSV
-
-Setelah setiap dataset polutan (CO, NO₂, dan SO₂) dinormalisasi dan dianalisis nilai kosong serta pencilan (outliers)-nya, langkah selanjutnya adalah menggabungkan keempat file tersebut menjadi satu dataset terpadu. Karena keempat data tersebut direkam dengan rentang waktu harian yang sama, kita dapat menggabungkannya berdasarkan kolom tanggal (`date`). Penggabungan ini akan mempermudah proses analisis multivariat dan pemodelan pada tahap selanjutnya, karena seluruh fitur parameter polutan udara kini berada dalam satu tabel yang terpusat.
-
-Berikut adalah kode Python menggunakan pustaka Pandas untuk menyatukan keempat dataset tersebut dan menyimpannya ke dalam file baru bernama `Polutan_Tuban.csv`:
-```python
+```{code-cell}
 import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.ensemble import IsolationForest
 
-df_co = pd.read_csv("CO_Timeseries.csv")
-df_no2 = pd.read_csv("NO2_Timeseries.csv")
-df_so2 = pd.read_csv("SO2_Timeseries.csv")
+df = pd.read_csv("../../data/polutan/SO2.csv")
+df = df.dropna(subset=['SO2']).copy()
+df['date'] = pd.to_datetime(df['date'])
+df = df.sort_values('date').reset_index(drop=True)
 
-dataframe_merged = pd.DataFrame({
-    "date": df_co['date'],
-    "CO": df_co['CO'],
-    "NO2": df_no2['NO2'],
-    "SO2": df_so2['SO2']
-})
+model = IsolationForest(contamination=0.05, random_state=42)
+pred = model.fit_predict(df[['SO2']])
 
-dataframe_merged.to_csv("Polutan_Tuban.csv", index=False)
+df['anomaly'] = pred
+outliers = df[df['anomaly'] == -1]
+
+print("Jumlah outlier SO2:", len(outliers))
+print(outliers[['date', 'SO2']].head())
+
+plt.figure(figsize=(15, 5))
+plt.plot(df['date'], df['SO2'], label='SO2', linewidth=1)
+plt.scatter(outliers['date'], outliers['SO2'], color='red', label='Outlier')
+plt.title('Deteksi Outlier SO2 (Isolation Forest)')
+plt.xlabel('Tanggal')
+plt.ylabel('Kadar SO2')
+plt.legend()
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
 ```
+
+#### 3. NO₂
+
+```{code-cell}
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.ensemble import IsolationForest
+
+df = pd.read_csv("../../data/polutan/NO2.csv")
+df = df.dropna(subset=['NO2']).copy()
+df['date'] = pd.to_datetime(df['date'])
+df = df.sort_values('date').reset_index(drop=True)
+
+model = IsolationForest(contamination=0.05, random_state=42)
+pred = model.fit_predict(df[['NO2']])
+
+df['anomaly'] = pred
+outliers = df[df['anomaly'] == -1]
+
+print("Jumlah outlier NO2:", len(outliers))
+print(outliers[['date', 'NO2']].head())
+
+plt.figure(figsize=(15, 5))
+plt.plot(df['date'], df['NO2'], label='NO2', linewidth=1)
+plt.scatter(outliers['date'], outliers['NO2'], color='red', label='Outlier')
+plt.title('Deteksi Outlier NO2 (Isolation Forest)')
+plt.xlabel('Tanggal')
+plt.ylabel('Kadar NO2')
+plt.legend()
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+```
+
+---
+
+## Visualisasi Gabungan (CO, SO₂, NO₂)
+
+Setelah proses pengecekan missing value dan outlier dilakukan, kita dapat melihat pola fluktuasi ketiga polutan secara bersamaan. Karena skala nilai ketiganya berbeda, maka dilakukan normalisasi Min-Max agar semua grafik bisa dibandingkan dalam satu sumbu yang sama.
+
+Rumus normalisasi Min-Max adalah:
+
+$$
+X_{scaled} = \frac{X - X_{min}}{X_{max} - X_{min}}
+$$
+
+Dengan rumus ini, semua nilai akan berada pada rentang 0 sampai 1.
 
 ```{code-cell}
 :tags: [hide-input]
-df = pd.read_csv("../../data/polutan/Polutan_Widang.csv")
-df.head(5)
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df_co = pd.read_csv("../../data/polutan/CO.csv")
+df_so2 = pd.read_csv("../../data/polutan/SO2.csv")
+df_no2 = pd.read_csv("../../data/polutan/NO2.csv")
+
+df_co['date'] = pd.to_datetime(df_co['date'])
+df_so2['date'] = pd.to_datetime(df_so2['date'])
+df_no2['date'] = pd.to_datetime(df_no2['date'])
+
+# Normalisasi Min-Max
+
+df_co['CO_scaled'] = (df_co['CO'] - df_co['CO'].min()) / (df_co['CO'].max() - df_co['CO'].min())
+df_so2['SO2_scaled'] = (df_so2['SO2'] - df_so2['SO2'].min()) / (df_so2['SO2'].max() - df_so2['SO2'].min())
+df_no2['NO2_scaled'] = (df_no2['NO2'] - df_no2['NO2'].min()) / (df_no2['NO2'].max() - df_no2['NO2'].min())
+
+plt.figure(figsize=(15, 6))
+plt.plot(df_co['date'], df_co['CO_scaled'], label='CO', linewidth=1.5, color='blue')
+plt.plot(df_so2['date'], df_so2['SO2_scaled'], label='SO2', linewidth=1.5, color='green')
+plt.plot(df_no2['date'], df_no2['NO2_scaled'], label='NO2', linewidth=1.5, color='purple')
+
+plt.title('Fluktuasi Kadar Polutan CO, SO2, dan NO2 (Setelah Normalisasi Min-Max)')
+plt.xlabel('Tanggal')
+plt.ylabel('Nilai Ternormalisasi')
+plt.legend()
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
 ```
+
+---
+
+## Kesimpulan
+
+Dari eksplorasi data, kita mengetahui bahwa dataset polutan masih mungkin mengandung:
+
+- tanggal yang hilang
+- nilai kosong (`NaN`)
+- outlier yang perlu dibersihkan sebelum proses ekstraksi fitur
+
+Tahap berikutnya adalah melakukan **preprocessing** untuk menangani missing value dan outlier, lalu menghasilkan data yang lebih bersih dan siap digunakan pada tahap ekstraksi fitur.
