@@ -449,12 +449,26 @@
 <p>Metrik ini mengukur sebaran data dengan menghitung median dari nilai absolut simpangan tiap data terhadap median populasinya.
 <strong>Rumus:</strong>
 $<span class="math notranslate nohighlight">\(MAD = median(\vert{}X_i - median(X)\vert{})\)</span>$</p>
+<p>Langkah-langkah Perhitungan:</p>
+<ol class="arabic simple">
+<li><p>Cari Median Utama: Urutkan seluruh data yang Anda miliki dari nilai terkecil hingga terbesar, kemudian temukan nilai tengahnya (median). Jika jumlah data genap, rata-ratakan dua nilai di tengah.</p></li>
+<li><p>Hitung Selisih: Kurangi setiap titik data yang Anda miliki dengan nilai Median Utama yang didapat pada langkah pertama.</p></li>
+<li><p>Absolutkan Hasil (Nilai Mutlak): Ubah semua hasil pengurangan tersebut menjadi bernilai positif (hilangkan tanda minus jika hasilnya negatif). Ini disebut nilai absolut.</p></li>
+<li><p>Cari Median dari Selisih: Kumpulkan seluruh nilai absolut dari langkah ketiga, urutkan kembali dari yang terkecil hingga terbesar, dan cari nilai tengahnya. Angka inilah yang menjadi nilai akhir MAD.</p></li>
+</ol>
 </section>
 <section id="b-median-absolute-difference-madiff">
 <h3>B. Median Absolute Difference (MADiff)<a class="headerlink" href="#b-median-absolute-difference-madiff" title="Link to this heading">#</a></h3>
 <p>Metrik ini mengukur fluktuasi lokal dengan menghitung median dari nilai absolut selisih antara titik data yang saling berurutan (berdekatan) dalam <em>time series</em>.
 <strong>Rumus:</strong>
 $<span class="math notranslate nohighlight">\(MADiff = median(\vert{}X_i - X_{i-1}\vert{})\)</span>$</p>
+<p>Langkah-langkah Perhitungan:</p>
+<ol class="arabic simple">
+<li><p>Pertahankan Urutan Waktu: Pastikan data Anda tidak diurutkan berdasarkan nilai dari kecil ke besar, melainkan tetap berdasarkan urutan waktu kejadian aslinya.</p></li>
+<li><p>Hitung Selisih Antar-Titik Berdekatan: Hitung perbedaan antara titik data kedua dikurangi titik pertama, titik ketiga dikurangi titik kedua, dan seterusnya hingga akhir data. (Jika ada <span class="math notranslate nohighlight">\(N\)</span> data, Anda akan mendapatkan <span class="math notranslate nohighlight">\(N-1\)</span> hasil selisih).</p></li>
+<li><p>Absolutkan Hasil (Nilai Mutlak): Ubah semua hasil selisih yang didapatkan menjadi bernilai positif.</p></li>
+<li><p>Cari Median: Kumpulkan semua hasil selisih absolut tersebut, urutkan dari terkecil ke terbesar, lalu temukan nilai tengahnya.</p></li>
+</ol>
 </section>
 </section>
 <hr class="docutils" />
