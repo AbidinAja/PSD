@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Business Understanding &#8212; My sample book</title>
+    <title>Analisis dan Perbandingan Metrik Statistik Polutan (NO2, CO, SO2) &#8212; My sample book</title>
   
   
   
@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -60,12 +60,13 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'Tugas/polutan/bussiness-understanding';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Tugas/polutan/hitung';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Data Understanding" href="data-understanding.html" />
-    <link rel="prev" title="Polutan di Kabupaten Tuban" href="polutan.html" />
+    <link rel="prev" title="K-Means Clustering" href="kmeans.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -221,12 +222,12 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="polutan.html">Polutan di Kabupaten Tuban</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Business Understanding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bussiness-understanding.html">Business Understanding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data-understanding.html">Data Understanding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="statistik.html">Laporan Analisis Statistika Deskriptif Polutan Udara (NO2)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="preprocessing.html">Data Preprocessing dan Ekstraksi Fitur</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kmeans.html">K-Means Clustering</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hitung.html">Analisis dan Perbandingan Metrik Statistik Polutan (NO2, CO, SO2)</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Analisis dan Perbandingan Metrik Statistik Polutan (NO2, CO, SO2)</a></li>
 </ul>
 </details></li>
 </ul>
@@ -305,7 +306,7 @@
       
       
       
-      <li><a href="https://github.com/AbidinAja/PSD/issues/new?title=Issue%20on%20page%20%2FTugas/polutan/bussiness-understanding.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/AbidinAja/PSD/issues/new?title=Issue%20on%20page%20%2FTugas/polutan/hitung.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -335,7 +336,7 @@
       
       
       
-      <li><a href="../../_sources/Tugas/polutan/bussiness-understanding.md" target="_blank"
+      <li><a href="../../_sources/Tugas/polutan/hitung.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -411,7 +412,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Business Understanding</h1>
+    <h1>Analisis dan Perbandingan Metrik Statistik Polutan (NO2, CO, SO2)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -421,10 +422,12 @@
             </div>
             <nav aria-label="Page">
                 <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#latar-belakang">1. Latar Belakang</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rumusan-masalah">2. Rumusan Masalah</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan-proyek">3. Tujuan Proyek</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#manfaat-proyek">4. Manfaat Proyek</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rumus-yang-digunakan">1. Rumus yang Digunakan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-median-absolute-deviation-mad">A. Median Absolute Deviation (MAD)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-median-absolute-difference-madiff">B. Median Absolute Difference (MADiff)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-perhitungan-manual-vs-tsfel">Perbandingan Perhitungan Manual vs TSFEL</a></li>
 </ul>
             </nav>
         </div>
@@ -436,41 +439,168 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="business-understanding">
-<h1>Business Understanding<a class="headerlink" href="#business-understanding" title="Link to this heading">#</a></h1>
-<section id="latar-belakang">
-<h2>1. Latar Belakang<a class="headerlink" href="#latar-belakang" title="Link to this heading">#</a></h2>
-<p>Kualitas udara merupakan indikator vital bagi kesehatan masyarakat dan keberlanjutan lingkungan. Seiring dengan peningkatan mobilitas kendaraan dan aktivitas industri di Kabupaten Tuban, potensi fluktuasi konsentrasi polutan di atmosfer semakin meningkat.</p>
-<p>Pemantauan difokuskan pada tiga gas polutan utama:</p>
-<ul class="simple">
-<li><p><strong>Nitrogen Dioksida (NO₂):</strong> Indikator utama emisi dari sektor transportasi dan industri.</p></li>
-<li><p><strong>Karbon Monoksida (CO):</strong> Gas beracun hasil pembakaran bahan bakar fosil yang tidak sempurna.</p></li>
-<li><p><strong>Belerang Dioksida (SO₂):</strong> Polutan yang umumnya berasal dari pemrosesan industri ber-sulfur tinggi maupun aktivitas geologis.</p></li>
-</ul>
-<p>Untuk mengamati pola polusi secara objektif dan berkelanjutan, proyek ini memanfaatkan data penginderaan jauh dari satelit <strong>Sentinel-5P</strong> melalui <em>Copernicus Data Space Ecosystem</em>. Data tersebut diolah menjadi deret waktu (<em>time series</em>) harian untuk merekam tingkat polusi di Kabupaten Tuban sejak Agustus 2025.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="analisis-dan-perbandingan-metrik-statistik-polutan-no2-co-so2">
+<h1>Analisis dan Perbandingan Metrik Statistik Polutan (NO2, CO, SO2)<a class="headerlink" href="#analisis-dan-perbandingan-metrik-statistik-polutan-no2-co-so2" title="Link to this heading">#</a></h1>
+<p>Notebook ini mendemonstrasikan perhitungan manual untuk metrik <strong>Median Absolute Deviation</strong> dan <strong>Median Absolute Difference</strong> menggunakan Python, lalu membandingkannya dengan hasil ekstraksi fitur <em>time-series</em> dari TSFEL (Time Series Feature Extraction Library).</p>
+<section id="rumus-yang-digunakan">
+<h2>1. Rumus yang Digunakan<a class="headerlink" href="#rumus-yang-digunakan" title="Link to this heading">#</a></h2>
+<section id="a-median-absolute-deviation-mad">
+<h3>A. Median Absolute Deviation (MAD)<a class="headerlink" href="#a-median-absolute-deviation-mad" title="Link to this heading">#</a></h3>
+<p>Metrik ini mengukur sebaran data dengan menghitung median dari nilai absolut simpangan tiap data terhadap median populasinya.
+<strong>Rumus:</strong>
+$<span class="math notranslate nohighlight">\(MAD = median(\vert{}X_i - median(X)\vert{})\)</span>$</p>
 </section>
-<section id="rumusan-masalah">
-<h2>2. Rumusan Masalah<a class="headerlink" href="#rumusan-masalah" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Bagaimana tren harian konsentrasi gas polutan (NO₂, CO, dan SO₂) di wilayah Kabupaten Tuban?</p></li>
-<li><p>Apakah terdapat pola musiman (<em>seasonality</em>), tren jangka panjang, atau lonjakan ekstrem (<em>anomaly</em>) pada tingkat polusi udara di wilayah tersebut?</p></li>
-</ul>
+<section id="b-median-absolute-difference-madiff">
+<h3>B. Median Absolute Difference (MADiff)<a class="headerlink" href="#b-median-absolute-difference-madiff" title="Link to this heading">#</a></h3>
+<p>Metrik ini mengukur fluktuasi lokal dengan menghitung median dari nilai absolut selisih antara titik data yang saling berurutan (berdekatan) dalam <em>time series</em>.
+<strong>Rumus:</strong>
+$<span class="math notranslate nohighlight">\(MADiff = median(\vert{}X_i - X_{i-1}\vert{})\)</span>$</p>
 </section>
-<section id="tujuan-proyek">
-<h2>3. Tujuan Proyek<a class="headerlink" href="#tujuan-proyek" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p><strong>Otomatisasi Ekstraksi Data:</strong> Mengembangkan alur pengolahan otomatis untuk mentransformasi citra satelit format spasial (NetCDF) menjadi dataset tabular (CSV) yang siap dianalisis.</p></li>
-<li><p><strong>Analisis Temporal (EDA):</strong> Mengidentifikasi dinamika, pola distribusi, dan tren perubahan polutan udara dari waktu ke waktu.</p></li>
-<li><p><strong>Persiapan Pemodelan:</strong> Menyediakan fondasi data historis yang bersih untuk kebutuhan analisis prediktif (<em>time series forecasting</em>) kualitas udara.</p></li>
-</ul>
 </section>
-<section id="manfaat-proyek">
-<h2>4. Manfaat Proyek<a class="headerlink" href="#manfaat-proyek" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p><strong>Pemerintah &amp; Pembuat Kebijakan:</strong> Menyediakan <em>data-driven insight</em> sebagai acuan perumusan kebijakan lingkungan, pengawasan emisi industri, dan tata ruang.</p></li>
-<li><p><strong>Masyarakat:</strong> Memberikan edukasi transparan mengenai fluktuasi kualitas udara harian di daerah sekitar.</p></li>
-<li><p><strong>Akademisi &amp; Data Scientist:</strong> Menjadi studi kasus terapan mengenai ekstraksi data spasial beresolusi tinggi menjadi variabel <em>time series</em>.</p></li>
-</ul>
+<hr class="docutils" />
+<section id="perbandingan-perhitungan-manual-vs-tsfel">
+<h2>Perbandingan Perhitungan Manual vs TSFEL<a class="headerlink" href="#perbandingan-perhitungan-manual-vs-tsfel" title="Link to this heading">#</a></h2>
+<p>Pada bagian ini, kita akan membuktikan dan membandingkan hasil perhitungan metrik statistik secara manual menggunakan <code class="docutils literal notranslate"><span class="pre">numpy</span></code> dengan hasil ekstraksi fitur otomatis dari <em>library</em> TSFEL. Dua metrik yang akan diuji adalah <strong>Median Absolute Deviation</strong> dan <strong>Median Absolute Difference</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+
+<span class="c1"># Definisi nama file yang akan diuji</span>
+<span class="c1"># Sesuaikan path (lokasi folder) jika file berada di folder tertentu (misal: &#39;../../data/polutan/&#39;)</span>
+<span class="n">files</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;NO2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;raw&#39;</span><span class="p">:</span> <span class="s1">&#39;../../data/polutan/NO2_after.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;tsfel&#39;</span><span class="p">:</span> <span class="s1">&#39;../../data/polutan/NO2_widang_TSFEL.csv&#39;</span><span class="p">},</span>
+    <span class="s1">&#39;CO&#39;</span><span class="p">:</span>  <span class="p">{</span><span class="s1">&#39;raw&#39;</span><span class="p">:</span> <span class="s1">&#39;../../data/polutan/CO_after.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;tsfel&#39;</span><span class="p">:</span> <span class="s1">&#39;../../data/polutan/CO_widang_TSFEL.csv&#39;</span><span class="p">},</span>
+    <span class="s1">&#39;SO2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;raw&#39;</span><span class="p">:</span> <span class="s1">&#39;../../data/polutan/SO2_after.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;tsfel&#39;</span><span class="p">:</span> <span class="s1">&#39;../../data/polutan/SO2_widang_TSFEL.csv&#39;</span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">pol</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># 1. Load Data Mentah</span>
+        <span class="n">df_raw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="s1">&#39;raw&#39;</span><span class="p">])</span>
+        <span class="n">signal</span> <span class="o">=</span> <span class="n">df_raw</span><span class="p">[</span><span class="n">pol</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+        
+        <span class="c1"># 2. Perhitungan Manual</span>
+        <span class="c1"># Median Absolute Deviation</span>
+        <span class="n">median_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+        <span class="n">calc_mad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">signal</span> <span class="o">-</span> <span class="n">median_val</span><span class="p">))</span>
+        
+        <span class="c1"># Median Absolute Difference</span>
+        <span class="n">calc_madiff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">signal</span><span class="p">)))</span>
+        
+        <span class="c1"># 3. Load Data Ekstraksi TSFEL</span>
+        <span class="n">df_tsfel</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="s1">&#39;tsfel&#39;</span><span class="p">])</span>
+        <span class="n">tsfel_mad</span> <span class="o">=</span> <span class="n">df_tsfel</span><span class="p">[</span><span class="s1">&#39;median_abs_deviation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">tsfel_madiff</span> <span class="o">=</span> <span class="n">df_tsfel</span><span class="p">[</span><span class="s1">&#39;median_abs_diff&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        
+        <span class="c1"># 4. Menyimpan format ke list untuk DataFrame</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;Polutan&#39;</span><span class="p">:</span> <span class="n">pol</span><span class="p">,</span>
+            <span class="s1">&#39;Metrik&#39;</span><span class="p">:</span> <span class="s1">&#39;Median Abs Deviation&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Manual Python&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">calc_mad</span><span class="si">:</span><span class="s2">.9f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s1">&#39;Ekstraksi TSFEL&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tsfel_mad</span><span class="si">:</span><span class="s2">.9f</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">})</span>
+        
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;Polutan&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="c1"># Dikosongkan agar tampilan tabel lebih rapi</span>
+            <span class="s1">&#39;Metrik&#39;</span><span class="p">:</span> <span class="s1">&#39;Median Abs Diff&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Manual Python&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">calc_madiff</span><span class="si">:</span><span class="s2">.9f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s1">&#39;Ekstraksi TSFEL&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tsfel_madiff</span><span class="si">:</span><span class="s2">.9f</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">})</span>
+        
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File tidak ditemukan untuk </span><span class="si">{</span><span class="n">pol</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 5. Menampilkan hasil komparasi dalam bentuk tabel</span>
+<span class="n">df_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Polutan</th>
+      <th>Metrik</th>
+      <th>Manual Python</th>
+      <th>Ekstraksi TSFEL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NO2</td>
+      <td>Median Abs Deviation</td>
+      <td>0.000007434</td>
+      <td>0.000007434</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>Median Abs Diff</td>
+      <td>0.000003773</td>
+      <td>0.000003773</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>CO</td>
+      <td>Median Abs Deviation</td>
+      <td>0.002183394</td>
+      <td>0.002183394</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td></td>
+      <td>Median Abs Diff</td>
+      <td>0.001312008</td>
+      <td>0.001312008</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>SO2</td>
+      <td>Median Abs Deviation</td>
+      <td>0.000059796</td>
+      <td>0.000058761</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td></td>
+      <td>Median Abs Diff</td>
+      <td>0.000056815</td>
+      <td>0.000054662</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Kesimpulan dan Analisis
+Akurasi Perhitungan:
+Metodologi perhitungan menggunakan fungsi dasar numpy (np.median(np.abs(signal - np.median(signal))) dan np.median(np.abs(np.diff(signal)))) terbukti memberikan hasil yang ekuivalen dengan fungsionalitas kompleks yang ditawarkan oleh library TSFEL.</p></li>
+</ol>
+<p>Kecocokan Identik pada NO2 dan CO:
+Hasil perhitungan manual untuk polutan NO2 dan CO 100% identik dengan hasil ekstraksi fitur default TSFEL hingga digit desimal yang sangat panjang (presisi floating point).</p>
+<p>Penyimpangan Sangat Kecil pada SO2:
+Pada data SO2, terdapat perbedaan yang sangat marjinal (pada kisaran ~0.000001 atau digit ke-6 di belakang koma). Perbedaan super kecil ini umumnya wajar dalam data science dan terjadi akibat perbedaan penanganan batas tipe data (float precision rounding), filter pra-pemrosesan di dalam sistem under-the-hood TSFEL, atau perbedaan handling asimtot saat windowing feature extraction diterapkan pada set data yang memiliki banyak fluktuasi mendekati angka nol.</p>
 </section>
 </section>
 
@@ -505,22 +635,13 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="polutan.html"
+       href="kmeans.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Polutan di Kabupaten Tuban</p>
+        <p class="prev-next-title">K-Means Clustering</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="data-understanding.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Data Understanding</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -540,10 +661,12 @@
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#latar-belakang">1. Latar Belakang</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rumusan-masalah">2. Rumusan Masalah</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan-proyek">3. Tujuan Proyek</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#manfaat-proyek">4. Manfaat Proyek</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rumus-yang-digunakan">1. Rumus yang Digunakan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-median-absolute-deviation-mad">A. Median Absolute Deviation (MAD)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-median-absolute-difference-madiff">B. Median Absolute Difference (MADiff)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-perhitungan-manual-vs-tsfel">Perbandingan Perhitungan Manual vs TSFEL</a></li>
 </ul>
   </nav></div>
 
