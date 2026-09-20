@@ -24,10 +24,30 @@ Metrik ini mengukur sebaran data dengan menghitung median dari nilai absolut sim
 **Rumus:** 
 $$MAD = median(\vert{}X_i - median(X)\vert{})$$
 
+Langkah-langkah Perhitungan:
+
+1. Cari Median Utama: Urutkan seluruh data yang Anda miliki dari nilai terkecil hingga terbesar, kemudian temukan nilai tengahnya (median). Jika jumlah data genap, rata-ratakan dua nilai di tengah.
+
+2. Hitung Selisih: Kurangi setiap titik data yang Anda miliki dengan nilai Median Utama yang didapat pada langkah pertama.
+
+3. Absolutkan Hasil (Nilai Mutlak): Ubah semua hasil pengurangan tersebut menjadi bernilai positif (hilangkan tanda minus jika hasilnya negatif). Ini disebut nilai absolut.
+
+4. Cari Median dari Selisih: Kumpulkan seluruh nilai absolut dari langkah ketiga, urutkan kembali dari yang terkecil hingga terbesar, dan cari nilai tengahnya. Angka inilah yang menjadi nilai akhir MAD.
+
 ### B. Median Absolute Difference (MADiff)
 Metrik ini mengukur fluktuasi lokal dengan menghitung median dari nilai absolut selisih antara titik data yang saling berurutan (berdekatan) dalam *time series*.
 **Rumus:**
 $$MADiff = median(\vert{}X_i - X_{i-1}\vert{})$$
+
+Langkah-langkah Perhitungan:
+
+1. Pertahankan Urutan Waktu: Pastikan data Anda tidak diurutkan berdasarkan nilai dari kecil ke besar, melainkan tetap berdasarkan urutan waktu kejadian aslinya.
+
+2. Hitung Selisih Antar-Titik Berdekatan: Hitung perbedaan antara titik data kedua dikurangi titik pertama, titik ketiga dikurangi titik kedua, dan seterusnya hingga akhir data. (Jika ada $N$ data, Anda akan mendapatkan $N-1$ hasil selisih).
+
+3. Absolutkan Hasil (Nilai Mutlak): Ubah semua hasil selisih yang didapatkan menjadi bernilai positif.
+
+4. Cari Median: Kumpulkan semua hasil selisih absolut tersebut, urutkan dari terkecil ke terbesar, lalu temukan nilai tengahnya.
 
 ---
 ## Perbandingan Perhitungan Manual vs TSFEL
