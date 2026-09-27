@@ -59,8 +59,6 @@ import pandas as pd
 import numpy as np
 from IPython.display import display
 
-# Definisi nama file yang akan diuji
-# Sesuaikan path (lokasi folder) jika file berada di folder tertentu (misal: '../../data/polutan/')
 files = {
     'NO2': {'raw': '../../data/polutan/NO2_after.csv', 'tsfel': '../../data/polutan/NO2_widang_TSFEL.csv'},
     'CO':  {'raw': '../../data/polutan/CO_after.csv', 'tsfel': '../../data/polutan/CO_widang_TSFEL.csv'},
