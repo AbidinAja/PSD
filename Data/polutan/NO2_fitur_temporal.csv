@@ -1,2 +1,0 @@
-auc,autocorr,calc_centroid,distance,lempel_ziv,mean_abs_diff,mean_diff,median_abs_diff,median_diff,negative_turning,neighbourhood_peaks,positive_turning,slope,sum_abs_diff,zero_cross
-0.0114634750709371,4.0,200.9487830012729,365.0000000145726,0.1857923497267759,6.169646766092727e-06,-2.0583937337040363e-08,3.772652053157796e-06,4.4581281599671945e-08,77.0,16.0,78.0,2.70136545997435e-08,0.0022519210696238,0.0

@@ -10,6 +10,8 @@ chapters:
   - file: Tugas/polutan/data-understanding
   - file: Tugas/polutan/statistik
   - file: Tugas/polutan/preprocessing
+  - file: Tugas/polutan/poly
   - file: Tugas/polutan/kmeans
   - file: Tugas/polutan/hitung
+
 
