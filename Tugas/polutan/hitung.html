@@ -226,6 +226,7 @@
 <li class="toctree-l2"><a class="reference internal" href="data-understanding.html">Data Understanding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="statistik.html">Laporan Analisis Statistika Deskriptif Polutan Udara (NO2)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="preprocessing.html">Data Preprocessing dan Ekstraksi Fitur</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poly.html">Data Preprocessing dan Ekstraksi Fitur (Interpolasi Polinomial)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kmeans.html">K-Means Clustering</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Analisis dan Perbandingan Metrik Statistik Polutan (NO2, CO, SO2)</a></li>
 </ul>
@@ -533,6 +534,11 @@ $<span class="math notranslate nohighlight">\(MADiff = median(\vert{}X_i - X_{i-
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>File tidak ditemukan untuk NO2: [Errno 2] No such file or directory: &#39;../../data/polutan/NO2_widang_TSFEL.csv&#39;
+File tidak ditemukan untuk CO: [Errno 2] No such file or directory: &#39;../../data/polutan/CO_widang_TSFEL.csv&#39;
+File tidak ditemukan untuk SO2: [Errno 2] No such file or directory: &#39;../../data/polutan/SO2_widang_TSFEL.csv&#39;
+</pre></div>
+</div>
 <div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -551,55 +557,9 @@ $<span class="math notranslate nohighlight">\(MADiff = median(\vert{}X_i - X_{i-
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Polutan</th>
-      <th>Metrik</th>
-      <th>Manual Python</th>
-      <th>Ekstraksi TSFEL</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th>0</th>
-      <td>NO2</td>
-      <td>Median Abs Deviation</td>
-      <td>0.000007434</td>
-      <td>0.000007434</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td></td>
-      <td>Median Abs Diff</td>
-      <td>0.000003773</td>
-      <td>0.000003773</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>CO</td>
-      <td>Median Abs Deviation</td>
-      <td>0.002183394</td>
-      <td>0.002183394</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td></td>
-      <td>Median Abs Diff</td>
-      <td>0.001312008</td>
-      <td>0.001312008</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>SO2</td>
-      <td>Median Abs Deviation</td>
-      <td>0.000059796</td>
-      <td>0.000058761</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td></td>
-      <td>Median Abs Diff</td>
-      <td>0.000056815</td>
-      <td>0.000054662</td>
-    </tr>
   </tbody>
 </table>
 </div></div></div>

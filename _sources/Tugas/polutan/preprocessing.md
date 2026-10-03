@@ -14,13 +14,17 @@ kernelspec:
 
 # Data Preprocessing dan Ekstraksi Fitur
 
-## Preprocessing: Penanganan Outliers dan Interpolasi
+## Preprocessing: Pemeriksaan Tanggal, Penanganan Outlier, dan Interpolasi
 
-Pada tahap _Data Understanding_, kita telah mengidentifikasi adanya kemungkinan nilai _outliers_ pada deret waktu. Untuk menangani permasalahan ini dan mempersiapkan data agar bisa diekstrak fiturnya secara mulus, kita menerapkan pembersihan data menggunakan metode Rentang Interkuartil (IQR) dan mengisi (imputasi) kekosongan data menggunakan **interpolasi linier**.
+Notebook `data/polutan/polutan.ipynb` mengolah deret waktu harian untuk tiga polutan: karbon monoksida (CO), sulfur dioksida (SO2), dan nitrogen dioksida (NO2). Data yang dipakai pada tahap pemeriksaan dan preprocessing adalah `CO_Timeseries.csv`, `SO2_Timeseries.csv`, dan `NO2_Timeseries.csv` di folder `data/polutan/`. Setiap berkas berisi kolom `date` dan nilai polutan yang bersesuaian.
 
-Di akhir proses imputasi, teknik _backward fill_ (`bfill`) serta _forward fill_ (`ffill`) dimanfaatkan guna mengatasi nilai kosong pada bagian pinggir atau awalan dan akhiran rangkaian data yang tidak bisa diinterpolasi secara linier.
+Notebook terlebih dahulu menguji kelengkapan tanggal pada rentang yang ditetapkan, 31 Agustus 2025 sampai 31 Agustus 2026. Hasil yang tersimpan di notebook melaporkan tanggal `2026-08-31` tidak ditemukan. Pemeriksaan ini hanya mendeteksi tanggal yang hilang; kode tersebut tidak menambahkan baris tanggal maupun mengisi nilainya. Karena itu, interpolasi nilai di bawah ini tidak dengan sendirinya membuat rentang tanggal menjadi lengkap.
 
-Berikut adalah tahapan deteksi outlier, imputasi, dan penyimpanan dataset untuk masing-masing polutan udara:
+Outlier dideteksi menggunakan Rentang Interkuartil (IQR). Nilai yang berada di bawah `Q1 - 1.5 * IQR` atau di atas `Q3 + 1.5 * IQR` ditandai sebagai `NaN`, lalu nilai kosong diisi dengan interpolasi linier. Notebook mengulangi penghitungan IQR dan imputasi sampai tidak ada lagi nilai yang terdeteksi sebagai outlier. `bfill()` dan `ffill()` mengisi nilai kosong yang berada di ujung deret dan tidak dapat diisi oleh interpolasi linier.
+
+Jumlah outlier awal yang tercatat dalam output notebook adalah 6 untuk CO, 17 untuk SO2, dan 2 untuk NO2. Angka ini adalah jumlah sebelum proses pembersihan iteratif, bukan jumlah outlier yang tersisa pada data hasil.
+
+Berikut adalah tahapan preprocessing untuk setiap polutan:
 
 ### 1. Karbon Monoksida (CO)
 
@@ -29,9 +33,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Baca data CO
-
-df = pd.read_csv("../../data/polutan/CO_Outlier.csv")
+df = pd.read_csv("../../Data/Polutan/CO_Timeseries.csv")
 df['date'] = pd.to_datetime(df['date'])
 df = df.sort_values('date').reset_index(drop=True)
 df['CO'] = pd.to_numeric(df['CO'], errors='coerce')
@@ -78,16 +80,26 @@ plt.show()
 Penanganan outlier dan pengisian nilai yang hilang untuk **CO**:
 
 ```python
-# Tandai outlier menjadi NaN
-df['CO_cleaned'] = df['CO'].mask((df['CO'] < lower_bound) | (df['CO'] > upper_bound))
+# Bersihkan outlier secara iteratif dan isi nilai NaN
+df['CO_filled'] = df['CO'].copy()
+while True:
+    Q1 = df['CO_filled'].quantile(0.25)
+    Q3 = df['CO_filled'].quantile(0.75)
+    IQR = Q3 - Q1
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
 
-# Lakukan interpolasi linier pada NaN yang sudah dibuat
-df['CO_filled'] = df['CO_cleaned'].interpolate(method='linear').bfill().ffill()
+    outliers = (df['CO_filled'] < lower_bound) | (df['CO_filled'] > upper_bound)
+    if not outliers.any():
+        break
 
-# Simpan data yang telah dibersihkan dan diinterpolasi ke file CSV baru
+    df['CO_filled'] = df['CO_filled'].mask(outliers)
+    df['CO_filled'] = df['CO_filled'].interpolate(method='linear').bfill().ffill()
+
+# Simpan hasil preprocessing
 df_co = pd.DataFrame({"date": df['date'], "CO": df['CO_filled']})
-df_co.to_csv("../../data/polutan/CO_after.csv", index=False)
-print("Data CO berhasil diproses dan disimpan ke CO_after.csv")
+df_co.to_csv("../../Data/Polutan/CO_After.csv", index=False)
+print("Data CO berhasil diproses dan disimpan ke CO_After.csv")
 ```
 
 ### 2. Sulfur Dioksida (SO2)
@@ -97,7 +109,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-df = pd.read_csv("../../data/polutan/SO2_Outlier.csv")
+df = pd.read_csv("../../Data/Polutan/SO2_Timeseries.csv")
 df['date'] = pd.to_datetime(df['date'])
 df = df.sort_values('date').reset_index(drop=True)
 df['SO2'] = pd.to_numeric(df['SO2'], errors='coerce')
@@ -144,16 +156,26 @@ plt.show()
 Penanganan outlier dan pengisian nilai yang hilang untuk **SO2**:
 
 ```python
-# Tandai outlier menjadi NaN
-df['SO2_cleaned'] = df['SO2'].mask((df['SO2'] < lower_bound) | (df['SO2'] > upper_bound))
+# Bersihkan outlier secara iteratif dan isi nilai NaN
+df['SO2_filled'] = df['SO2'].copy()
+while True:
+    Q1 = df['SO2_filled'].quantile(0.25)
+    Q3 = df['SO2_filled'].quantile(0.75)
+    IQR = Q3 - Q1
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
 
-# Lakukan interpolasi linier pada NaN yang sudah dibuat
-df['SO2_filled'] = df['SO2_cleaned'].interpolate(method='linear').bfill().ffill()
+    outliers = (df['SO2_filled'] < lower_bound) | (df['SO2_filled'] > upper_bound)
+    if not outliers.any():
+        break
 
-# Simpan data yang telah dibersihkan dan diinterpolasi ke file CSV baru
+    df['SO2_filled'] = df['SO2_filled'].mask(outliers)
+    df['SO2_filled'] = df['SO2_filled'].interpolate(method='linear').bfill().ffill()
+
+# Simpan hasil preprocessing
 df_so2 = pd.DataFrame({"date": df['date'], "SO2": df['SO2_filled']})
-df_so2.to_csv("../../data/polutan/SO2_after.csv", index=False)
-print("Data SO2 berhasil diproses dan disimpan ke SO2_after.csv")
+df_so2.to_csv("../../Data/Polutan/SO2_After.csv", index=False)
+print("Data SO2 berhasil diproses dan disimpan ke SO2_After.csv")
 ```
 
 ### 3. Nitrogen Dioksida (NO2)
@@ -163,7 +185,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-df = pd.read_csv("../../data/polutan/NO2_Outlier.csv")
+df = pd.read_csv("../../Data/Polutan/NO2_Timeseries.csv")
 df['date'] = pd.to_datetime(df['date'])
 df = df.sort_values('date').reset_index(drop=True)
 df['NO2'] = pd.to_numeric(df['NO2'], errors='coerce')
@@ -210,30 +232,40 @@ plt.show()
 Penanganan outlier dan pengisian nilai yang hilang untuk **NO2**:
 
 ```python
-# Tandai outlier menjadi NaN
-df['NO2_cleaned'] = df['NO2'].mask((df['NO2'] < lower_bound) | (df['NO2'] > upper_bound))
+# Bersihkan outlier secara iteratif dan isi nilai NaN
+df['NO2_filled'] = df['NO2'].copy()
+while True:
+    Q1 = df['NO2_filled'].quantile(0.25)
+    Q3 = df['NO2_filled'].quantile(0.75)
+    IQR = Q3 - Q1
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
 
-# Lakukan interpolasi linier pada NaN yang sudah dibuat
-df['NO2_filled'] = df['NO2_cleaned'].interpolate(method='linear').bfill().ffill()
+    outliers = (df['NO2_filled'] < lower_bound) | (df['NO2_filled'] > upper_bound)
+    if not outliers.any():
+        break
 
-# Simpan data yang telah dibersihkan dan diinterpolasi ke file CSV baru
+    df['NO2_filled'] = df['NO2_filled'].mask(outliers)
+    df['NO2_filled'] = df['NO2_filled'].interpolate(method='linear').bfill().ffill()
+
+# Simpan hasil preprocessing
 df_no2 = pd.DataFrame({"date": df['date'], "NO2": df['NO2_filled']})
-df_no2.to_csv("../../data/polutan/NO2_after.csv", index=False)
-print("Data NO2 berhasil diproses dan disimpan ke NO2_after.csv")
+df_no2.to_csv("../../Data/Polutan/NO2_After.csv", index=False)
+print("Data NO2 berhasil diproses dan disimpan ke NO2_After.csv")
 ```
 
 ### 4. Visualisasi Gabungan Setelah Preprocessing
 
-Setelah proses penanganan *outlier* dan interpolasi selesai untuk ketiga polutan, kita dapat melihat visualisasi gabungan dari kadar CO, SO2, dan NO2 yang telah bersih dan utuh. Deret waktu ini telah siap untuk dilanjutkan ke tahap ekstraksi fitur.
+Setelah proses penanganan *outlier* dan imputasi selesai, ketiga berkas hasil dapat divisualisasikan. Nilai polutan yang kosong atau terdeteksi sebagai outlier telah diimputasi, tetapi tanggal yang tidak tersedia tidak ditambahkan oleh kode preprocessing. Sebelum ekstraksi fitur, pastikan rentang tanggal yang diperlukan memang tersedia jika model atau analisis membutuhkan kalender harian lengkap.
 
 ```{code-cell}
 import pandas as pd
 import matplotlib.pyplot as plt
 
 # Memuat data yang telah diproses
-df_co = pd.read_csv("../../data/polutan/CO_after.csv")
-df_so2 = pd.read_csv("../../data/polutan/SO2_after.csv")
-df_no2 = pd.read_csv("../../data/polutan/NO2_after.csv")
+df_co = pd.read_csv("../../Data/Polutan/CO_After.csv")
+df_so2 = pd.read_csv("../../Data/Polutan/SO2_After.csv")
+df_no2 = pd.read_csv("../../Data/Polutan/NO2_After.csv")
 
 df_co['date'] = pd.to_datetime(df_co['date'])
 df_so2['date'] = pd.to_datetime(df_so2['date'])
@@ -301,28 +333,34 @@ plt.show()
 
 ## Ekstraksi Fitur Deret Waktu (Time Series)
 
-Dengan data deret waktu polutan udara yang konsisten (tanpa tanggal hilang dan tanpa _outlier_), kita dapat melangkah ke ekstraksi berbagai fitur statistik, temporal, maupun spektral. Fitur-fitur ini sangat berguna sebagai parameter *input* yang merepresentasikan karakteristik *trend* harian polutan ke dalam model _machine learning_ maupun _deep learning_.
+Notebook mengekstrak fitur dari satu tabel gabungan, bukan dengan menjalankan tiga sel terpisah pada berkas `*_After.csv`. Berkas masukan yang digunakan adalah `data/polutan/Polutan_Widang_Linear.csv`, dengan kolom `date`, `CO`, `NO2`, dan `SO2`. Salinan CSV yang tersedia saat catatan ini diperbarui memiliki 366 baris, dari `2025-08-30` sampai `2026-08-30`.
 
-Kita akan memanfaatkan modul pustaka Python bernama `tsfel` (_Time Series Feature Extraction Library_) guna mempermudah proses komputasi serta standarisasi ragam tipe fitur. Untuk memastikan hasil ekstraksi mudah dibaca, format akhir data CSV akan di-*transpose* sehingga struktur tabel menjadi format dua kolom, yakni *Feature* dan *Value*.
+### Alur ekstraksi pada notebook
 
-### 1. Karbon Monoksida (CO)
+1. Baca tabel gabungan dan urutkan berdasarkan `date`.
+2. Proses kolom `NO2`, `SO2`, dan `CO` satu per satu.
+3. Untuk setiap polutan, hitung batas IQR sebagai pemeriksaan tambahan. Nilai di luar batas ditandai sebagai `NaN`.
+4. Jadikan `date` sebagai indeks, lalu isi kekosongan dengan interpolasi berbasis waktu (`method='time'`), `ffill()`, dan `bfill()`.
+5. Hitung 68 fitur TSFEL untuk setiap polutan. Fungsi `extract_one` meneruskan `fs=1` hanya jika fungsi fitur tersebut menerimanya; `to_scalar` merangkum keluaran array menjadi satu nilai.
+6. Awali nama setiap fitur dengan nama polutan. Hasil disimpan sebagai satu baris lebar di `data/polutan/Widang_Linier.csv`, bukan ditranspose menjadi dua kolom.
 
-```python
+Dengan tiga polutan dan 68 fitur per polutan, hasil yang diharapkan memiliki 204 kolom fitur. Kolom contoh: `NO2_abs_energy`, `SO2_calc_mean`, dan `CO_zero_cross`.
+
+```{code-cell}
 import pandas as pd
 import numpy as np
 import inspect
 import tsfel.feature_extraction.features as tsfel_features
 
-# ---------- 1. Muat data yang sudah dibersihkan ----------
-df = pd.read_csv('../../data/polutan/CO_after.csv')
+# Baca tabel gabungan polutan
+df = pd.read_csv('../../Data/Polutan/Polutan_Widang_Linear.csv')
+
 df['date'] = pd.to_datetime(df['date'])
 df = df.sort_values('date').reset_index(drop=True)
 
-target_pollutant = 'CO'
+pollutants = ['NO2', 'SO2', 'CO']
 fs = 1
-signal_1d = df[target_pollutant].astype(float).values
 
-# ---------- 2. Inisiasi Daftar Fitur TSFEL ----------
 FEATURE_LIST = """abs_energy auc autocorr average_power calc_centroid calc_max calc_mean
 calc_median calc_min calc_std calc_var dfa distance ecdf ecdf_percentile ecdf_percentile_count
 ecdf_slope entropy fundamental_frequency higuchi_fractal_dimension hist_mode human_range_energy
@@ -335,7 +373,7 @@ spectral_positive_turning spectral_roll_off spectral_roll_on spectral_skewness s
 spectral_spread spectral_variation spectrogram_mean_coeff sum_abs_diff wavelet_abs_mean
 wavelet_energy wavelet_entropy wavelet_std wavelet_var zero_cross""".split()
 
-# ---------- 3. Fungsi ekstraksi dan penyeragaman output ----------
+
 def to_scalar(result):
     if isinstance(result, dict) and "values" in result:
         result = result["values"]
@@ -354,516 +392,49 @@ def extract_one(fn_name, signal, fs):
         result = fn(signal)
     return to_scalar(result)
 
-# Lakukan ekstraksi iteratif pada fitur
-row = {}
-for fn_name in FEATURE_LIST:
-    row[fn_name] = extract_one(fn_name, signal_1d, fs)
+combined_row = {}
+for pollutant in pollutants:
+    df_poly = df[['date', pollutant]].copy()
+    df_poly[pollutant] = pd.to_numeric(df_poly[pollutant], errors='coerce')
 
-extracted_features_final = pd.DataFrame([row])
-# Export hasil ke file CSV
-extracted_features_final.to_csv(f'../../data/polutan/{target_pollutant}_widang_TSFEL.csv', index=False)
-print(f"Berhasil mengekstrak {len(FEATURE_LIST)} fitur untuk {target_pollutant}.")
+    Q1 = df_poly[pollutant].quantile(0.25)
+    Q3 = df_poly[pollutant].quantile(0.75)
+    IQR = Q3 - Q1
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+    df_poly.loc[
+        (df_poly[pollutant] < lower_bound) | (df_poly[pollutant] > upper_bound),
+        pollutant,
+    ] = np.nan
+
+    df_clean = df_poly.set_index('date').interpolate(method='time').ffill().bfill()
+    signal_1d = df_clean[pollutant].astype(float).values
+
+    for fn_name in FEATURE_LIST:
+        feature_key = f"{pollutant}_{fn_name}"
+        combined_row[feature_key] = extract_one(fn_name, signal_1d, fs)
+
+extracted_features_final = pd.DataFrame([combined_row])
+output_filename = '../../Data/Polutan/Widang_Linier.csv'
+extracted_features_final.to_csv(output_filename, index=False)
+print(f"Total fitur yang disimpan: {extracted_features_final.shape[1]}")
 ```
 
-Contoh cuplikan hasil ekstraksi fitur **CO**:
+### Makna ringkas fitur
 
-```{code-cell}
-:tags: [hide-input]
-df_feat = pd.read_csv("../../data/polutan/CO_widang_TSFEL.csv")
-df_feat.head(10)
-```
+Daftar TSFEL yang dipakai mencakup fitur statistik, temporal, frekuensi, dan wavelet. Contohnya, `calc_mean`, `calc_std`, dan `kurtosis` menggambarkan nilai pusat, sebaran, dan bentuk distribusi; `mean_abs_diff`, `autocorr`, dan `zero_cross` menggambarkan perubahan atau pola urutan sinyal; sedangkan fitur dengan awalan `spectral_` dan `wavelet_` merangkum karakteristik frekuensi dan transformasi wavelet. Nilai keluaran spesifik dapat dibaca langsung dari kolom berawalan nama polutan pada `Widang_Linier.csv`.
 
-### 2. Sulfur Dioksida (SO2)
+### Catatan tentang rentang tanggal
 
-```python
-import pandas as pd
-import numpy as np
-import inspect
-import tsfel.feature_extraction.features as tsfel_features
-
-df = pd.read_csv('../../data/polutan/SO2_after.csv')
-df['date'] = pd.to_datetime(df['date'])
-df = df.sort_values('date').reset_index(drop=True)
-
-target_pollutant = 'SO2'
-fs = 1
-signal_1d = df[target_pollutant].astype(float).values
-
-FEATURE_LIST = """abs_energy auc autocorr average_power calc_centroid calc_max calc_mean
-calc_median calc_min calc_std calc_var dfa distance ecdf ecdf_percentile ecdf_percentile_count
-ecdf_slope entropy fundamental_frequency higuchi_fractal_dimension hist_mode human_range_energy
-hurst_exponent interq_range kurtosis lempel_ziv lpcc max_frequency max_power_spectrum
-maximum_fractal_length mean_abs_deviation mean_abs_diff mean_diff median_abs_deviation
-median_abs_diff median_diff median_frequency mfcc mse negative_turning neighbourhood_peaks
-petrosian_fractal_dimension pk_pk_distance positive_turning power_bandwidth rms skewness slope
-spectral_centroid spectral_decrease spectral_distance spectral_entropy spectral_kurtosis
-spectral_positive_turning spectral_roll_off spectral_roll_on spectral_skewness spectral_slope
-spectral_spread spectral_variation spectrogram_mean_coeff sum_abs_diff wavelet_abs_mean
-wavelet_energy wavelet_entropy wavelet_std wavelet_var zero_cross""".split()
-
-# Fungsi bantu untuk merapikan output TSFEL
-def to_scalar(result):
-    if isinstance(result, dict) and "values" in result:
-        result = result["values"]
-    if isinstance(result, (list, tuple, np.ndarray)):
-        arr = np.asarray(result, dtype=float)
-        return float(np.nanmean(arr))
-    return float(result)
-
-
-def extract_one(fn_name, signal, fs):
-    fn = getattr(tsfel_features, fn_name)
-    params = inspect.signature(fn).parameters
-    if "fs" in params:
-        result = fn(signal, fs)
-    else:
-        result = fn(signal)
-    return to_scalar(result)
-
-row = {}
-for fn_name in FEATURE_LIST:
-    row[fn_name] = extract_one(fn_name, signal_1d, fs)
-
-extracted_features_final = pd.DataFrame([row])
-extracted_features_final.to_csv(f'../../data/polutan/{target_pollutant}_widang_TSFEL.csv', index=False)
-print(f"Berhasil mengekstrak fitur untuk {target_pollutant}.")
-```
-
-Contoh cuplikan hasil ekstraksi fitur **SO2**:
-
-```{code-cell}
-:tags: [hide-input]
-df_feat = pd.read_csv("../../data/polutan/SO2_widang_TSFEL.csv")
-df_feat.head(10)
-```
-
-### 3. Nitrogen Dioksida (NO2)
-
-```python
-import pandas as pd
-import numpy as np
-import inspect
-import tsfel.feature_extraction.features as tsfel_features
-
-df = pd.read_csv('../../data/polutan/NO2_after.csv')
-df['date'] = pd.to_datetime(df['date'])
-df = df.sort_values('date').reset_index(drop=True)
-
-target_pollutant = 'NO2'
-fs = 1
-signal_1d = df[target_pollutant].astype(float).values
-
-FEATURE_LIST = """abs_energy auc autocorr average_power calc_centroid calc_max calc_mean
-calc_median calc_min calc_std calc_var dfa distance ecdf ecdf_percentile ecdf_percentile_count
-ecdf_slope entropy fundamental_frequency higuchi_fractal_dimension hist_mode human_range_energy
-hurst_exponent interq_range kurtosis lempel_ziv lpcc max_frequency max_power_spectrum
-maximum_fractal_length mean_abs_deviation mean_abs_diff mean_diff median_abs_deviation
-median_abs_diff median_diff median_frequency mfcc mse negative_turning neighbourhood_peaks
-petrosian_fractal_dimension pk_pk_distance positive_turning power_bandwidth rms skewness slope
-spectral_centroid spectral_decrease spectral_distance spectral_entropy spectral_kurtosis
-spectral_positive_turning spectral_roll_off spectral_roll_on spectral_skewness spectral_slope
-spectral_spread spectral_variation spectrogram_mean_coeff sum_abs_diff wavelet_abs_mean
-wavelet_energy wavelet_entropy wavelet_std wavelet_var zero_cross""".split()
-
-# Fungsi bantu untuk merapikan output TSFEL
-def to_scalar(result):
-    if isinstance(result, dict) and "values" in result:
-        result = result["values"]
-    if isinstance(result, (list, tuple, np.ndarray)):
-        arr = np.asarray(result, dtype=float)
-        return float(np.nanmean(arr))
-    return float(result)
-
-
-def extract_one(fn_name, signal, fs):
-    fn = getattr(tsfel_features, fn_name)
-    params = inspect.signature(fn).parameters
-    if "fs" in params:
-        result = fn(signal, fs)
-    else:
-        result = fn(signal)
-    return to_scalar(result)
-
-row = {}
-for fn_name in FEATURE_LIST:
-    row[fn_name] = extract_one(fn_name, signal_1d, fs)
-
-extracted_features_final = pd.DataFrame([row])
-extracted_features_final.to_csv(f'../../data/polutan/{target_pollutant}_widang_TSFEL.csv', index=False)
-print(f"Berhasil mengekstrak fitur untuk {target_pollutant}.")
-```
-
-Contoh cuplikan hasil ekstraksi fitur **NO2**:
-
-```{code-cell}
-:tags: [hide-input]
-df_feat = pd.read_csv("../../data/polutan/NO2_widang_TSFEL.csv")
-df_feat.head(10)
-```
-
-## Penjelasan Domain TSFEL
-
-Pustaka TSFEL membagi 68 fitur deret waktu menjadi tiga domain utama: **Statistik (Statistical)**, **Waktu (Temporal)**, dan **Frekuensi (Spectral)**. Berikut adalah penjabaran lengkap untuk masing-masing fitur beserta rumusnya, serta hasil perhitungannya yang diterapkan pada polutan NO2 (dari `NO2_after.csv`) yang disajikan pada hasil akhir (`NO2_widang_TSFEL.csv`).
-
-### 1. Domain Statistical
-Domain statistik mengekstrak metrik kuantitatif dan karakteristik sebaran serta bentuk distribusi dari sinyal deret waktu. Domain ini terdiri dari 17 fitur utama yang fokus pada distribusi.
-
-1. **`calc_max`**
-   - **Penjelasan**: Nilai maksimum dari deret waktu.
-   - **Rumus**: $\max(x)$
-   - **Hasil (NO2)**: `5.51000e-05`
-
-2. **`calc_min`**
-   - **Penjelasan**: Nilai minimum dari deret waktu.
-   - **Rumus**: $\min(x)$
-   - **Hasil (NO2)**: `5.12000e-06`
-
-3. **`calc_mean`**
-   - **Penjelasan**: Rata-rata (mean) dari deret waktu.
-   - **Rumus**: $\mu = \frac{1}{N} \sum_{i=1}^N x_i$
-   - **Hasil (NO2)**: `2.84004e-05`
-
-4. **`calc_median`**
-   - **Penjelasan**: Nilai tengah (median) dari deret waktu.
-   - **Rumus**: $\text{median}(x)$
-   - **Hasil (NO2)**: `2.81250e-05`
-
-5. **`calc_std`**
-   - **Penjelasan**: Standar deviasi, mengukur tingkat penyebaran data.
-   - **Rumus**: $\sigma = \sqrt{\frac{1}{N} \sum_{i=1}^N (x_i - \mu)^2}$
-   - **Hasil (NO2)**: `1.01280e-05`
-
-6. **`calc_var`**
-   - **Penjelasan**: Varians, kuadrat dari standar deviasi.
-   - **Rumus**: $\sigma^2 = \frac{1}{N} \sum_{i=1}^N (x_i - \mu)^2$
-   - **Hasil (NO2)**: `1.02577e-10`
-
-7. **`ecdf`**
-   - **Penjelasan**: Fungsi distribusi kumulatif empiris.
-   - **Rumus**: $\hat{F}(t) = \frac{1}{N} \sum_{i=1}^N \mathbf{1}_{x_i \le t}$
-   - **Hasil (NO2)**: `1.50273e-02`
-
-8. **`ecdf_percentile`**
-   - **Penjelasan**: Nilai ECDF pada persentil tertentu.
-   - **Rumus**: $P_{perc}(\hat{F})$
-   - **Hasil (NO2)**: `2.84000e-05`
-
-9. **`ecdf_percentile_count`**
-   - **Penjelasan**: Jumlah data yang berada di bawah persentil ECDF.
-   - **Rumus**: $\sum \mathbf{1}_{x_i \le P_{perc}}$
-   - **Hasil (NO2)**: `1.82500e+02`
-
-10. **`ecdf_slope`**
-   - **Penjelasan**: Kemiringan dari kurva ECDF.
-   - **Rumus**: $\frac{\Delta y}{\Delta x} \text{ pada } \hat{F}(t)$
-   - **Hasil (NO2)**: `3.47222e+04`
-
-11. **`hist_mode`**
-   - **Penjelasan**: Modus (nilai paling sering muncul) berdasarkan histogram.
-   - **Rumus**: $\arg\max_j (\text{count}(bin_j))$
-   - **Hasil (NO2)**: `2.76110e-05`
-
-12. **`interq_range`**
-   - **Penjelasan**: Jangkauan interkuartil (IQR), selisih Q3 dan Q1.
-   - **Rumus**: $IQR = Q_3 - Q_1$
-   - **Hasil (NO2)**: `1.45000e-05`
-
-13. **`kurtosis`**
-   - **Penjelasan**: Keruncingan (peakedness) dari distribusi data.
-   - **Rumus**: $K = \frac{\frac{1}{N} \sum_{i=1}^N (x_i - \mu)^4}{\sigma^4} - 3$
-   - **Hasil (NO2)**: `-4.15397e-01`
-
-14. **`skewness`**
-   - **Penjelasan**: Kemiringan (asimetri) dari distribusi data.
-   - **Rumus**: $S = \frac{\frac{1}{N} \sum_{i=1}^N (x_i - \mu)^3}{\sigma^3}$
-   - **Hasil (NO2)**: `1.02776e-01`
-
-15. **`mean_abs_deviation`**
-   - **Penjelasan**: Rata-rata simpangan absolut dari mean.
-   - **Rumus**: $MAD = \frac{1}{N} \sum_{i=1}^N |x_i - \mu|$
-   - **Hasil (NO2)**: `8.22498e-06`
-
-16. **`median_abs_deviation`**
-   - **Penjelasan**: Median dari simpangan absolut dari median.
-   - **Rumus**: $\text{Median}(|x_i - \text{median}(x)|)$
-   - **Hasil (NO2)**: `7.10833e-06`
-
-17. **`rms`**
-   - **Penjelasan**: Root Mean Square (energi kuadrat rata-rata).
-   - **Rumus**: $RMS = \sqrt{\frac{1}{N} \sum_{i=1}^N x_i^2}$
-   - **Hasil (NO2)**: `3.01523e-05`
-
-### 2. Domain Temporal
-Domain temporal mengevaluasi sinyal dari segi urutan waktunya. Terdiri dari 25 fitur yang mengukur dependensi, jarak, autokorelasi, dan kompleksitas waktu.
-
-1. **`abs_energy`**
-   - **Penjelasan**: Total energi absolut dari deret waktu.
-   - **Rumus**: $E = \sum_{i=1}^N x_i^2$
-   - **Hasil (NO2)**: `3.32752e-07`
-
-2. **`auc`**
-   - **Penjelasan**: Area di bawah kurva sinyal (Area Under Curve).
-   - **Rumus**: $AUC = \sum_{i=1}^{N-1} \frac{x_i + x_{i+1}}{2}$
-   - **Hasil (NO2)**: `1.03695e-02`
-
-3. **`autocorr`**
-   - **Penjelasan**: Autokorelasi sinyal, kesamaan sinyal dengan versi tertundanya.
-   - **Rumus**: $R(\tau) = \sum_{i=1}^{N-\tau} x_i x_{i+\tau}$
-   - **Hasil (NO2)**: `1.70000e+01`
-
-4. **`average_power`**
-   - **Penjelasan**: Daya rata-rata dari sinyal waktu.
-   - **Rumus**: $P = \frac{1}{N} \sum_{i=1}^N x_i^2$
-   - **Hasil (NO2)**: `9.11650e-10`
-
-5. **`calc_centroid`**
-   - **Penjelasan**: Titik pusat dari urutan waktu (Time Centroid).
-   - **Rumus**: $C_t = \frac{\sum t_i \cdot x_i}{\sum x_i}$
-   - **Hasil (NO2)**: `2.03671e+02`
-
-6. **`dfa`**
-   - **Penjelasan**: Detrended Fluctuation Analysis, untuk mengukur dependensi fraktal.
-   - **Rumus**: $F(n) \propto n^\alpha$
-   - **Hasil (NO2)**: `1.01119e+00`
-
-7. **`distance`**
-   - **Penjelasan**: Total jarak (panjang lintasan) antar titik-titik berturutan.
-   - **Rumus**: $D = \sum_{i=1}^{N-1} \sqrt{1 + (x_{i+1} - x_i)^2}$
-   - **Hasil (NO2)**: `3.65000e+02`
-
-8. **`entropy`**
-   - **Penjelasan**: Shannon Entropy, mengukur ketidakpastian sinyal.
-   - **Rumus**: $H = -\sum p(x) \log p(x)$
-   - **Hasil (NO2)**: `9.27850e-01`
-
-9. **`higuchi_fractal_dimension`**
-   - **Penjelasan**: Dimensi Fraktal Higuchi, mengukur kompleksitas bentuk.
-   - **Rumus**: $L(k) \propto k^{-D}$
-   - **Hasil (NO2)**: `1.84022e+00`
-
-10. **`hurst_exponent`**
-   - **Penjelasan**: Eksponen Hurst, indikasi memori jangka panjang waktu.
-   - **Rumus**: $E[\frac{R(n)}{S(n)}] = C n^H$
-   - **Hasil (NO2)**: `8.03093e-01`
-
-11. **`lempel_ziv`**
-   - **Penjelasan**: Kompleksitas Lempel-Ziv, mengukur tingkat kompresibilitas sinyal.
-   - **Rumus**: $LZ = \frac{c(N)}{\frac{N}{\log N}}$
-   - **Hasil (NO2)**: `1.72131e-01`
-
-12. **`maximum_fractal_length`**
-   - **Penjelasan**: Panjang maksimal fraktal di berbagai skala pengukuran.
-   - **Rumus**: $L_{max} = \max_k (L(k))$
-   - **Hasil (NO2)**: `-2.69521e+00`
-
-13. **`mean_abs_diff`**
-   - **Penjelasan**: Rata-rata dari perbedaan absolut titik berurutan.
-   - **Rumus**: $\mu_{\Delta} = \frac{1}{N-1} \sum_{i=1}^{N-1} |x_{i+1} - x_i|$
-   - **Hasil (NO2)**: `4.56367e-06`
-
-14. **`mean_diff`**
-   - **Penjelasan**: Rata-rata perbedaan antara titik berurutan.
-   - **Rumus**: $\mu_{d} = \frac{1}{N-1} \sum_{i=1}^{N-1} (x_{i+1} - x_i)$
-   - **Hasil (NO2)**: `1.20548e-08`
-
-15. **`median_abs_diff`**
-   - **Penjelasan**: Median perbedaan absolut berurutan.
-   - **Rumus**: $\text{Median}(|x_{i+1} - x_i|)$
-   - **Hasil (NO2)**: `2.50000e-06`
-
-16. **`median_diff`**
-   - **Penjelasan**: Median dari selisih titik berurutan.
-   - **Rumus**: $\text{Median}(x_{i+1} - x_i)$
-   - **Hasil (NO2)**: `4.00000e-07`
-
-17. **`mse`**
-   - **Penjelasan**: Mean Squared Error dari sinyal terhadap rata-ratanya.
-   - **Rumus**: $MSE = \frac{1}{N} \sum_{i=1}^N (x_i - \mu)^2$
-   - **Hasil (NO2)**: `1.28358e+00`
-
-18. **`negative_turning`**
-   - **Penjelasan**: Jumlah titik belok bergradien negatif (puncak yang turun).
-   - **Rumus**: $\sum \mathbf{1}_{x_{i-1} < x_i > x_{i+1}}$
-   - **Hasil (NO2)**: `6.70000e+01`
-
-19. **`neighbourhood_peaks`**
-   - **Penjelasan**: Jumlah puncak pada area bertetangga yang ditentukan.
-   - **Rumus**: $\sum \text{Peaks}(x, \text{window})$
-   - **Hasil (NO2)**: `1.60000e+01`
-
-20. **`petrosian_fractal_dimension`**
-   - **Penjelasan**: Dimensi Fraktal Petrosian.
-   - **Rumus**: $D = \frac{\log_{10}(N)}{\log_{10}(N) + \log_{10}(\frac{N}{N + 0.4 N_{\Delta}})}$
-   - **Hasil (NO2)**: `1.02404e+00`
-
-21. **`pk_pk_distance`**
-   - **Penjelasan**: Jarak dari puncak tertinggi ke lembah terendah (Peak-to-Peak).
-   - **Rumus**: $P2P = \max(x) - \min(x)$
-   - **Hasil (NO2)**: `4.99800e-05`
-
-22. **`positive_turning`**
-   - **Penjelasan**: Jumlah titik belok bergradien positif (lembah yang naik).
-   - **Rumus**: $\sum \mathbf{1}_{x_{i-1} > x_i < x_{i+1}}$
-   - **Hasil (NO2)**: `6.80000e+01`
-
-23. **`slope`**
-   - **Penjelasan**: Kemiringan tren regresi linier secara keseluruhan.
-   - **Rumus**: $m = \frac{\sum (t_i - \bar{t})(x_i - \mu)}{\sum (t_i - \bar{t})^2}$
-   - **Hasil (NO2)**: `2.85331e-08`
-
-24. **`sum_abs_diff`**
-   - **Penjelasan**: Total akumulasi perbedaan absolut titik berurutan.
-   - **Rumus**: $SAD = \sum_{i=1}^{N-1} |x_{i+1} - x_i|$
-   - **Hasil (NO2)**: `1.66574e-03`
-
-25. **`zero_cross`**
-   - **Penjelasan**: Jumlah titik perpotongan nol (zero-crossing).
-   - **Rumus**: $\sum \mathbf{1}_{x_i \cdot x_{i+1} < 0}$
-   - **Hasil (NO2)**: `0.00000e+00`
-
-### 3. Domain Spectral
-Domain spektral mentransformasi data ke domain frekuensi (melalui Fourier/Wavelet). Terdiri dari 26 fitur untuk mengukur sifat periodik, energi spektrum, dan rentang frekuensi.
-
-1. **`fundamental_frequency`**
-   - **Penjelasan**: Frekuensi dasar yang paling kuat pada spektrum.
-   - **Rumus**: $f_0 = \arg\max_f (|X(f)|^2)$
-   - **Hasil (NO2)**: `2.73224e-03`
-
-2. **`max_frequency`**
-   - **Penjelasan**: Frekuensi tertinggi pada analisis spektrum daya.
-   - **Rumus**: $f_{max} = \max(f)$
-   - **Hasil (NO2)**: `4.34426e-01`
-
-3. **`median_frequency`**
-   - **Penjelasan**: Frekuensi yang membagi spektrum daya (energi) menjadi dua bagian sama.
-   - **Rumus**: $\int_0^{f_{med}} |X(f)|^2 df = \frac{1}{2} \int_0^\infty |X(f)|^2 df$
-   - **Hasil (NO2)**: `4.09836e-02`
-
-4. **`human_range_energy`**
-   - **Penjelasan**: Energi sinyal pada jangkauan pendengaran manusia.
-   - **Rumus**: $E_h = \sum_{f \in H} |X(f)|^2$
-   - **Hasil (NO2)**: `0.00000e+00`
-
-5. **`lpcc`**
-   - **Penjelasan**: Koefisien Linear Prediction Cepstral (LPCC).
-   - **Rumus**: $C_n = -a_n - \sum_{k=1}^{n-1} \frac{k}{n} C_k a_{n-k}$
-   - **Hasil (NO2)**: `7.48200e-01`
-
-6. **`mfcc`**
-   - **Penjelasan**: Koefisien Mel-Frequency Cepstral (MFCC).
-   - **Rumus**: $c_n = \sum_{k=1}^K (\log S_k) \cos\left[n(k-\frac{1}{2})\frac{\pi}{K}\right]$
-   - **Hasil (NO2)**: `2.43670e+01`
-
-7. **`max_power_spectrum`**
-   - **Penjelasan**: Daya tertinggi dari seluruh rentang spektrum frekuensi.
-   - **Rumus**: $\max_f (|X(f)|^2)$
-   - **Hasil (NO2)**: `1.22004e+02`
-
-8. **`power_bandwidth`**
-   - **Penjelasan**: Lebar pita tempat akumulasi mayoritas kekuatan sinyal (daya).
-   - **Rumus**: $BW = f_{upper} - f_{lower}$
-   - **Hasil (NO2)**: `3.22404e-01`
-
-9. **`spectral_centroid`**
-   - **Penjelasan**: Pusat massa spektral (frekuensi rata-rata berbobot energi).
-   - **Rumus**: $C_s = \frac{\sum f_k |X(f_k)|}{\sum |X(f_k)|}$
-   - **Hasil (NO2)**: `1.20096e-01`
-
-10. **`spectral_decrease`**
-   - **Penjelasan**: Tingkat penurunan kekuatan spektral pada frekuensi yang meninggi.
-   - **Rumus**: $D_s = \frac{\sum_{k=2}^K \frac{|X(f_k)| - |X(f_1)|}{k-1}}{\sum_{k=2}^K |X(f_k)|}$
-   - **Hasil (NO2)**: `-2.52716e+00`
-
-11. **`spectral_distance`**
-   - **Penjelasan**: Jarak spektral, selisih antar kurva densitas spektrum.
-   - **Rumus**: $D(X, Y) = \sqrt{\sum (X(f) - Y(f))^2}$
-   - **Hasil (NO2)**: `-1.58982e+00`
-
-12. **`spectral_entropy`**
-   - **Penjelasan**: Entropi spektral, seberapa menyebar distribusi energi spektrum.
-   - **Rumus**: $H_s = -\sum p_f \log p_f$
-   - **Hasil (NO2)**: `6.21878e-01`
-
-13. **`spectral_kurtosis`**
-   - **Penjelasan**: Kurtosis dari kepadatan daya spektrum.
-   - **Rumus**: $K_s = \frac{\sum (f - C_s)^4 |X(f)|^2}{(\sum (f - C_s)^2 |X(f)|^2)^2}$
-   - **Hasil (NO2)**: `2.71723e+00`
-
-14. **`spectral_positive_turning`**
-   - **Penjelasan**: Titik belok positif pada kurva spektrum.
-   - **Rumus**: $\sum \mathbf{1}_{|X(f_{i-1})| > |X(f_i)| < |X(f_{i+1})|}$
-   - **Hasil (NO2)**: `6.10000e+01`
-
-15. **`spectral_roll_off`**
-   - **Penjelasan**: Frekuensi roll-off di mana sebagian besar energi spektral terkonsentrasi.
-   - **Rumus**: $f_c \text{ dimana } \sum_{f=0}^{f_c} |X(f)|^2 = 0.95 \sum_{f} |X(f)|^2$
-   - **Hasil (NO2)**: `4.34426e-01`
-
-16. **`spectral_roll_on`**
-   - **Penjelasan**: Frekuensi roll-on tempat sebagian kecil energi (misal 5%) terakumulasi.
-   - **Rumus**: $f_c \text{ dimana } \sum_{f=0}^{f_c} |X(f)|^2 = 0.05 \sum_{f} |X(f)|^2$
-   - **Hasil (NO2)**: `0.00000e+00`
-
-17. **`spectral_skewness`**
-   - **Penjelasan**: Skewness (kemiringan) dari kepadatan daya spektrum.
-   - **Rumus**: $S_s = \frac{\sum (f - C_s)^3 |X(f)|^2}{(\sum (f - C_s)^2 |X(f)|^2)^{3/2}}$
-   - **Hasil (NO2)**: `1.05467e+00`
-
-18. **`spectral_slope`**
-   - **Penjelasan**: Kemiringan dari spektrum daya yang dihitung menggunakan regresi linier.
-   - **Rumus**: $m_s = \frac{\sum (f_i - \bar{f})(|X(f_i)| - \overline{|X(f)|})}{\sum (f_i - \bar{f})^2}$
-   - **Hasil (NO2)**: `-3.35216e-02`
-
-19. **`spectral_spread`**
-   - **Penjelasan**: Sebaran spektrum atau varians frekuensi di sekeliling pusat massa.
-   - **Rumus**: $V_s = \sqrt{\frac{\sum (f_k - C_s)^2 |X(f_k)|}{\sum |X(f_k)|}}$
-   - **Hasil (NO2)**: `1.50384e-01`
-
-20. **`spectral_variation`**
-   - **Penjelasan**: Variasi atau jarak perubahan spektrum pada titik yang berdekatan.
-   - **Rumus**: $V = 1 - \frac{\sum X_{t-1}(f) X_t(f)}{\sqrt{\sum X_{t-1}^2 \sum X_t^2}}$
-   - **Hasil (NO2)**: `2.64122e-01`
-
-21. **`spectrogram_mean_coeff`**
-   - **Penjelasan**: Koefisien magnitudo rata-rata dari matriks spektrogram.
-   - **Rumus**: $\frac{1}{T F} \sum_t \sum_f |S(t, f)|$
-   - **Hasil (NO2)**: `1.21204e-10`
-
-22. **`wavelet_abs_mean`**
-   - **Penjelasan**: Rata-rata magnitudo absolut dari koefisien transformasi wavelet.
-   - **Rumus**: $\mu_w = \frac{1}{N} \sum |W(a,b)|$
-   - **Hasil (NO2)**: `1.83560e-06`
-
-23. **`wavelet_energy`**
-   - **Penjelasan**: Energi total yang terkandung di dalam koefisien wavelet.
-   - **Rumus**: $E_w = \sum |W(a,b)|^2$
-   - **Hasil (NO2)**: `1.42750e-05`
-
-24. **`wavelet_entropy`**
-   - **Penjelasan**: Entropi wavelet, ukuran distribusi sebaran energi di ruang waktu-frekuensi.
-   - **Rumus**: $H_w = -\sum p_j \log p_j, p_j = \frac{E_j}{E_{tot}}$
-   - **Hasil (NO2)**: `2.12394e+00`
-
-25. **`wavelet_std`**
-   - **Penjelasan**: Standar deviasi dari sebaran koefisien wavelet.
-   - **Rumus**: $\sigma_w = \sqrt{\frac{1}{N} \sum (|W(a,b)| - \mu_w)^2}$
-   - **Hasil (NO2)**: `1.41400e-05`
-
-26. **`wavelet_var`**
-   - **Penjelasan**: Varians dari koefisien dispersi wavelet.
-   - **Rumus**: $\sigma_w^2$
-   - **Hasil (NO2)**: `2.24529e-10`
-
----
+Pemeriksaan tanggal pada bagian preprocessing menggunakan rentang ekspektasi `2025-08-31` sampai `2026-08-31` dan output notebook mencatat `2026-08-31` sebagai tanggal yang hilang. Sementara itu, salinan `Polutan_Widang_Linear.csv` yang ada di folder data saat ini berisi tanggal `2025-08-30` sampai `2026-08-30`. Kedua fakta ini menunjukkan rentang input perlu diperiksa sebelum hasil dipakai untuk analisis yang mensyaratkan kalender harian lengkap. Interpolasi berbasis waktu mengisi nilai pada baris yang ada; ia tidak membuat baris untuk tanggal yang tidak ada.
 
 ## Kesimpulan
-Proses preprocessing pada data polutan meliputi:
 
-1. deteksi outlier menggunakan IQR
-2. perubahan outlier menjadi nilai kosong
-3. interpolasi linier untuk mengisi missing value
-4. penyimpanan hasil ke `CO_after.csv`, `SO2_after.csv`, dan `NO2_after.csv`
-5. ekstraksi fitur dengan TSFEL untuk menghasilkan `*_widang_TSFEL.csv`
+Alur notebook yang didokumentasikan di sini adalah:
 
-Hasil akhir dari proses ini adalah data yang lebih bersih, lebih stabil, dan siap untuk tahap analisis lanjutan.
+1. Membentuk dan memeriksa deret waktu harian CO, SO2, dan NO2.
+2. Menandai outlier berdasarkan IQR dan mengimputasinya secara iteratif dengan interpolasi linier, `bfill()`, dan `ffill()` ke berkas `CO_After.csv`, `SO2_After.csv`, dan `NO2_After.csv`.
+3. Membaca tabel gabungan `Polutan_Widang_Linear.csv`, menerapkan pemeriksaan IQR tambahan per polutan, dan mengisi nilai kosong dengan interpolasi waktu.
+4. Menghitung 68 fitur TSFEL untuk setiap polutan dan menyimpan satu baris dengan 204 kolom fitur ke `Widang_Linier.csv`.
 
+Tanggal yang hilang tidak otomatis dibuat oleh langkah-langkah tersebut. Pastikan kelengkapan rentang tanggal secara terpisah sebelum menggunakan hasil untuk pemodelan deret waktu.
