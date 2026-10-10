@@ -1,0 +1,2933 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Klasifikasi Spasial Lahan Sawah dan Non-Sawah &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Tugas/polutan/klasifikasi-sawah';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="lands" href="../dataran/dataran.html" />
+    <link rel="prev" title="Analisis dan Perbandingan Metrik Statistik Polutan (NO2, CO, SO2)" href="hitung.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/profil.jpg" class="logo__image only-light" alt="My sample book - Home"/>
+    <img src="../../_static/profil.jpg" class="logo__image only-dark pst-js-only" alt="My sample book - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Profile
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="polutan.html">Polutan di Kabupaten Tuban</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="bussiness-understanding.html">Business Understanding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-understanding.html">Data Understanding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistik.html">Laporan Analisis Statistika Deskriptif Polutan Udara (NO2)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html">Data Preprocessing dan Ekstraksi Fitur</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poly.html">Data Preprocessing dan Ekstraksi Fitur (Interpolasi Polinomial)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kmeans.html">K-Means Clustering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hitung.html">Analisis dan Perbandingan Metrik Statistik Polutan (NO2, CO, SO2)</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Klasifikasi Spasial Lahan Sawah dan Non-Sawah</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../dataran/dataran.html">lands</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dataran/bussiness-understanding.html">1. Business Understanding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dataran/data-understanding.html">2. Data Understanding &amp; Karakteristik Data Spasial</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../dataran/modeling.html">3. Modeling Klasifikasi (Naive Bayes vs KNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dataran/visualisasi.html">4. Visualisasi Map (Folium)</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/AbidinAja/PSD" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/AbidinAja/PSD/issues/new?title=Issue%20on%20page%20%2FTugas/polutan/klasifikasi-sawah.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Tugas/polutan/klasifikasi-sawah.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Klasifikasi Spasial Lahan Sawah dan Non-Sawah</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalasi-library-yang-digunakan">Instalasi Library Yang Digunakan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#desain-pengambilan-sampel-ground-truth">1. Desain Pengambilan Sampel (Ground Truth)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#akuisisi-citra-sentinel-2a-tif-via-openeo-dan-ekstraksi-fitur">2. Akuisisi Citra Sentinel-2A (<code class="docutils literal notranslate"><span class="pre">.tif</span></code>) via openEO dan Ekstraksi Fitur</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitur-spektral-dan-indeks-turunan-yang-diekstrak">Fitur Spektral dan Indeks Turunan yang Diekstrak:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-evaluasi-klasifikasi-2-kelas-random-forest">3. Hasil Evaluasi Klasifikasi 2 Kelas (Random Forest)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#peta-sebaran-sampel-sawah-dan-non-sawah">4. Peta Sebaran Sampel Sawah dan Non-Sawah</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="klasifikasi-spasial-lahan-sawah-dan-non-sawah">
+<h1>Klasifikasi Spasial Lahan Sawah dan Non-Sawah<a class="headerlink" href="#klasifikasi-spasial-lahan-sawah-dan-non-sawah" title="Link to this heading">#</a></h1>
+<p>Bagian ini mendokumentasikan tahapan akuisisi citra satelit optik <strong>Sentinel-2A (Level-2A)</strong> dalam format GeoTIFF (<code class="docutils literal notranslate"><span class="pre">.tif</span></code>) melalui <strong>openEO</strong>, ekstraksi nilai spektral pada <strong>100 titik sampel</strong> (50 sampel Sawah dan 50 sampel Non-Sawah) yang telah dilabeli melalui <strong>QGIS</strong>, hingga pemodelan klasifikasi biner (2 kelas).</p>
+<section id="instalasi-library-yang-digunakan">
+<h2>Instalasi Library Yang Digunakan<a class="headerlink" href="#instalasi-library-yang-digunakan" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>geopandas
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>openeo
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>scikit-learn
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>folium
+</pre></div>
+</div>
+</section>
+<section id="desain-pengambilan-sampel-ground-truth">
+<h2>1. Desain Pengambilan Sampel (Ground Truth)<a class="headerlink" href="#desain-pengambilan-sampel-ground-truth" title="Link to this heading">#</a></h2>
+<p>Pengambilan sampel dilakukan secara spasial dengan membagi objek pengamatan ke dalam dua kelas seimbang (<em>balanced dataset</em>) dalam format vektor (<code class="docutils literal notranslate"><span class="pre">Shapefile</span></code> / <code class="docutils literal notranslate"><span class="pre">GeoJSON</span></code>):</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Kelas Target</p></th>
+<th class="head text-center"><p>Kode Label</p></th>
+<th class="head text-center"><p>Jumlah Sampel</p></th>
+<th class="head text-left"><p>Karakteristik Objek</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>Sawah</strong></p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td class="text-center"><p>50 Sampel</p></td>
+<td class="text-left"><p>Petak lahan pertanian padi aktif (fase vegetatif, genangan air/tanam, maupun pematangan)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Non-Sawah</strong></p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td class="text-center"><p>50 Sampel</p></td>
+<td class="text-left"><p>Permukiman/bangunan, jalan raya, badan air permanen, dan vegetasi non-pertanian</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Total</strong></p></td>
+<td class="text-center"><p>—</p></td>
+<td class="text-center"><p><strong>100 Sampel</strong></p></td>
+<td class="text-left"><p>Digabungkan menjadi satu <em>GeoDataFrame</em> berproyeksi <code class="docutils literal notranslate"><span class="pre">EPSG:4326</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">geopandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">openeo</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># 1. BACA KEDUA FILE ZIP (SAWAH &amp; NON-SAWAH) DAN BERI LABEL OTOMATIS</span>
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># Sesuaikan nama file zip non-sawah milikmu di baris kedua</span>
+<span class="n">gdf_sawah</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;sawah.zip&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">)</span>
+<span class="n">gdf_nonsawah</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;nonsawah.zip&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">)</span>
+
+<span class="c1"># Beri kolom label secara otomatis</span>
+<span class="n">gdf_sawah</span><span class="p">[</span><span class="s2">&quot;label_teks&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Sawah&quot;</span>
+<span class="n">gdf_sawah</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">gdf_nonsawah</span><span class="p">[</span><span class="s2">&quot;label_teks&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Non-Sawah&quot;</span>
+<span class="n">gdf_nonsawah</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Gabungkan keduanya menjadi 1 GeoDataFrame (50 + 50 = 100 sampel)</span>
+<span class="n">gdf_gabungan</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">gdf_sawah</span><span class="p">,</span> <span class="n">gdf_nonsawah</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">crs</span><span class="o">=</span><span class="s2">&quot;EPSG:4326&quot;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah sampel Sawah     : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">gdf_sawah</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah sampel Non-Sawah : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">gdf_nonsawah</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total sampel gabungan   : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">gdf_gabungan</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># 2. AMBIL BATAS KOORDINAT GABUNGAN (BOUNDING BOX) UNTUK OPENEO</span>
+<span class="c1"># ==============================================================================</span>
+<span class="n">minx</span><span class="p">,</span> <span class="n">miny</span><span class="p">,</span> <span class="n">maxx</span><span class="p">,</span> <span class="n">maxy</span> <span class="o">=</span> <span class="n">gdf_gabungan</span><span class="o">.</span><span class="n">total_bounds</span>
+<span class="n">buffer_deg</span> <span class="o">=</span> <span class="mf">0.005</span>  <span class="c1"># Tambahan margin ~500 meter agar titik di tepi tetap masuk</span>
+
+<span class="n">bbox</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;west&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">minx</span> <span class="o">-</span> <span class="n">buffer_deg</span><span class="p">),</span>
+    <span class="s2">&quot;south&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">miny</span> <span class="o">-</span> <span class="n">buffer_deg</span><span class="p">),</span>
+    <span class="s2">&quot;east&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">maxx</span> <span class="o">+</span> <span class="n">buffer_deg</span><span class="p">),</span>
+    <span class="s2">&quot;north&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">maxy</span> <span class="o">+</span> <span class="n">buffer_deg</span><span class="p">),</span>
+<span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bounding Box Gabungan:&quot;</span><span class="p">,</span> <span class="n">bbox</span><span class="p">)</span>
+
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># 3. KONEKSI KE OPENEO &amp; UNDUH SENTINEL-2A FORMAT GEOTIFF (.tif)</span>
+<span class="c1"># ==============================================================================</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openeo</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;openeo.dataspace.copernicus.eu&quot;</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">authenticate_oidc</span><span class="p">()</span>
+
+<span class="n">datacube</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">load_collection</span><span class="p">(</span>
+    <span class="s2">&quot;SENTINEL2_L2A&quot;</span><span class="p">,</span>
+    <span class="n">spatial_extent</span><span class="o">=</span><span class="n">bbox</span><span class="p">,</span>
+    <span class="n">temporal_extent</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;2026-05-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2026-09-30&quot;</span><span class="p">],</span>  <span class="c1"># Rentang waktu minim awan</span>
+    <span class="n">bands</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">&quot;B02&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;B03&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;B04&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;B08&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;B11&quot;</span><span class="p">,</span>
+    <span class="p">],</span>  <span class="c1"># Blue, Green, Red, NIR, SWIR</span>
+    <span class="n">max_cloud_cover</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Ambil median waktu agar bebas tutupan awan</span>
+<span class="n">composite_s2</span> <span class="o">=</span> <span class="n">datacube</span><span class="o">.</span><span class="n">median_time</span><span class="p">()</span>
+
+<span class="c1"># Unduh menjadi file GeoTIFF (.tif)</span>
+<span class="n">nama_tif</span> <span class="o">=</span> <span class="s2">&quot;sentinel2_sawah_nonsawah.tif&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mengunduh citra Sentinel-2A (.tif)...&quot;</span><span class="p">)</span>
+<span class="n">composite_s2</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">nama_tif</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;GTiff&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Berhasil diunduh: </span><span class="si">{</span><span class="n">nama_tif</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Output:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Jumlah</span> <span class="n">sampel</span> <span class="n">Sawah</span>     <span class="p">:</span> <span class="mi">50</span>
+<span class="n">Jumlah</span> <span class="n">sampel</span> <span class="n">Non</span><span class="o">-</span><span class="n">Sawah</span> <span class="p">:</span> <span class="mi">50</span>
+<span class="n">Total</span> <span class="n">sampel</span> <span class="n">gabungan</span>   <span class="p">:</span> <span class="mi">100</span>
+<span class="n">Bounding</span> <span class="n">Box</span> <span class="n">Gabungan</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;west&#39;</span><span class="p">:</span> <span class="mf">111.87169010000001</span><span class="p">,</span> <span class="s1">&#39;south&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">6.9056517</span><span class="p">,</span> <span class="s1">&#39;east&#39;</span><span class="p">:</span> <span class="mf">111.8930379</span><span class="p">,</span> <span class="s1">&#39;north&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">6.8848906</span><span class="p">}</span>
+<span class="n">Authenticated</span> <span class="n">using</span> <span class="n">refresh</span> <span class="n">token</span><span class="o">.</span>
+<span class="n">Mengunduh</span> <span class="n">citra</span> <span class="n">Sentinel</span><span class="o">-</span><span class="mi">2</span><span class="n">A</span> <span class="p">(</span><span class="o">.</span><span class="n">tif</span><span class="p">)</span><span class="o">...</span>
+<span class="n">Berhasil</span> <span class="n">diunduh</span><span class="p">:</span> <span class="n">sentinel2_sawah_nonsawah</span><span class="o">.</span><span class="n">tif</span>
+</pre></div>
+</div>
+</section>
+<section id="akuisisi-citra-sentinel-2a-tif-via-openeo-dan-ekstraksi-fitur">
+<h2>2. Akuisisi Citra Sentinel-2A (<code class="docutils literal notranslate"><span class="pre">.tif</span></code>) via openEO dan Ekstraksi Fitur<a class="headerlink" href="#akuisisi-citra-sentinel-2a-tif-via-openeo-dan-ekstraksi-fitur" title="Link to this heading">#</a></h2>
+<p>Akuisisi citra dilakukan menggunakan <em>bounding box</em> gabungan dari ke-100 titik sampel pada koleksi <strong><code class="docutils literal notranslate"><span class="pre">SENTINEL2_L2A</span></code></strong> (<em>Bottom-of-Atmosphere Reflectance</em>) dengan batas tutupan awan maksimum <code class="docutils literal notranslate"><span class="pre">&lt;</span> <span class="pre">10%</span></code> dan agregasi temporal <code class="docutils literal notranslate"><span class="pre">median_time()</span></code> untuk menghasilkan komposit citra bebas awan berformat <strong>GeoTIFF (<code class="docutils literal notranslate"><span class="pre">.tif</span></code>)</strong>.</p>
+<section id="fitur-spektral-dan-indeks-turunan-yang-diekstrak">
+<h3>Fitur Spektral dan Indeks Turunan yang Diekstrak:<a class="headerlink" href="#fitur-spektral-dan-indeks-turunan-yang-diekstrak" title="Link to this heading">#</a></h3>
+<ol class="arabic">
+<li><p><strong>Band Spektral Utama:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">B02</span></code> (<em>Blue</em> - 490 nm), <code class="docutils literal notranslate"><span class="pre">B03</span></code> (<em>Green</em> - 560 nm), <code class="docutils literal notranslate"><span class="pre">B04</span></code> (<em>Red</em> - 665 nm) dengan resolusi spasial 10 meter.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">B08</span></code> (<em>Near Infrared / NIR</em> - 842 nm) untuk mendeteksi pantulan klorofil tanaman padi.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">B11</span></code> (<em>Short-Wave Infrared / SWIR</em> - 1610 nm) untuk mendeteksi kelembapan tanah dan genangan air.</p></li>
+</ul>
+</li>
+<li><p><strong>Normalized Difference Vegetation Index (NDVI):</strong></p>
+<div class="math notranslate nohighlight">
+\[\text{NDVI} = \frac{B08 - B04}{B08 + B04}\]</div>
+</li>
+<li><p><strong>Normalized Difference Water Index (NDWI):</strong></p>
+<div class="math notranslate nohighlight">
+\[\text{NDWI} = \frac{B03 - B08}{B03 + B08}\]</div>
+</li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">rasterio</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">confusion_matrix</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="c1"># 1. Buka file .tif Sentinel-2A dan samakan proyeksi koordinat (CRS)</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;sentinel2_sawah_nonsawah.tif&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+  <span class="n">gdf_projected</span> <span class="o">=</span> <span class="n">gdf_gabungan</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">crs</span><span class="p">)</span>
+
+  <span class="c1"># Ambil titik tengah (centroid) dari tiap sampel (mendukung Point maupun Polygon)</span>
+  <span class="n">koordinat_sampel</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">(</span><span class="n">geom</span><span class="o">.</span><span class="n">centroid</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">geom</span><span class="o">.</span><span class="n">centroid</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">geom</span> <span class="ow">in</span> <span class="n">gdf_projected</span><span class="o">.</span><span class="n">geometry</span>
+  <span class="p">]</span>
+
+  <span class="c1"># Ekstrak nilai piksel dari kelima band Sentinel-2A</span>
+  <span class="n">nilai_band</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">koordinat_sampel</span><span class="p">))</span>
+
+<span class="c1"># 2. Buat tabel DataFrame Fitur</span>
+<span class="n">df_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">nilai_band</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;B02&quot;</span><span class="p">,</span> <span class="s2">&quot;B03&quot;</span><span class="p">,</span> <span class="s2">&quot;B04&quot;</span><span class="p">,</span> <span class="s2">&quot;B08&quot;</span><span class="p">,</span> <span class="s2">&quot;B11&quot;</span><span class="p">])</span>
+
+<span class="c1"># 3. Tambahkan fitur indeks vegetasi (NDVI) &amp; indeks air (NDWI)</span>
+<span class="n">df_dataset</span><span class="p">[</span><span class="s2">&quot;NDVI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_dataset</span><span class="p">[</span><span class="s2">&quot;B08&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df_dataset</span><span class="p">[</span><span class="s2">&quot;B04&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span>
+    <span class="n">df_dataset</span><span class="p">[</span><span class="s2">&quot;B08&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">df_dataset</span><span class="p">[</span><span class="s2">&quot;B04&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1e-6</span>
+<span class="p">)</span>
+<span class="n">df_dataset</span><span class="p">[</span><span class="s2">&quot;NDWI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_dataset</span><span class="p">[</span><span class="s2">&quot;B03&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df_dataset</span><span class="p">[</span><span class="s2">&quot;B08&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span>
+    <span class="n">df_dataset</span><span class="p">[</span><span class="s2">&quot;B03&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">df_dataset</span><span class="p">[</span><span class="s2">&quot;B08&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1e-6</span>
+<span class="p">)</span>
+
+<span class="c1"># 4. Masukkan Koordinat &amp; Label Kelas (Sawah = 1, Non-Sawah = 0)</span>
+<span class="n">df_dataset</span><span class="p">[</span><span class="s2">&quot;Longitude&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf_gabungan</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">centroid</span><span class="o">.</span><span class="n">x</span>
+<span class="n">df_dataset</span><span class="p">[</span><span class="s2">&quot;Latitude&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf_gabungan</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">centroid</span><span class="o">.</span><span class="n">y</span>
+<span class="n">df_dataset</span><span class="p">[</span><span class="s2">&quot;Kelas&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf_gabungan</span><span class="p">[</span><span class="s2">&quot;label_teks&quot;</span><span class="p">]</span>
+<span class="n">df_dataset</span><span class="p">[</span><span class="s2">&quot;Target&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf_gabungan</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span>
+
+<span class="c1"># Simpan ke CSV (bisa dipakai juga kalau mau diolah di KNIME)</span>
+<span class="n">df_dataset</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;dataset_100sampel_sawah_nonsawah.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dataset berhasil disimpan ke &#39;dataset_100sampel_sawah_nonsawah.csv&#39;&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_dataset</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># 5. PROSES KLASIFIKASI 2 KELAS (SAWAH VS NON-SAWAH)</span>
+<span class="c1"># ==============================================================================</span>
+<span class="n">fitur_kolom</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;B02&quot;</span><span class="p">,</span> <span class="s2">&quot;B03&quot;</span><span class="p">,</span> <span class="s2">&quot;B04&quot;</span><span class="p">,</span> <span class="s2">&quot;B08&quot;</span><span class="p">,</span> <span class="s2">&quot;B11&quot;</span><span class="p">,</span> <span class="s2">&quot;NDVI&quot;</span><span class="p">,</span> <span class="s2">&quot;NDWI&quot;</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df_dataset</span><span class="p">[</span><span class="n">fitur_kolom</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_dataset</span><span class="p">[</span><span class="s2">&quot;Kelas&quot;</span><span class="p">]</span>
+
+<span class="c1"># Split 76% Training (38 Sawah + 38 Non-Sawah) &amp; 24% Testing (12 Sawah + 12 Non-Sawah)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.24</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span>
+<span class="p">)</span>
+
+<span class="c1"># Latih model Random Forest</span>
+<span class="n">model_rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model_rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Evaluasi pada data uji</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model_rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== HASIL EVALUASI KLASIFIKASI 2 KELAS ===&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi Testing : </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Confusion Matrix:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Classification Report:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><strong>Output:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Dataset</span> <span class="n">berhasil</span> <span class="n">disimpan</span> <span class="n">ke</span> <span class="s1">&#39;dataset_100sampel_sawah_nonsawah.csv&#39;</span>
+</pre></div>
+</div>
+<p><strong>Output:</strong></p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="n">df_ekstraksi_cek_poly</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../Data/sawah/dataset_100sampel_sawah_nonsawah.csv&quot;</span><span class="p">)</span>
+<span class="n">df_ekstraksi_cek_poly</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>B02</th>
+      <th>B03</th>
+      <th>B04</th>
+      <th>B08</th>
+      <th>B11</th>
+      <th>NDVI</th>
+      <th>NDWI</th>
+      <th>Longitude</th>
+      <th>Latitude</th>
+      <th>Kelas</th>
+      <th>Target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>304</td>
+      <td>567</td>
+      <td>291</td>
+      <td>3429</td>
+      <td>1434</td>
+      <td>0.843548</td>
+      <td>-0.716216</td>
+      <td>112.152833</td>
+      <td>-7.030260</td>
+      <td>Sawah</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>289</td>
+      <td>459</td>
+      <td>250</td>
+      <td>3153</td>
+      <td>1205</td>
+      <td>0.853071</td>
+      <td>-0.745847</td>
+      <td>112.154038</td>
+      <td>-7.029563</td>
+      <td>Sawah</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>277</td>
+      <td>506</td>
+      <td>324</td>
+      <td>3534</td>
+      <td>1524</td>
+      <td>0.832037</td>
+      <td>-0.749505</td>
+      <td>112.154886</td>
+      <td>-7.029610</td>
+      <td>Sawah</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>328</td>
+      <td>606</td>
+      <td>420</td>
+      <td>3124</td>
+      <td>1389</td>
+      <td>0.762980</td>
+      <td>-0.675067</td>
+      <td>112.153656</td>
+      <td>-7.030449</td>
+      <td>Sawah</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>349</td>
+      <td>612</td>
+      <td>360</td>
+      <td>2755</td>
+      <td>1378</td>
+      <td>0.768860</td>
+      <td>-0.636472</td>
+      <td>112.155967</td>
+      <td>-7.030698</td>
+      <td>Sawah</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="hasil-evaluasi-klasifikasi-2-kelas-random-forest">
+<h2>3. Hasil Evaluasi Klasifikasi 2 Kelas (Random Forest)<a class="headerlink" href="#hasil-evaluasi-klasifikasi-2-kelas-random-forest" title="Link to this heading">#</a></h2>
+<p>Dataset 100 sampel dibagi menggunakan skema <em>Stratified Train-Test Split</em> dengan proporsi <strong>76% Data Latih (76 sampel: 38 Sawah, 38 Non-Sawah)</strong> dan <strong>24% Data Uji (24 sampel: 12 Sawah, 12 Non-Sawah)</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mcolors</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mpatches</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ConfusionMatrixDisplay</span><span class="p">,</span>
+    <span class="n">accuracy_score</span><span class="p">,</span>
+    <span class="n">classification_report</span><span class="p">,</span>
+    <span class="n">confusion_matrix</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.impute</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleImputer</span>
+
+<span class="c1"># 1. Muat dataset dari CSV</span>
+<span class="n">df_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../Data/sawah/dataset_100sampel_sawah_nonsawah.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># 2. Siapkan fitur dan target; abaikan fitur yang tidak tersedia di CSV</span>
+<span class="n">fitur_kolom</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;B02&quot;</span><span class="p">,</span> <span class="s2">&quot;B03&quot;</span><span class="p">,</span> <span class="s2">&quot;B04&quot;</span><span class="p">,</span> <span class="s2">&quot;B08&quot;</span><span class="p">,</span> <span class="s2">&quot;B11&quot;</span><span class="p">,</span> <span class="s2">&quot;NDVI&quot;</span><span class="p">,</span> <span class="s2">&quot;NDWI&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df_dataset</span><span class="o">.</span><span class="n">columns</span>
+<span class="p">]</span>
+<span class="k">if</span> <span class="s2">&quot;Kelas&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df_dataset</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Kolom target &#39;Kelas&#39; tidak ditemukan di dataset.&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">fitur_kolom</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Tidak ada kolom fitur Sentinel-2 yang ditemukan di dataset.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Target kosong tidak dapat digunakan untuk pelatihan</span>
+<span class="n">df_model</span> <span class="o">=</span> <span class="n">df_dataset</span><span class="p">[</span><span class="n">fitur_kolom</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;Kelas&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_model</span><span class="p">[</span><span class="s2">&quot;Kelas&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_model</span><span class="p">[</span><span class="s2">&quot;Kelas&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;string&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="n">df_model</span> <span class="o">=</span> <span class="n">df_model</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Kelas&quot;</span><span class="p">])</span>
+
+<span class="c1"># Pastikan fitur numerik; nilai tak hingga dan teks tidak valid dianggap sebagai nilai kosong</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df_model</span><span class="p">[</span><span class="n">fitur_kolom</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">replace</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_model</span><span class="p">[</span><span class="s2">&quot;Kelas&quot;</span><span class="p">]</span>
+
+<span class="c1"># Buang fitur yang seluruh nilainya kosong</span>
+<span class="n">fitur_kolom</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">fitur_kolom</span> <span class="k">if</span> <span class="n">X</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()]</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">fitur_kolom</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Semua kolom fitur kosong atau tidak berisi angka.&quot;</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">fitur_kolom</span><span class="p">]</span>
+
+<span class="c1"># 3. Split 76% Training &amp; 24% Testing (76 data latih dan 24 data uji jika tersedia 100 sampel)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.24</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;X_train:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">y_train:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">X_train.shape:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X_train:
+     B02   B03   B04   B08   B11      NDVI      NDWI
+61   762   817   937  1556  2888  0.248295 -0.311420
+22   287   587   261  3711  1727  0.868580 -0.726850
+11   383   690   373  3275  1421  0.795504 -0.651955
+40   274   598   339  2928  1324  0.792470 -0.660805
+27   319   562   299  2917  1443  0.814055 -0.676919
+..   ...   ...   ...   ...   ...       ...       ...
+74  1267  1403  1618  2060  2842  0.120174 -0.189720
+71  1661  1745  1828  2169  2801  0.085314 -0.108329
+3    328   606   420  3124  1389  0.762980 -0.675067
+86   655   787   951  1761  2741  0.298673 -0.382261
+69   947  1284  1226  3299  2702  0.458122 -0.439668
+
+[72 rows x 7 columns]
+
+y_train:
+61    Non-Sawah
+22        Sawah
+11        Sawah
+40        Sawah
+27        Sawah
+        ...    
+74    Non-Sawah
+71    Non-Sawah
+3         Sawah
+86    Non-Sawah
+69    Non-Sawah
+Name: Kelas, Length: 72, dtype: string
+
+X_train.shape:
+(72, 7)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;X_test:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">y_test:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X_test:
+     B02   B03   B04   B08   B11      NDVI      NDWI
+13   275   485   219  4244  1808  0.901860 -0.794883
+35   353   572   378  2587  1102  0.745025 -0.637860
+25   337   610   378  2931  1259  0.771532 -0.655465
+88  1036  1079  1179  1942  3128  0.244473 -0.285667
+89   708   893   999  2430  2629  0.417323 -0.462534
+6    298   537   265  3956  1793  0.874437 -0.760961
+72   718   891   973  2338  2685  0.412262 -0.448126
+7    297   558   299  3403  1603  0.838466 -0.718253
+79   933  1225  1319  2880  3096  0.371755 -0.403167
+19   189   382   147  4245  1402  0.933060 -0.834882
+28   399   701   522  1623   789  0.513287 -0.396730
+64  1089  1229  1317  1386  1562  0.025527 -0.060038
+26   252   405   204  3901  1537  0.900609 -0.811890
+73   552   714   731  2257  2505  0.510710 -0.519354
+68   701   864   988  1640  2694  0.248097 -0.309904
+48   315   598   365  2817  1566  0.770585 -0.649780
+8    224   439   208  3252  1221  0.879769 -0.762124
+57   654   802  1053  1823  2690  0.267733 -0.388952
+97   554   771   718  2450  1944  0.546717 -0.521267
+70  1358  1585  1584  2603  2829  0.243372 -0.243075
+60  1274  1398  1492  2021  2950  0.150584 -0.182217
+93   560   688   802  1423  2345  0.279101 -0.348176
+16   235   448   223  3415  1276  0.877405 -0.768056
+1    289   459   250  3153  1205  0.853071 -0.745847
+
+y_test:
+13        Sawah
+35        Sawah
+25        Sawah
+88    Non-Sawah
+89    Non-Sawah
+6         Sawah
+72    Non-Sawah
+7         Sawah
+79    Non-Sawah
+19        Sawah
+28        Sawah
+64    Non-Sawah
+26        Sawah
+73    Non-Sawah
+68    Non-Sawah
+48        Sawah
+8         Sawah
+57    Non-Sawah
+97    Non-Sawah
+70    Non-Sawah
+60    Non-Sawah
+93    Non-Sawah
+16        Sawah
+1         Sawah
+Name: Kelas, dtype: string
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Buang fitur yang kosong seluruhnya pada data latih, lalu isi nilai kosong</span>
+<span class="c1"># menggunakan median data latih agar tidak terjadi kebocoran data.</span>
+<span class="n">fitur_kolom</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">fitur_kolom</span> <span class="k">if</span> <span class="n">X_train</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()]</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">fitur_kolom</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Semua fitur pada data latih kosong; model tidak dapat dilatih.&quot;</span><span class="p">)</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">fitur_kolom</span><span class="p">]</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">[</span><span class="n">fitur_kolom</span><span class="p">]</span>
+<span class="n">imputer</span> <span class="o">=</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">)</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">imputer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">imputer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># 4. Latih model Random Forest tanpa nilai NaN</span>
+<span class="n">model_rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model_rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model_rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi Testing : </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Confusion Matrix:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Classification Report:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Akurasi Testing : 100.00%
+
+Confusion Matrix:
+ [[12  0]
+ [ 0 12]]
+
+Classification Report:
+               precision    recall  f1-score   support
+
+   Non-Sawah       1.00      1.00      1.00        12
+       Sawah       1.00      1.00      1.00        12
+
+    accuracy                           1.00        24
+   macro avg       1.00      1.00      1.00        24
+weighted avg       1.00      1.00      1.00        24
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ==============================================================================</span>
+<span class="c1"># A. VISUALISASI CONFUSION MATRIX &amp; FEATURE IMPORTANCE</span>
+<span class="c1"># ==============================================================================</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+
+<span class="c1"># 1. Plot Confusion Matrix</span>
+<span class="n">ConfusionMatrixDisplay</span><span class="o">.</span><span class="n">from_predictions</span><span class="p">(</span>
+    <span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Greens&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Confusion Matrix (Data Uji </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span><span class="si">}</span><span class="s2"> Sampel)&quot;</span><span class="p">)</span>
+
+<span class="c1"># 2. Plot Tingkat Kepentingan Fitur (Band &amp; Indeks Spektral)</span>
+<span class="n">importances</span> <span class="o">=</span> <span class="n">model_rf</span><span class="o">.</span><span class="n">feature_importances_</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">importances</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span>
+    <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)),</span>
+    <span class="n">importances</span><span class="p">[</span><span class="n">indices</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#2ecc71&quot;</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="n">fitur_kolom</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Nilai Kepentingan (Importance)&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Kontribusi Fitur Spektral Sentinel-2A&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/2883a968e23407d085795573e875f626f48dfecf0ee5357a91397fd586bdeb5f.png" src="../../_images/2883a968e23407d085795573e875f626f48dfecf0ee5357a91397fd586bdeb5f.png" />
+</div>
+</div>
+</section>
+<section id="peta-sebaran-sampel-sawah-dan-non-sawah">
+<h2>4. Peta Sebaran Sampel Sawah dan Non-Sawah<a class="headerlink" href="#peta-sebaran-sampel-sawah-dan-non-sawah" title="Link to this heading">#</a></h2>
+<p>Peta interaktif berikut menampilkan titik sampel berdasarkan label pada dataset: <strong>Sawah</strong> berwarna hijau dan <strong>Non-Sawah</strong> berwarna merah. Gunakan kontrol layer di kanan atas peta untuk menampilkan atau menyembunyikan tiap kelas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">folium</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+
+<span class="c1"># Pastikan dataset memiliki label dan koordinat geografis.</span>
+<span class="n">kolom_peta</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;Latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;Kelas&quot;</span><span class="p">]</span>
+<span class="n">kolom_tidak_ada</span> <span class="o">=</span> <span class="p">[</span><span class="n">kolom</span> <span class="k">for</span> <span class="n">kolom</span> <span class="ow">in</span> <span class="n">kolom_peta</span> <span class="k">if</span> <span class="n">kolom</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df_dataset</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">kolom_tidak_ada</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kolom untuk peta tidak ditemukan: </span><span class="si">{</span><span class="n">kolom_tidak_ada</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">df_peta</span> <span class="o">=</span> <span class="n">df_dataset</span><span class="p">[</span><span class="n">kolom_peta</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_peta</span><span class="p">[</span><span class="s2">&quot;Longitude&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df_peta</span><span class="p">[</span><span class="s2">&quot;Longitude&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+<span class="n">df_peta</span><span class="p">[</span><span class="s2">&quot;Latitude&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df_peta</span><span class="p">[</span><span class="s2">&quot;Latitude&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
+<span class="n">df_peta</span> <span class="o">=</span> <span class="n">df_peta</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="n">kolom_peta</span><span class="p">)</span>
+<span class="n">df_peta</span> <span class="o">=</span> <span class="n">df_peta</span><span class="p">[</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">df_peta</span><span class="p">[</span><span class="s2">&quot;Longitude&quot;</span><span class="p">])</span>
+    <span class="o">&amp;</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">df_peta</span><span class="p">[</span><span class="s2">&quot;Latitude&quot;</span><span class="p">])</span>
+    <span class="o">&amp;</span> <span class="n">df_peta</span><span class="p">[</span><span class="s2">&quot;Longitude&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
+    <span class="o">&amp;</span> <span class="n">df_peta</span><span class="p">[</span><span class="s2">&quot;Latitude&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="n">warna_kelas</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Sawah&quot;</span><span class="p">:</span> <span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="s2">&quot;Non-Sawah&quot;</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">}</span>
+<span class="n">kelas_tidak_dikenal</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df_peta</span><span class="p">[</span><span class="s2">&quot;Kelas&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">warna_kelas</span><span class="p">))</span>
+<span class="k">if</span> <span class="n">kelas_tidak_dikenal</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Label kelas tidak dikenali: </span><span class="si">{</span><span class="n">kelas_tidak_dikenal</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">df_peta</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Tidak ada baris dengan koordinat valid untuk ditampilkan pada peta.&quot;</span><span class="p">)</span>
+
+<span class="n">peta</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span>
+    <span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="n">df_peta</span><span class="p">[</span><span class="s2">&quot;Latitude&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">df_peta</span><span class="p">[</span><span class="s2">&quot;Longitude&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()],</span>
+    <span class="n">zoom_start</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span>
+    <span class="n">tiles</span><span class="o">=</span><span class="s2">&quot;OpenStreetMap&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">kelas</span><span class="p">,</span> <span class="n">warna</span> <span class="ow">in</span> <span class="n">warna_kelas</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">layer</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">FeatureGroup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">kelas</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">data_kelas</span> <span class="o">=</span> <span class="n">df_peta</span><span class="p">[</span><span class="n">df_peta</span><span class="p">[</span><span class="s2">&quot;Kelas&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">kelas</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">sampel</span> <span class="ow">in</span> <span class="n">data_kelas</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">folium</span><span class="o">.</span><span class="n">CircleMarker</span><span class="p">(</span>
+            <span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="n">sampel</span><span class="p">[</span><span class="s2">&quot;Latitude&quot;</span><span class="p">],</span> <span class="n">sampel</span><span class="p">[</span><span class="s2">&quot;Longitude&quot;</span><span class="p">]],</span>
+            <span class="n">radius</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="n">warna</span><span class="p">,</span>
+            <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">fill_color</span><span class="o">=</span><span class="n">warna</span><span class="p">,</span>
+            <span class="n">fill_opacity</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+            <span class="n">tooltip</span><span class="o">=</span><span class="n">kelas</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">peta</span><span class="p">)</span>
+
+<span class="n">folium</span><span class="o">.</span><span class="n">LayerControl</span><span class="p">()</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">peta</span><span class="p">)</span>
+<span class="n">peta</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;peta_sampel_sawah_nonsawah.html&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">peta</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -> Trust Notebook</span><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    
+    &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://code.jquery.com/jquery-3.7.1.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js&quot;&gt;&lt;/script&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css&quot;/&gt;
+    
+            &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
+            &lt;style&gt;
+                #map_fc0e02e52f782ae4cd3e4c99370013ab {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            &lt;/style&gt;
+
+            &lt;style&gt;html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            &lt;/style&gt;
+
+            &lt;style&gt;#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            &lt;/style&gt;
+
+            &lt;script&gt;
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            &lt;/script&gt;
+
+        
+&lt;/head&gt;
+&lt;body&gt;
+    
+    
+            &lt;div class=&quot;folium-map&quot; id=&quot;map_fc0e02e52f782ae4cd3e4c99370013ab&quot; &gt;&lt;/div&gt;
+        
+&lt;/body&gt;
+&lt;script&gt;
+    
+    
+            var map_fc0e02e52f782ae4cd3e4c99370013ab = L.map(
+                &quot;map_fc0e02e52f782ae4cd3e4c99370013ab&quot;,
+                {
+                    center: [-7.030093791407624, 112.14812500197938],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  &quot;zoom&quot;: 14,
+  &quot;zoomControl&quot;: true,
+  &quot;preferCanvas&quot;: false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_4e1946a3281eb4a08d325934e0faa275 = L.tileLayer(
+                &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
+                {
+  &quot;minZoom&quot;: 0,
+  &quot;maxZoom&quot;: 19,
+  &quot;maxNativeZoom&quot;: 19,
+  &quot;noWrap&quot;: false,
+  &quot;attribution&quot;: &quot;\u0026copy; \u003ca href=\&quot;https://www.openstreetmap.org/copyright\&quot;\u003eOpenStreetMap\u003c/a\u003e contributors&quot;,
+  &quot;subdomains&quot;: &quot;abc&quot;,
+  &quot;detectRetina&quot;: false,
+  &quot;tms&quot;: false,
+  &quot;opacity&quot;: 1,
+}
+
+            );
+        
+    
+            tile_layer_4e1946a3281eb4a08d325934e0faa275.addTo(map_fc0e02e52f782ae4cd3e4c99370013ab);
+        
+    
+            var feature_group_84db4978f0ac66c549ac9c62e87099a1 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_1a9566000772b32c83288f0218fa4bd1 = L.circleMarker(
+                [-7.030259760689814, 112.15283332083187],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_1a9566000772b32c83288f0218fa4bd1.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_7f93e8eb065f358dc9b8d3d7d9f3a905 = L.circleMarker(
+                [-7.029562580176792, 112.15403833540005],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_7f93e8eb065f358dc9b8d3d7d9f3a905.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_cae389c5b4b5b856c3c12ee1cb5f3441 = L.circleMarker(
+                [-7.029609517837662, 112.15488551564694],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_cae389c5b4b5b856c3c12ee1cb5f3441.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_58ff8d60cddfebd390a5661aa6e6b1ae = L.circleMarker(
+                [-7.030448539167448, 112.15365646354212],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_58ff8d60cddfebd390a5661aa6e6b1ae.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_9e7da4e175a2d178f540d527b1752dda = L.circleMarker(
+                [-7.030697634950193, 112.15596674506212],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_9e7da4e175a2d178f540d527b1752dda.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_9e6c7a1e5b02425f344235fb3dba7ef6 = L.circleMarker(
+                [-7.0311049636873975, 112.15511860557262],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_9e6c7a1e5b02425f344235fb3dba7ef6.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_cb2eb4cb968b42f73f2606ba12103138 = L.circleMarker(
+                [-7.032059119146704, 112.1533083704316],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_cb2eb4cb968b42f73f2606ba12103138.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_c67d5d4077f493361d79cd039bddd437 = L.circleMarker(
+                [-7.031957897789348, 112.15397045291895],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_c67d5d4077f493361d79cd039bddd437.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_cc219d8bbd265607577e67b26c321359 = L.circleMarker(
+                [-7.031965419523168, 112.15269892046514],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_cc219d8bbd265607577e67b26c321359.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_35fa3d4ba6656b65f0099030c4e1df4d = L.circleMarker(
+                [-7.032711307432279, 112.15202631876087],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_35fa3d4ba6656b65f0099030c4e1df4d.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_b8beb282bde133b1d40643e7459c3f55 = L.circleMarker(
+                [-7.028998939412385, 112.15306235095592],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_b8beb282bde133b1d40643e7459c3f55.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_0c6f607e630d92244c8ea0968f35f0b4 = L.circleMarker(
+                [-7.032828995300349, 112.1499044157922],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_0c6f607e630d92244c8ea0968f35f0b4.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_c57c2234a0f11f61f1949c1589520290 = L.circleMarker(
+                [-7.0322218444005005, 112.15074585532696],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_c57c2234a0f11f61f1949c1589520290.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_7b5727f2e5f64a5be2a637f65539b229 = L.circleMarker(
+                [-7.031844519563445, 112.1509690001524],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_7b5727f2e5f64a5be2a637f65539b229.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_256b7a15ab90bce2aecd7d39b3408952 = L.circleMarker(
+                [-7.031302392120029, 112.1516728365816],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_256b7a15ab90bce2aecd7d39b3408952.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_02131bf145150a2cb383bd59cae7a9b3 = L.circleMarker(
+                [-7.033824998770847, 112.1530128177451],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_02131bf145150a2cb383bd59cae7a9b3.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_c5e81e5cae4f60fb9d149216056f599b = L.circleMarker(
+                [-7.032655051654133, 112.15409024672704],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_c5e81e5cae4f60fb9d149216056f599b.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_1bd927aa26034f228e286574b205736d = L.circleMarker(
+                [-7.033725621065683, 112.1516310930802],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_1bd927aa26034f228e286574b205736d.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_236c8174dd5bc0cf36d4ccc462643381 = L.circleMarker(
+                [-7.034048555731976, 112.1497884224618],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_236c8174dd5bc0cf36d4ccc462643381.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_494733313b821b83eb8e2476c0b5b311 = L.circleMarker(
+                [-7.034806135402199, 112.14912735787826],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_494733313b821b83eb8e2476c0b5b311.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_cf220230e478a7ca2c40220d51085ae8 = L.circleMarker(
+                [-7.033447420026766, 112.1500978084611],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_cf220230e478a7ca2c40220d51085ae8.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_f08734a7d2c3313148e2e5a7ca0d44f9 = L.circleMarker(
+                [-7.031935400188113, 112.15492676686812],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_f08734a7d2c3313148e2e5a7ca0d44f9.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_06b192ebb47ffda60cd23492f289051b = L.circleMarker(
+                [-7.033311755728766, 112.15392623816612],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_06b192ebb47ffda60cd23492f289051b.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_e1b41d58aa71fba5006691e3e5f3f675 = L.circleMarker(
+                [-7.0324557468340245, 112.155151965762],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_e1b41d58aa71fba5006691e3e5f3f675.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_76dd5487446b718f45c45cac700a6c4f = L.circleMarker(
+                [-7.032647306505292, 112.15641398285509],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_76dd5487446b718f45c45cac700a6c4f.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_d1b6464b00277c4f11aabbc85fa8dffa = L.circleMarker(
+                [-7.028576659636059, 112.15414389740556],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_d1b6464b00277c4f11aabbc85fa8dffa.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_49244fb194ce2e022058a1860f760b6f = L.circleMarker(
+                [-7.028449702772494, 112.1551148893212],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_49244fb194ce2e022058a1860f760b6f.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_cc87b422d90a6bdd2159ce9d4602c98c = L.circleMarker(
+                [-7.034318278273324, 112.15175779541448],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_cc87b422d90a6bdd2159ce9d4602c98c.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_0f3d241a435809e414d5f4f80d4451ed = L.circleMarker(
+                [-7.034997665326869, 112.15218242456768],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_0f3d241a435809e414d5f4f80d4451ed.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_ecff01c7692270cc09fd5cc8448d1a57 = L.circleMarker(
+                [-7.034972920969301, 112.15399008830047],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_ecff01c7692270cc09fd5cc8448d1a57.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_26b10eeeb98de2b4fc49314ab47a2d2b = L.circleMarker(
+                [-7.03246826501992, 112.149263407824],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_26b10eeeb98de2b4fc49314ab47a2d2b.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_38c7941e6dec6e9319cf44546f0a1913 = L.circleMarker(
+                [-7.029893322274428, 112.14306898768857],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_38c7941e6dec6e9319cf44546f0a1913.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_95aea30b71085936df19ff8254e8199f = L.circleMarker(
+                [-7.029594631212592, 112.1433440956534],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_95aea30b71085936df19ff8254e8199f.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_bc81edb7a74413686b70037711ae9376 = L.circleMarker(
+                [-7.029918850993468, 112.1434509126968],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_bc81edb7a74413686b70037711ae9376.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_1ef8262bb757cf589a102968e3aebe96 = L.circleMarker(
+                [-7.030315747781984, 112.14312996292516],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_1ef8262bb757cf589a102968e3aebe96.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_70e40b8be3e81c668e7ae9c55fd5c99e = L.circleMarker(
+                [-7.030369929030287, 112.143783538434],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_70e40b8be3e81c668e7ae9c55fd5c99e.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_ef27bfc6e760f7716bace1c74350c319 = L.circleMarker(
+                [-7.030075677232746, 112.14458135531144],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_ef27bfc6e760f7716bace1c74350c319.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_222edfda4a8d8e832e0e22da05247d84 = L.circleMarker(
+                [-7.030006717080817, 112.14381709122334],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_222edfda4a8d8e832e0e22da05247d84.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_bc700a959ed775e64548d2c3d7d28da0 = L.circleMarker(
+                [-7.03004413837611, 112.14414276670348],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_bc700a959ed775e64548d2c3d7d28da0.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_91acb74755babcb9b0b14a491d579240 = L.circleMarker(
+                [-7.029738779342605, 112.14384795383056],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_91acb74755babcb9b0b14a491d579240.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_a067b90fac59a9b9f2a504bfeec09492 = L.circleMarker(
+                [-7.028694272717235, 112.14290331671675],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_a067b90fac59a9b9f2a504bfeec09492.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_b6ac142b8e371ba6f14b5dbacb9df237 = L.circleMarker(
+                [-7.028673442272179, 112.14331908965198],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_b6ac142b8e371ba6f14b5dbacb9df237.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_31882cbeb02af5961fef7a5bc6d58d73 = L.circleMarker(
+                [-7.028961425865135, 112.14325623932336],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_31882cbeb02af5961fef7a5bc6d58d73.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_1de638b2c1399207035bde7f192ff82e = L.circleMarker(
+                [-7.029197095797276, 112.1432156749567],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_1de638b2c1399207035bde7f192ff82e.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_d7aff407c3ad55257119d37b7f546015 = L.circleMarker(
+                [-7.029082435145686, 112.1439744720139],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_d7aff407c3ad55257119d37b7f546015.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_d0a6176fafdc92d3ee8274404c6e64a0 = L.circleMarker(
+                [-7.029384249600448, 112.14388128330066],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_d0a6176fafdc92d3ee8274404c6e64a0.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_500052eea8e394df755be1f0d7a20458 = L.circleMarker(
+                [-7.027673023307826, 112.14385892163922],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_500052eea8e394df755be1f0d7a20458.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_e342103d0b582dac4273aaae138c61a4 = L.circleMarker(
+                [-7.028022997715415, 112.14386671880368],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_e342103d0b582dac4273aaae138c61a4.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_0ff17732a4b6521303829c05aa938d23 = L.circleMarker(
+                [-7.028235987097961, 112.14386134007916],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;green&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;green&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_84db4978f0ac66c549ac9c62e87099a1);
+        
+    
+            circle_marker_0ff17732a4b6521303829c05aa938d23.bindTooltip(
+                `&lt;div&gt;
+                     Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            feature_group_84db4978f0ac66c549ac9c62e87099a1.addTo(map_fc0e02e52f782ae4cd3e4c99370013ab);
+        
+    
+            var feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_80d3e45970a45d2cb6239274bf7bd600 = L.circleMarker(
+                [-7.028354773376854, 112.14757857936736],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_80d3e45970a45d2cb6239274bf7bd600.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_dd4d78936ddb2bc42c078cd2d1daddb3 = L.circleMarker(
+                [-7.028071452141499, 112.1474874838748],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_dd4d78936ddb2bc42c078cd2d1daddb3.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_b92a6feae34eacd9a11bc2bd7f66c8a9 = L.circleMarker(
+                [-7.028082737076827, 112.14685171103598],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_b92a6feae34eacd9a11bc2bd7f66c8a9.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_de688751dbe28fe505860e37d49d0c34 = L.circleMarker(
+                [-7.0293136133896486, 112.14795220848109],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_de688751dbe28fe505860e37d49d0c34.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_123793614330ecb713c511cb2057c81d = L.circleMarker(
+                [-7.028011368544838, 112.1481970247567],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_123793614330ecb713c511cb2057c81d.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_a1bc5127b9a061aa71fa05d70dcdadda = L.circleMarker(
+                [-7.028555199365269, 112.14709641312264],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_a1bc5127b9a061aa71fa05d70dcdadda.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_956ecbd5c9859ea84fe6b9f9709600e0 = L.circleMarker(
+                [-7.030417585210172, 112.14493853767368],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_956ecbd5c9859ea84fe6b9f9709600e0.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_8f7e527710f87181dcdb0bfa12b3210a = L.circleMarker(
+                [-7.029406873791009, 112.1456237734944],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_8f7e527710f87181dcdb0bfa12b3210a.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_8b0591f93b11d1c171e471765f9fdcb3 = L.circleMarker(
+                [-7.028951194175939, 112.14687304366088],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_8b0591f93b11d1c171e471765f9fdcb3.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_1d026f130bae8e16afe29cde61c4c8b3 = L.circleMarker(
+                [-7.029561310906367, 112.14669717603124],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_1d026f130bae8e16afe29cde61c4c8b3.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_e69b30a299d23219755ce48e4cf0a220 = L.circleMarker(
+                [-7.030229445349089, 112.14575572891938],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_e69b30a299d23219755ce48e4cf0a220.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_05ba121401464744f760c3f8c3e0b800 = L.circleMarker(
+                [-7.029394327493077, 112.1491912811275],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_05ba121401464744f760c3f8c3e0b800.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_0bcb8ea65b05cdb7ce2fa935eef0f4f7 = L.circleMarker(
+                [-7.030116222410557, 112.1475275318526],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_0bcb8ea65b05cdb7ce2fa935eef0f4f7.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_7a9505a9ad413501254fe2e69473fe95 = L.circleMarker(
+                [-7.028255364740208, 112.14941912192036],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_7a9505a9ad413501254fe2e69473fe95.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_f3a635d7d65ffb355c299d99b66c5d37 = L.circleMarker(
+                [-7.028803442085271, 112.14573900473812],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_f3a635d7d65ffb355c299d99b66c5d37.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_59e48060fb370c130dd6c34880f76d12 = L.circleMarker(
+                [-7.033772359891902, 112.1458149466854],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_59e48060fb370c130dd6c34880f76d12.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_cd1043ccb217a459a9143a4768f6d204 = L.circleMarker(
+                [-7.034197000042993, 112.14524149777316],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_cd1043ccb217a459a9143a4768f6d204.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_5f4119762f81d4e74e264937b3629e35 = L.circleMarker(
+                [-7.028566933734483, 112.1486721671546],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_5f4119762f81d4e74e264937b3629e35.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_62920773346838b2db3d11c3b30e37da = L.circleMarker(
+                [-7.0299253105485215, 112.14821354780148],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_62920773346838b2db3d11c3b30e37da.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_470e50a46b460859e513ffd20a5e4f3e = L.circleMarker(
+                [-7.028856880507385, 112.14951337485677],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_470e50a46b460859e513ffd20a5e4f3e.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_b94f66ea29a3e7fa1e840daf5c30b36b = L.circleMarker(
+                [-7.027585444462162, 112.14581134306036],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_b94f66ea29a3e7fa1e840daf5c30b36b.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_345b59a2b29e188e4cc2139efea2243c = L.circleMarker(
+                [-7.02749156728199, 112.1450672913323],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_345b59a2b29e188e4cc2139efea2243c.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_eb5c497db86dc6379f7c3d92dd6b431a = L.circleMarker(
+                [-7.030925437015215, 112.14493835720612],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_eb5c497db86dc6379f7c3d92dd6b431a.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_9b80ece5aa807a481e0873f8cb655693 = L.circleMarker(
+                [-7.030262194195372, 112.14680675913944],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_9b80ece5aa807a481e0873f8cb655693.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_febee55ab841adfcd7b403e01d1ca847 = L.circleMarker(
+                [-7.030115964386599, 112.14940783769852],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_febee55ab841adfcd7b403e01d1ca847.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_fad7b1f302666153567d2d2ba9d370e2 = L.circleMarker(
+                [-7.02949097827571, 112.14983510415766],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_fad7b1f302666153567d2d2ba9d370e2.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_8acfb9cf733922b7bcd1ba6569550eeb = L.circleMarker(
+                [-7.030121970349805, 112.1486739522822],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_8acfb9cf733922b7bcd1ba6569550eeb.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_4cfc416bfa294294c72fe5f8f951680c = L.circleMarker(
+                [-7.02911178196636, 112.14759561981506],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_4cfc416bfa294294c72fe5f8f951680c.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_cf4be87bf9ee1dc92850675ef94728ba = L.circleMarker(
+                [-7.02937770280275, 112.1486535919004],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_cf4be87bf9ee1dc92850675ef94728ba.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_09fb77bcec1778c7e763237591c2cdc0 = L.circleMarker(
+                [-7.030562484543623, 112.14989543574116],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_09fb77bcec1778c7e763237591c2cdc0.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_165ea08002ab10f2d1ab499d99f0f733 = L.circleMarker(
+                [-7.027192917981505, 112.14400164725078],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_165ea08002ab10f2d1ab499d99f0f733.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_effceb2c35f3fc9771f63a1be8786fca = L.circleMarker(
+                [-7.029310081665222, 112.14490028500704],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_effceb2c35f3fc9771f63a1be8786fca.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_9c00a5030f7072cd784af367b1f70904 = L.circleMarker(
+                [-7.024137858216512, 112.14577775694866],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_9c00a5030f7072cd784af367b1f70904.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_d5e6acfe2911dca6d31e12ac87269004 = L.circleMarker(
+                [-7.025732479700008, 112.14489249205693],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_d5e6acfe2911dca6d31e12ac87269004.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_12411351d9ee71de9c71b46375024f3e = L.circleMarker(
+                [-7.02653808480489, 112.1450308624111],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_12411351d9ee71de9c71b46375024f3e.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_bfc13c4e441e6b1416a8c9ef9879bd2e = L.circleMarker(
+                [-7.03117786996619, 112.14568672299252],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_bfc13c4e441e6b1416a8c9ef9879bd2e.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_2be10693eee66fb7e31b591293d70bfa = L.circleMarker(
+                [-7.030729594106949, 112.144219122274],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_2be10693eee66fb7e31b591293d70bfa.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_9683a9ef79b1485908ac32ece7843298 = L.circleMarker(
+                [-7.0209655628988905, 112.1428848198572],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_9683a9ef79b1485908ac32ece7843298.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_e9da57193f062a74731c16e29808118f = L.circleMarker(
+                [-7.027734218692569, 112.14424985477932],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_e9da57193f062a74731c16e29808118f.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_3277420ec0d493e83891cbcd20548bc1 = L.circleMarker(
+                [-7.028318630713112, 112.14991168840096],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_3277420ec0d493e83891cbcd20548bc1.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_240d643f9e6159bdd89e21cd9d3a8644 = L.circleMarker(
+                [-7.029360865664739, 112.15098309595746],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_240d643f9e6159bdd89e21cd9d3a8644.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_edc0326a1278f8fda852d7ea6ac51f9b = L.circleMarker(
+                [-7.03167831073905, 112.14510550802214],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_edc0326a1278f8fda852d7ea6ac51f9b.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_c69424a6e4e710640e3922d4e52e1968 = L.circleMarker(
+                [-7.031316392952413, 112.14436829303632],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_c69424a6e4e710640e3922d4e52e1968.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_e977334fd2f8fecc74c67ebf82f6c313 = L.circleMarker(
+                [-7.0302031393821816, 112.14629891535044],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_e977334fd2f8fecc74c67ebf82f6c313.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_9576e6579d355f3317714a423ccf8b94 = L.circleMarker(
+                [-7.022079597085545, 112.14433630953653],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_9576e6579d355f3317714a423ccf8b94.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_0321be2765f208bb32c2af7ea84921eb = L.circleMarker(
+                [-7.031978447049218, 112.14574473440908],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_0321be2765f208bb32c2af7ea84921eb.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            var circle_marker_db7b858fa4e339f5e058e60bf4d09b95 = L.circleMarker(
+                [-7.032563365503986, 112.14575820383595],
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.8, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 6, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef);
+        
+    
+            circle_marker_db7b858fa4e339f5e058e60bf4d09b95.bindTooltip(
+                `&lt;div&gt;
+                     Non-Sawah
+                 &lt;/div&gt;`,
+                {
+  &quot;sticky&quot;: true,
+}
+            );
+        
+    
+            feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef.addTo(map_fc0e02e52f782ae4cd3e4c99370013ab);
+        
+    
+            var layer_control_368ba34981e57e10a04fe3654001476c_layers = {
+                base_layers : {
+                    &quot;openstreetmap&quot; : tile_layer_4e1946a3281eb4a08d325934e0faa275,
+                },
+                overlays :  {
+                    &quot;Sawah&quot; : feature_group_84db4978f0ac66c549ac9c62e87099a1,
+                    &quot;Non-Sawah&quot; : feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef,
+                },
+            };
+            let layer_control_368ba34981e57e10a04fe3654001476c = L.control.layers(
+                layer_control_368ba34981e57e10a04fe3654001476c_layers.base_layers,
+                layer_control_368ba34981e57e10a04fe3654001476c_layers.overlays,
+                {
+  &quot;position&quot;: &quot;topright&quot;,
+  &quot;collapsed&quot;: true,
+  &quot;autoZIndex&quot;: true,
+}
+            ).addTo(map_fc0e02e52f782ae4cd3e4c99370013ab);
+
+        
+    
+            tile_layer_4e1946a3281eb4a08d325934e0faa275.addTo(map_fc0e02e52f782ae4cd3e4c99370013ab);
+        
+    
+            feature_group_84db4978f0ac66c549ac9c62e87099a1.addTo(map_fc0e02e52f782ae4cd3e4c99370013ab);
+        
+    
+            feature_group_adf28d3c5f31ed8c5d2ac4c7fe979cef.addTo(map_fc0e02e52f782ae4cd3e4c99370013ab);
+        
+&lt;/script&gt;
+&lt;/html&gt;" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div></div></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Tugas\polutan"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="hitung.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Analisis dan Perbandingan Metrik Statistik Polutan (NO2, CO, SO2)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../dataran/dataran.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">lands</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalasi-library-yang-digunakan">Instalasi Library Yang Digunakan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#desain-pengambilan-sampel-ground-truth">1. Desain Pengambilan Sampel (Ground Truth)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#akuisisi-citra-sentinel-2a-tif-via-openeo-dan-ekstraksi-fitur">2. Akuisisi Citra Sentinel-2A (<code class="docutils literal notranslate"><span class="pre">.tif</span></code>) via openEO dan Ekstraksi Fitur</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitur-spektral-dan-indeks-turunan-yang-diekstrak">Fitur Spektral dan Indeks Turunan yang Diekstrak:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-evaluasi-klasifikasi-2-kelas-random-forest">3. Hasil Evaluasi Klasifikasi 2 Kelas (Random Forest)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#peta-sebaran-sampel-sawah-dan-non-sawah">4. Peta Sebaran Sampel Sawah dan Non-Sawah</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
