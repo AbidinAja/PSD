@@ -21,4 +21,5 @@ chapters:
   - file: Tugas/dataran/data-preprocessing
   - file: Tugas/dataran/modeling
   - file: Tugas/dataran/visualisasi
+  - file: Tugas/dataran/deployment
 
