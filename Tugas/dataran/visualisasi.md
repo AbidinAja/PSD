@@ -488,7 +488,7 @@ sns.heatmap(
     annot_kws={"size": 9.5, "weight": "bold"},
     cbar_kws={"shrink": 0.82, "label": "Jumlah Sampel Piksel"}
 )
-plt.title("Confusion Matrix - K-Nearest Neighbors (KNN, k=5)\nData Uji 127.195 Piksel (Akurasi 87,5%)", 
+plt.title("Confusion Matrix - K-Nearest Neighbors (KNN, k=5)\nData Uji 127.195 Piksel dari 635974 piksel (Akurasi 87,5%)", 
           fontsize=12, fontweight="bold", color="#18232F", pad=15)
 plt.xlabel("Hasil Prediksi Model", fontsize=10.5, fontweight="600", color="#334155", labelpad=10)
 plt.ylabel("Kelas Ground Truth (Aktual)", fontsize=10.5, fontweight="600", color="#334155", labelpad=10)
@@ -521,7 +521,7 @@ Poligon yang mengalami salah klasifikasi tersebut telah ditandai secara visual p
 Berdasarkan hasil analisis data dan pemodelan tutupan lahan berbasis Sentinel-2A di Jawa Timur:
 
 1. **Konsistensi Akurasi Model**:
-   * Model KNN ($k=5$) menghasilkan akurasi sebesar **87.53%** (~**87.5%**) pada data uji independen 127.195 piksel, selaras dengan tahap *Modeling*.
+   * Model KNN ($k=5$) menghasilkan akurasi sebesar **87.53%** (~**87.5%**) pada data uji independen 127.195 piksel dari 635974 piksel, selaras dengan tahap *Modeling*.
    * Pada tingkat poligon wilayah (Convex Hull), akurasi agregat mencapai **88.06%** (317 dari 360 poligon terprediksi secara akurat).
 
 2. **Kekuatan dan Karakteristik Spektral**:
